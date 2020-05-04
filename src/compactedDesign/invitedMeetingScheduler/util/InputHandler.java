@@ -9,7 +9,7 @@ import javafx.scene.input.MouseButton;
 /**
  * <h1> Input Handler </h1>
  * The InputHandler program implements an object to 
- * handle mouse and keyboard based inputs on javafx.
+ * handle mouse and keyboard based inputs with javafx.
  * <p>
  * 
  * @author Jeffrey Jiang
