@@ -2,6 +2,8 @@ package compactedDesign.invitedMeetingScheduler;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+
 /**
  * <h1> IMSLauncher </h1>
  * 
