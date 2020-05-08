@@ -27,12 +27,13 @@ public class IMSLauncher extends Application {
 		//Setting up the window
 		primaryStage.setTitle("Invited Meeting Scheduler");//sets the title of the window
 		primaryStage.setOnCloseRequest(e -> System.exit(0)); // stops the program upon closing the window
-		primaryStage.setResizable(true);
+		primaryStage.setResizable(false); //change later
 		
-		Parent root = FXMLLoader.load(new URL(("/views/StartView.fxml")));
-		Scene scene = new Scene(root,300,300);
+		Parent root = FXMLLoader.load(getClass().getResource("/views/StartView.fxml"));
+		Scene scene = new Scene(root,600,300);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+
 		
 	}
 	
