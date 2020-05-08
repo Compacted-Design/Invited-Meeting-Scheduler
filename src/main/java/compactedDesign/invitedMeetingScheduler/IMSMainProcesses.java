@@ -1,10 +1,10 @@
 package compactedDesign.invitedMeetingScheduler;
 
-public class AppLoop implements Runnable{
+public class IMSMainProcesses implements Runnable{
 	private boolean running = false; //tells the program whether the program is running or not.
 	private final double UPDATE_CAP = 1.0/59.95; //this caps updates and rendering to 60 times a second
 	
-	public AppLoop() {
+	public IMSMainProcesses() {
 		// TODO Auto-generated constructor stub
 	}
 
