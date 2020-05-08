@@ -1,6 +1,11 @@
 package compactedDesign.invitedMeetingScheduler;
 
+import java.net.URL;
+
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
@@ -22,6 +27,12 @@ public class IMSLauncher extends Application {
 		//Setting up the window
 		primaryStage.setTitle("Invited Meeting Scheduler");//sets the title of the window
 		primaryStage.setOnCloseRequest(e -> System.exit(0)); // stops the program upon closing the window
+		primaryStage.setResizable(true);
+		
+		Parent root = FXMLLoader.load(new URL(("/views/StartView.fxml")));
+		Scene scene = new Scene(root,300,300);
+		primaryStage.setScene(scene);
+		primaryStage.show();
 		
 	}
 	
