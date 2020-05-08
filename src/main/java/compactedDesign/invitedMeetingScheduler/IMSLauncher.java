@@ -3,7 +3,7 @@ package compactedDesign.invitedMeetingScheduler;
 import javafx.application.Application;
 import javafx.stage.Stage;
 /**
- * <h1> Invited Meeting Scheduler Launcher </h1>
+ * <h1> IMSLauncher </h1>
  * 
  * <p>The Invited Meeting Scheduler Launcher program initializes 
  * the application.</p>
@@ -20,7 +20,7 @@ public class IMSLauncher extends Application {
 		//Setting up the window
 		primaryStage.setTitle("Invited Meeting Scheduler");//sets the title of the window
 		primaryStage.setOnCloseRequest(e -> System.exit(0)); // stops the program upon closing the window
-		System.out.println(1);
+		
 	}
 	
 	/**
