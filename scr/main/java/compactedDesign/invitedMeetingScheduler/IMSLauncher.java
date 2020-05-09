@@ -19,7 +19,6 @@ import javafx.stage.Stage;
  */
 public class IMSLauncher extends Application {
 	
-	private static Scene scene;//change if a better method is found
 
 
 	@Override
@@ -27,10 +26,10 @@ public class IMSLauncher extends Application {
 		//Setting up the window
 		primaryStage.setTitle("Invited Meeting Scheduler");//sets the title of the window
 		primaryStage.setOnCloseRequest(e -> System.exit(0)); // stops the program upon closing the window
-		primaryStage.setResizable(false); //change later
+		primaryStage.setResizable(false); // maybe change later
 		
 		Parent root = FXMLLoader.load(getClass().getResource("/views/StartView.fxml"));
-		scene = new Scene(root,600,300);
+		Scene scene = new Scene(root,600,300);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
@@ -42,10 +41,5 @@ public class IMSLauncher extends Application {
 	 * @param args Used for launch method
 	 */
 	public static void main(String[] args) {launch(args);}
-	/**
-	 * Getter method for the class variable scene.
-	 * @return scene of primary stage
-	 */
-	public static Scene getScene() {return scene;}//change if a better method is found
 
 }

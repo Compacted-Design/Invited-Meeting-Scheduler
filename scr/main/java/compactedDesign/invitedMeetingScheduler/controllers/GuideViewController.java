@@ -2,9 +2,10 @@ package compactedDesign.invitedMeetingScheduler.controllers;
 
 import java.io.IOException;
 
-import compactedDesign.invitedMeetingScheduler.IMSLauncher;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 
 /**
  * <h1>GuideViewController</h1>
@@ -14,14 +15,18 @@ import javafx.scene.control.Button;
  * @since 2020-05-08
  */
 public class GuideViewController {
-	public Button backButton;
+	@FXML
+	private Button backButton;
+	@FXML
+	private Pane root;
 	
 	/**
 	 * Action which occurs upon clicking the backButton. 
 	 * @throws IOException
 	 */
-	public void backButtonClick() throws IOException {
-		IMSLauncher.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/StartView.fxml")));
+	@FXML
+	private void backButtonClick() throws IOException {
+		root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/StartView.fxml")));
 	}
 
 }
