@@ -2,8 +2,8 @@ package compactedDesign.invitedMeetingScheduler;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -28,7 +28,7 @@ public class IMSLauncher extends Application {
 		primaryStage.setOnCloseRequest(e -> System.exit(0)); // stops the program upon closing the window
 		primaryStage.setResizable(false); // maybe change later
 		
-		Parent root = FXMLLoader.load(getClass().getResource("/views/StartView.fxml"));
+		Pane root = FXMLLoader.load(getClass().getResource("/views/StartView.fxml"));
 		Scene scene = new Scene(root,600,300);
 		primaryStage.setScene(scene);
 		primaryStage.show();
