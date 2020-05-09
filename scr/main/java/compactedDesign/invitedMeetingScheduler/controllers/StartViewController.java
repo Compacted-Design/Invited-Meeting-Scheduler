@@ -15,16 +15,27 @@ import javafx.scene.layout.BorderPane;
  */
 public class StartViewController {
 	
-	public Button startButton, guideButton;
+	public Button startButton, guideButton, dataEntryButton;
 	public BorderPane root;
 	
-	public void startClick() {
+	/**
+	 * Action which occurs upon clicking the startButton
+	 */
+	public void startButtonClick() {
 		System.out.println("hey");
 	}
 	
+	/**
+	 * Action which occurs upon clicking the guideButton. 
+	 * Changes the root node of the scene to the GuideView.
+	 * @throws IOException
+	 */
 	public void guideButtonClick() throws IOException {
 		IMSLauncher.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/GuideView.fxml")));//change if a better method is found
-		System.out.println("hi");
+	}
+	
+	public void dataEntryButtonClick() {
+		
 	}
 
 }
