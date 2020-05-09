@@ -14,10 +14,12 @@ import javafx.stage.Stage;
  * the application.</p>
  * 
  * @author Jeffrey Jiang
- * @version 0.1
- * @since 2020-05-07
+ * @version 0.2
+ * @since 2020-05-08
  */
 public class IMSLauncher extends Application {
+	
+	private static Scene scene;//change if a better method is found
 
 
 	@Override
@@ -28,7 +30,7 @@ public class IMSLauncher extends Application {
 		primaryStage.setResizable(false); //change later
 		
 		Parent root = FXMLLoader.load(getClass().getResource("/views/StartView.fxml"));
-		Scene scene = new Scene(root,600,300);
+		scene = new Scene(root,600,300);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
@@ -40,5 +42,10 @@ public class IMSLauncher extends Application {
 	 * @param args Used for launch method
 	 */
 	public static void main(String[] args) {launch(args);}
+	/**
+	 * Getter method for the class variable scene.
+	 * @return scene of primary stage
+	 */
+	public static Scene getScene() {return scene;}//change if a better method is found
 
 }
