@@ -22,7 +22,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="startButton" mnemonicParsing="false" onAction="#startButtonClick" text="Start" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Button fx:id="guideButton" mnemonicParsing="false" onAction="#guideButtonClick" text="Guides" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <Button fx:id="dataEntryButton" mnemonicParsing="false" onAction="#dataEntryButtonClick" text="Data Entry" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>

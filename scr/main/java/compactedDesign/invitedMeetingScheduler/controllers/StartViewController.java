@@ -18,17 +18,10 @@ import javafx.stage.Stage;
 public class StartViewController {
 	
 	@FXML
-	private Button startButton, guideButton, dataEntryButton;
+	private Button guideButton, dataEntryButton;
 	@FXML
 	private Pane root;
 	
-	/**
-	 * Action which occurs upon clicking the startButton
-	 */
-	@FXML
-	private void startButtonClick() {
-		System.out.println("hey");
-	}
 	
 	/**
 	 * Action which occurs upon clicking the guideButton. 
@@ -46,7 +39,6 @@ public class StartViewController {
 	@FXML
 	private void dataEntryButtonClick() throws IOException {
 		root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/DataEntryView.fxml")));
-		
 	}
 
 }

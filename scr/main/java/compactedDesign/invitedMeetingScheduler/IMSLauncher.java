@@ -29,7 +29,7 @@ public class IMSLauncher extends Application {
 		primaryStage.setResizable(false); // maybe change later
 		
 		Pane root = FXMLLoader.load(getClass().getResource("/views/StartView.fxml"));
-		Scene scene = new Scene(root,600,300);
+		Scene scene = new Scene(root,600,600);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
