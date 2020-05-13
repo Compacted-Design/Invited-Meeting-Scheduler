@@ -24,16 +24,26 @@ public class DataEntryViewController {
 		root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/StartView.fxml")));
 	}
 	
+	/**
+	 * 
+	 * @throws IOException
+	 */
 	@FXML
 	private void manualButtonClick() throws IOException {
 		//dataEntryPane = FXMLLoader.load(getClass().getResource("/views/entryViews/ManualView.fxml"));
 		dataEntryContainerPane.getChildren().remove(dataEntryPane);
-		dataEntryContainerPane.add(FXMLLoader.load(getClass().getResource("/views/entryViews/ManualView.fxml")), 0, 1);
+		dataEntryPane = FXMLLoader.load(getClass().getResource("/views/entryViews/ManualView.fxml"));
+		dataEntryContainerPane.add(dataEntryPane, 0, 1);
 	}
-	
+	/**
+	 * 
+	 * @throws IOException
+	 */
 	@FXML
-	private void spreadsheetButtonClick() {
-		
+	private void spreadsheetButtonClick() throws IOException {
+		dataEntryContainerPane.getChildren().remove(dataEntryPane);
+		dataEntryPane = FXMLLoader.load(getClass().getResource("/views/entryViews/SheetView.fxml"));
+		dataEntryContainerPane.add(dataEntryPane, 0, 1);
 	}
 
 }
