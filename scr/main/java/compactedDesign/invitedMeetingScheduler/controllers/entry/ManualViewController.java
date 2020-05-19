@@ -43,14 +43,22 @@ public class ManualViewController {
 	@SuppressWarnings("resource")
 	@FXML
 	private void submitButtonClick() throws FileNotFoundException, IOException {
+		boolean invalidEntry = false;
 		try {
 			Integer.parseInt(idEntry.getText());
+			if(idEntry.getText().trim().length() != 6) {
+				noticeLabel.setText("ID should be 6 digits ");
+				invalidEntry = true;
+			}
 		} catch (Exception e) {
 			noticeLabel.setText("ID should be 6 digits");
-			return;
+			invalidEntry = true;
 		}
-		if(idEntry.getText().trim().length() != 6) {
-			noticeLabel.setText("ID should be 6 digits");
+		if(firstNameEntry.getText().trim().equals("") || lastNameEntry.getText().trim().equals("") || middleSchoolEntry.getText().trim().equals("")) {
+			noticeLabel.setText(noticeLabel.getText() + "\n Missing required information");
+			invalidEntry = true;
+		}
+		if(invalidEntry) {
 			return;
 		}
 		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/Data.xlsx"));
