@@ -16,8 +16,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 public class ManualViewController {
+	
+	@FXML
+	private Pane root;
 	
 	@FXML
 	private ScrollPane scrollPane;
@@ -36,9 +40,8 @@ public class ManualViewController {
 	private void submitButtonClick() throws FileNotFoundException, IOException {
 		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/Data.xlsx"));
 		Workbook wb = new XSSFWorkbook(in);
-		Sheet s = wb.getSheet("TestData");
+		Sheet s = wb.getSheet("RawData");
 		int i = 1;
-		
 		for(; s.getRow(i) != null; i++) { //TODO: Change the cell values to equal what the cell titles are
 			if((""+((int)s.getRow(i).getCell(0).getNumericCellValue())).trim().equals(idEntry.getText().trim())) {
 				s.getRow(i).getCell(1).setCellValue(firstNameEntry.getText().trim());
@@ -63,10 +66,11 @@ public class ManualViewController {
 			}
 		}
 		in.close();
-		FileOutputStream out = new FileOutputStream(new File("scr/main/resources/data/RawData.xlsx"));
+		FileOutputStream out = new FileOutputStream(new File("scr/main/resources/data/Data.xlsx"));
 		wb.write(out);
 		out.close();
 		wb.close();
+		
 	}
 
 }
