@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -16,41 +17,46 @@
    <center>
       <ScrollPane fx:id="scrollPane" BorderPane.alignment="CENTER">
          <content>
-         	
-            		<VBox>
+            <HBox>
                <children>
-                  <Label text="Manual Entry">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label text="Student ID" />
-                  <TextField fx:id="idEntry" />
-                  <Label text="First Name" />
-                  <TextField fx:id="firstNameEntry" />
-                  <Label text="Last Name" />
-                  <TextField fx:id="lastNameEntry" />
-                  <Label text="Middle School" />
-                  <TextField fx:id="middleSchoolEntry" />
-                  <Label text="Accepted Programs" />
-                  <GridPane>
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+               	
+                  		<VBox>
                      <children>
-                        <CheckBox fx:id="smcsCheck" mnemonicParsing="false" text="SMCS" />
-                        <CheckBox fx:id="globalCheck" mnemonicParsing="false" text="Global" GridPane.columnIndex="1" />
-                        <CheckBox fx:id="humanitiesCheck" mnemonicParsing="false" text="Humanities" GridPane.columnIndex="2" />
+                        <Label text="Manual Entry">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Student ID" />
+                        <TextField fx:id="idEntry" />
+                        <Label text="First Name" />
+                        <TextField fx:id="firstNameEntry" />
+                        <Label text="Last Name" />
+                        <TextField fx:id="lastNameEntry" />
+                        <Label text="Middle School" />
+                        <TextField fx:id="middleSchoolEntry" />
+                        <Label text="Accepted Programs" />
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <CheckBox fx:id="smcsCheck" mnemonicParsing="false" text="SMCS" />
+                              <CheckBox fx:id="globalCheck" mnemonicParsing="false" text="Global" GridPane.columnIndex="1" />
+                              <CheckBox fx:id="humanitiesCheck" mnemonicParsing="false" text="Humanities" GridPane.columnIndex="2" />
+                           </children>
+                        </GridPane>
+                        <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonClick" text="Submit" />
                      </children>
-                  </GridPane>
-                  <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonClick" text="Submit" />
+                  </VBox>
+                  <Label fx:id="noticeLabel" />
                </children>
-            </VBox>
+            </HBox>
          </content>
       </ScrollPane>
    </center>
