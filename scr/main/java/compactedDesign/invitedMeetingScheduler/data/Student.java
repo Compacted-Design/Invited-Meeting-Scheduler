@@ -3,35 +3,25 @@ package compactedDesign.invitedMeetingScheduler.data;
 public class Student {
 	private String firstName;
 	private String lastName;
-	private String schoolName; 
+	private String schoolName; //Change to ID later
+	private boolean smcs;
+	private boolean hum;
+	private boolean global;
 	private int id;
-	
-	//A = accepted, W = want to observe
-	private boolean smcsA;
-	private boolean humA;
-	private boolean globalA;
-	//W values are experimental
-	private boolean smcsW; 
-	private boolean humW;
-	private boolean globalW;
-	
 	private int rotation;
 	
 	
 	
 	
-	public Student(String firstName, String lastName, String schoolName, boolean smcsA, boolean humA, boolean globalA, int id, boolean smcsW, boolean humW, boolean globalW) {
+	public Student(String firstName, String lastName, String schoolName, boolean smcs, boolean hum, boolean global, int id) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.schoolName = schoolName;
-		this.smcsA = smcsA;
-		this.humA = humA;
-		this.globalA = globalA;
+		this.smcs = smcs;
+		this.hum = hum;
+		this.global = global;
 		this.id = id;
-		this.smcsW = smcsW;
-		this.humW = humW;
-		this.globalW = globalW;
 	}
 
 
@@ -64,6 +54,37 @@ public class Student {
 		this.schoolName = schoolName;
 	}
 
+
+	public boolean isSmcs() {
+		return smcs;
+	}
+
+
+	public void setSmcs(boolean smcs) {
+		this.smcs = smcs;
+	}
+
+
+	public boolean isHum() {
+		return hum;
+	}
+
+
+	public void setHum(boolean hum) {
+		this.hum = hum;
+	}
+
+
+	public boolean isGlobal() {
+		return global;
+	}
+
+
+	public void setGlobal(boolean global) {
+		this.global = global;
+	}
+
+
 	public int getId() {
 		return id;
 	}
@@ -81,66 +102,6 @@ public class Student {
 
 	public void setRotation(int rotation) {
 		this.rotation = rotation;
-	}
-
-
-	public boolean isSmcsA() {
-		return smcsA;
-	}
-
-
-	public void setSmcsA(boolean smcsA) {
-		this.smcsA = smcsA;
-	}
-
-
-	public boolean isHumA() {
-		return humA;
-	}
-
-
-	public void setHumA(boolean humA) {
-		this.humA = humA;
-	}
-
-
-	public boolean isGlobalA() {
-		return globalA;
-	}
-
-
-	public void setGlobalA(boolean globalA) {
-		this.globalA = globalA;
-	}
-
-
-	public boolean isSmcsW() {
-		return smcsW;
-	}
-
-
-	public void setSmcsW(boolean smcsW) {
-		this.smcsW = smcsW;
-	}
-
-
-	public boolean isHumW() {
-		return humW;
-	}
-
-
-	public void setHumW(boolean humW) {
-		this.humW = humW;
-	}
-
-
-	public boolean isGlobalW() {
-		return globalW;
-	}
-
-
-	public void setGlobalW(boolean globalW) {
-		this.globalW = globalW;
 	}
 	
 
