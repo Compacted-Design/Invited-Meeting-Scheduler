@@ -10,6 +10,7 @@ import java.io.IOException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.examples.ShiftRows;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -67,6 +68,9 @@ public class ManualViewController {
 			}
 		}
 		if(!added) {
+			if(s.getRow(i) != null) {
+				s.shiftRows(i, s.getLastRowNum()+1, 1);
+			}
 			s.createRow(i);
 			for(int j = 0; j < 7; j++) {
 				s.getRow(i).createCell(j);
