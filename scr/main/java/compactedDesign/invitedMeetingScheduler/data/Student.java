@@ -8,6 +8,7 @@ public class Student {
 	private boolean hum;
 	private boolean global;
 	private int id;
+	private int rotation;
 	
 	
 	
@@ -92,8 +93,16 @@ public class Student {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
+
+
+	public int getRotation() {
+		return rotation;
+	}
+
+
+	public void setRotation(int rotation) {
+		this.rotation = rotation;
+	}
 	
 
 }
