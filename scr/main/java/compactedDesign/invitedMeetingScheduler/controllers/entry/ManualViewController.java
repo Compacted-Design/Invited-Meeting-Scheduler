@@ -43,6 +43,7 @@ public class ManualViewController {
 	@SuppressWarnings("resource")
 	@FXML
 	private void submitButtonClick() throws FileNotFoundException, IOException {
+		noticeLabel.setText("");
 		boolean invalidEntry = false;
 		try {
 			Integer.parseInt(idEntry.getText());
@@ -55,7 +56,7 @@ public class ManualViewController {
 			invalidEntry = true;
 		}
 		if(firstNameEntry.getText().trim().equals("") || lastNameEntry.getText().trim().equals("") || middleSchoolEntry.getText().trim().equals("")) {
-			noticeLabel.setText(noticeLabel.getText() + "\n Missing required information");
+			noticeLabel.setText(noticeLabel.getText() + "\n"+"Missing required information");
 			invalidEntry = true;
 		}
 		if(invalidEntry) {

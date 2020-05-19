@@ -10,6 +10,7 @@ public class Student {
 	private boolean smcsA;
 	private boolean humA;
 	private boolean globalA;
+	//W values are experimental
 	private boolean smcsW; 
 	private boolean humW;
 	private boolean globalW;
