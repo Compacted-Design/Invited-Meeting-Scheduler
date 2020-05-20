@@ -10,9 +10,6 @@ public class Student {
 	private int id;
 	private int rotation;
 	
-	
-	
-	
 	public Student(String firstName, String lastName, String schoolName, boolean smcs, boolean hum, boolean global, int id) {
 		super();
 		this.firstName = firstName;

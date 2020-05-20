@@ -1,5 +1,10 @@
 package compactedDesign.invitedMeetingScheduler;
 
+import java.io.IOException;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+
+import compactedDesign.invitedMeetingScheduler.data.DataLoader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -39,7 +44,12 @@ public class IMSLauncher extends Application {
 	/**
 	 * Starting method. 
 	 * @param args Used for launch method
+	 * @throws IOException 
+	 * @throws InvalidFormatException 
 	 */
-	public static void main(String[] args) {launch(args);}
+	public static void main(String[] args) throws InvalidFormatException, IOException {
+		//launch(args);
+		DataLoader.createSchedule();
+	}
 
 }
