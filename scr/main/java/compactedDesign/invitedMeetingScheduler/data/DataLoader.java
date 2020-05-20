@@ -29,8 +29,9 @@ public class DataLoader {
 
 	}
 
-	public static void createSchedule() throws IOException, InvalidFormatException {
-		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/Data.xlsx"));
+	public static void createSchedules() throws IOException, InvalidFormatException {
+		// There will be issues if the rots leave the tables
+		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/StudentData.xlsx"));
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("ScheduleData");
 		int i = 1;
@@ -44,7 +45,8 @@ public class DataLoader {
 						if (text != null && text.contains("First")) {
 							text = text.replace("First", s.getRow(i).getCell(2).getStringCellValue());
 							r.setText(text, 0);
-						} if (text != null && text.contains("Last")) {
+						}
+						if (text != null && text.contains("Last")) {
 							text = text.replace("Last", s.getRow(i).getCell(3).getStringCellValue());
 							r.setText(text, 0);
 						}
@@ -58,16 +60,20 @@ public class DataLoader {
 							for (XWPFRun r : p.getRuns()) {
 								String text = r.getText(0);
 								if (text != null && text.contains("ROT1")) {
-									text = text.replace("ROT1", rotMessage(s.getRow(i).getCell(4).getStringCellValue()));
+									text = text.replace("ROT1",
+											rotMessage(s.getRow(i).getCell(4).getStringCellValue()));
 									r.setText(text, 0);
 								} else if (text != null && text.contains("ROT2")) {
-									text = text.replace("ROT2", rotMessage(s.getRow(i).getCell(5).getStringCellValue()));
+									text = text.replace("ROT2",
+											rotMessage(s.getRow(i).getCell(5).getStringCellValue()));
 									r.setText(text, 0);
 								} else if (text != null && text.contains("ROT3")) {
-									text = text.replace("ROT3", rotMessage(s.getRow(i).getCell(6).getStringCellValue()));
+									text = text.replace("ROT3",
+											rotMessage(s.getRow(i).getCell(6).getStringCellValue()));
 									r.setText(text, 0);
 								} else if (text != null && text.contains("ROT4")) {
-									text = text.replace("ROT4", rotMessage(s.getRow(i).getCell(7).getStringCellValue()));
+									text = text.replace("ROT4",
+											rotMessage(s.getRow(i).getCell(7).getStringCellValue()));
 									r.setText(text, 0);
 								}
 							}
@@ -79,18 +85,19 @@ public class DataLoader {
 					"scr/main/resources/data/schedules/" + s.getRow(i).getCell(2).getStringCellValue()
 							+ s.getRow(i).getCell(3).getStringCellValue() + ".docx"));
 		}
-		System.exit(0);
 	}
-	
+
 	private static String rotMessage(String rot) {
-		if(rot.equals("H")) {
+		if (rot.equals("H")) {
 			return humString;
-		}else if(rot.equals("GL")) {
+		} else if (rot.equals("GL")) {
 			return gloString;
-		}else if(rot.equals("S")) {
+		} else if (rot.equals("S")) {
 			return smcString;
+		} else if (rot.equals("GE")) {
+			return genString;
 		}
-		return genString;
+		return rot;
 	}
 
 }

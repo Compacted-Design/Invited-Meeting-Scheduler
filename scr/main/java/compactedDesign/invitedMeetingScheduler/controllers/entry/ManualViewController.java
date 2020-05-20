@@ -10,7 +10,6 @@ import java.io.IOException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.xssf.usermodel.examples.ShiftRows;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -43,6 +42,7 @@ public class ManualViewController {
 	@SuppressWarnings("resource")
 	@FXML
 	private void submitButtonClick() throws FileNotFoundException, IOException {
+		//TODO: Move this to DataLoader
 		noticeLabel.setText("");
 		boolean invalidEntry = false;
 		try {
@@ -62,7 +62,7 @@ public class ManualViewController {
 		if(invalidEntry) {
 			return;
 		}
-		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/Data.xlsx"));
+		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/StudentData.xlsx"));
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("RawData");
 		int i = 1;
@@ -88,7 +88,7 @@ public class ManualViewController {
 			dataEntry(i, s);
 		}
 		in.close();
-		FileOutputStream out = new FileOutputStream(new File("scr/main/resources/data/Data.xlsx"));
+		FileOutputStream out = new FileOutputStream(new File("scr/main/resources/data/StudentData.xlsx"));
 		wb.write(out);
 		out.close();
 		wb.close();

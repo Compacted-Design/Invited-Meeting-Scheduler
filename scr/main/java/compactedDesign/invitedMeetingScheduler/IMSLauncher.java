@@ -48,8 +48,7 @@ public class IMSLauncher extends Application {
 	 * @throws InvalidFormatException 
 	 */
 	public static void main(String[] args) throws InvalidFormatException, IOException {
-		//launch(args);
-		DataLoader.createSchedule();
+		launch(args);
 	}
 
 }
