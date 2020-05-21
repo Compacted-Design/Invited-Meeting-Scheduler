@@ -1,0 +1,2 @@
+Notes:
+- Maybe use some more try catch statements rather than just throwing everything

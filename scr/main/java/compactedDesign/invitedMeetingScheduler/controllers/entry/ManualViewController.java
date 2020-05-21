@@ -67,7 +67,7 @@ public class ManualViewController {
 		Sheet s = wb.getSheet("RawData");
 		int i = 1;
 		boolean added = false;
-		for(; s.getRow(i) != null; i++) { //TODO: Change the cell values to equal what the cell titles are
+		for(; s.getRow(i) != null; i++) { //TODO: Change to a binary search
 			if((int)s.getRow(i).getCell(0).getNumericCellValue() == Integer.parseInt(idEntry.getText().trim())) {
 				dataEntry(i, s);
 				added = true;

@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  */
 public class IMSLauncher extends Application {
 	
-
+	private static DataLoader dl;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -38,7 +38,7 @@ public class IMSLauncher extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
-		
+		dl = new DataLoader();
 	}
 	
 	/**
@@ -50,5 +50,11 @@ public class IMSLauncher extends Application {
 	public static void main(String[] args) throws InvalidFormatException, IOException {
 		launch(args);
 	}
+
+	public static DataLoader getDl() {
+		return dl;
+	}
+	
+	
 
 }

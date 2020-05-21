@@ -1,8 +1,10 @@
 package compactedDesign.invitedMeetingScheduler.data;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,19 +21,37 @@ import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
 public class DataLoader {
+	private String genString;// = "Media Center - PHS Whole School Magnet: Parents Room 41 - PHS Whole School Magnet: Students";
+	private String humString;// = "Room 8 - Humanities House";
+	private String gloString;// = "Room 33 - Global Ecology House";
+	private String smcString;// = "Room 195 - Science, Math, Computer Science House";
 
-	private static String genString = "Media Center - PHS Whole School Magnet: Parents Room 41 - PHS Whole School Magnet: Students";
-	private static String humString = "Room 8 - Humanities House";
-	private static String gloString = "Room 33 - Global Ecology House";
-	private static String smcString = "Room 195 - Science, Math, Computer Science House";
+	public DataLoader() throws IOException {
+		FileReader rotationText = new FileReader(new File("scr/main/resources/data/RotationNames.txt"));
+		BufferedReader br = new BufferedReader(rotationText);
+		String line = "";
+		while ((line = br.readLine()) != null) {
+			if(line.substring(0, 4).equals("gen:")) {
+				genString = line.substring(4);
+			}else if(line.substring(0, 4).equals("hum:")) {
+				humString = line.substring(4);
+			}else if(line.substring(0, 4).equals("glo:")) {
+				gloString = line.substring(4);
+			}else if(line.substring(0, 4).equals("smc:")) {
+				smcString = line.substring(4);
+			}
+		}
+	}
 
+	// Where the manual and sheet entry data will be transfered
 	public void loadData() {
 
 	}
 
-	public static void createSchedules() throws IOException, InvalidFormatException {
+	public void createSchedules() throws IOException, InvalidFormatException {
 		// There will be issues if the rots leave the tables
 		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/StudentData.xlsx"));
+		@SuppressWarnings("resource")
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("ScheduleData");
 		int i = 1;
@@ -85,9 +105,11 @@ public class DataLoader {
 					"scr/main/resources/data/schedules/" + s.getRow(i).getCell(2).getStringCellValue()
 							+ s.getRow(i).getCell(3).getStringCellValue() + ".docx"));
 		}
+		in.close();
+		wb.close();
 	}
 
-	private static String rotMessage(String rot) {
+	private String rotMessage(String rot) {
 		if (rot.equals("H")) {
 			return humString;
 		} else if (rot.equals("GL")) {
@@ -98,6 +120,38 @@ public class DataLoader {
 			return genString;
 		}
 		return rot;
+	}
+
+	public String getGenString() {
+		return genString;
+	}
+
+	public void setGenString(String genString) {
+		this.genString = genString;
+	}
+
+	public String getHumString() {
+		return humString;
+	}
+
+	public void setHumString(String humString) {
+		this.humString = humString;
+	}
+
+	public String getGloString() {
+		return gloString;
+	}
+
+	public void setGloString(String gloString) {
+		this.gloString = gloString;
+	}
+
+	public String getSmcString() {
+		return smcString;
+	}
+
+	public void setSmcString(String smcString) {
+		this.smcString = smcString;
 	}
 
 }
