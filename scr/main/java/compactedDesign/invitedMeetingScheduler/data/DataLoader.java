@@ -21,10 +21,10 @@ import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
 public class DataLoader {
-	private String genString;// = "Media Center - PHS Whole School Magnet: Parents Room 41 - PHS Whole School Magnet: Students";
-	private String humString;// = "Room 8 - Humanities House";
-	private String gloString;// = "Room 33 - Global Ecology House";
-	private String smcString;// = "Room 195 - Science, Math, Computer Science House";
+	private String genString;
+	private String humString;
+	private String gloString;
+	private String smcString;
 
 	public DataLoader() throws IOException {
 		FileReader rotationText = new FileReader(new File("scr/main/resources/data/RotationNames.txt"));
