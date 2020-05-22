@@ -56,6 +56,7 @@ public class DataLoader {
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("ScheduleData");
 		int i = 1;
+		//TODO: Combine lines 60-96 into 1 for loop
 		List<Student> students = new ArrayList<>();
 		for (; s.getRow(i) != null; i++) {
 			students.add(new Student(
@@ -67,7 +68,30 @@ public class DataLoader {
 					s.getRow(i).getCell(5).getStringCellValue().trim().equals("Y"), 
 					s.getRow(i).getCell(6).getStringCellValue().trim().equals("Y")));
 		}
-		List<Student> studentsS, studentsG, studentsH, studentsSG, studentsSH, studentsGH, studentsSGH;
+		List<Student> studentsS = new ArrayList<>(), studentsG = new ArrayList<>(), studentsH = new ArrayList<>(), studentsSG = new ArrayList<>(), studentsSH = new ArrayList<>(), studentsGH = new ArrayList<>(), studentsSGH = new ArrayList<>();
+		for (Student student : students) {
+			if(student.isGlobal()) {
+				if(student.isHum()) {
+					if(student.isSmcs()) {
+						studentsSGH.add(student);
+					}else {
+						studentsGH.add(student);
+					}
+				}else if(student.isSmcs()) {
+					studentsSG.add(student);
+				}else {
+					studentsG.add(student);
+				}
+			}else if(student.isHum()) {
+				if(student.isSmcs()) {
+					studentsSH.add(student);
+				}else {
+					studentsH.add(student);
+				}
+			}else {
+				studentsS.add(student);
+			}
+		}
 		
 	}
 
