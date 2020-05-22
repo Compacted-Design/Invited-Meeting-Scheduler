@@ -24,6 +24,10 @@ import javafx.stage.Stage;
  */
 public class IMSLauncher extends Application {
 	
+	/*
+	 * Change dl to a local variable.
+	 * Load all the controllers in the start method first so they can get other needed variables
+	 */
 	private static DataLoader dl;
 
 	@Override

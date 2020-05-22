@@ -21,6 +21,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
 public class DataLoader {
+	//Decide whether it should be static or not
 	private String genString;
 	private String humString;
 	private String gloString;
