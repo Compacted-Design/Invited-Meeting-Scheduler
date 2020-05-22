@@ -1,4 +1,4 @@
-gen:Media Center - PHS Whole School Magnet: Parents Room 41 - PHS Whole School Magnet: Students
-hum:Room 8 - Humanities House
+gen:Media Center - PHS Whole School Magnet: Parents Room 41 - PHS Whole School Magnet:
 glo:Room 33 - Global Ecology House
+hum:Room 8 - Humanities House
 smc:Room 195 - Science, Math, Computer Science House
