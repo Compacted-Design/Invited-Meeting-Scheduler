@@ -45,7 +45,7 @@ public class DataLoader {
 		}
 	}
 
-	// Where the manual and sheet entry data will be transfered
+	//TODO: Where the manual and sheet entry data will be transfered to
 	public void loadData() {
 
 	}
@@ -56,7 +56,7 @@ public class DataLoader {
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("ScheduleData");
 		int i = 1;
-		//TODO: Combine lines 60-96 into 1 for loop
+		//TODO: Combine into 1 for loop
 		List<Student> students = new ArrayList<>();
 		for (; s.getRow(i) != null; i++) {
 			students.add(new Student(
@@ -68,31 +68,56 @@ public class DataLoader {
 					s.getRow(i).getCell(5).getStringCellValue().trim().equals("Y"), 
 					s.getRow(i).getCell(6).getStringCellValue().trim().equals("Y")));
 		}
-		List<Student> studentsS = new ArrayList<>(), studentsG = new ArrayList<>(), studentsH = new ArrayList<>(), studentsSG = new ArrayList<>(), studentsSH = new ArrayList<>(), studentsGH = new ArrayList<>(), studentsSGH = new ArrayList<>();
+		int smcCount2 = 0, smcCount3 = 0, humCount2 = 0, humCount3 = 0, gloCount2 = 0, gloCount3 = 0, rotCount4 = 0;
+		//List<Student> studentsS = new ArrayList<>(), studentsG = new ArrayList<>(), studentsH = new ArrayList<>(), studentsSG = new ArrayList<>(), studentsSH = new ArrayList<>(), studentsGH = new ArrayList<>(), studentsSGH = new ArrayList<>();
 		for (Student student : students) {
 			if(student.isGlobal()) {
 				if(student.isHum()) {
 					if(student.isSmcs()) {
-						studentsSGH.add(student);
+						//studentsSGH.add(student);
+						rotCount4++;
 					}else {
-						studentsGH.add(student);
+						//studentsGH.add(student);
+						humCount3++;
+						gloCount3++;
 					}
 				}else if(student.isSmcs()) {
-					studentsSG.add(student);
+					//studentsSG.add(student);
+					smcCount3++;
+					gloCount3++;
 				}else {
-					studentsG.add(student);
+					//studentsG.add(student);
+					gloCount2++;
 				}
 			}else if(student.isHum()) {
 				if(student.isSmcs()) {
-					studentsSH.add(student);
+					//studentsSH.add(student);
+					smcCount3++;
+					humCount3++;
 				}else {
-					studentsH.add(student);
+					//studentsH.add(student);
+					humCount2++;
 				}
 			}else {
-				studentsS.add(student);
+				//studentsS.add(student);
+				smcCount2++;
 			}
 		}
-		
+		smcCount3 += rotCount4;
+		humCount3 += rotCount4;
+		gloCount3 += rotCount4;
+		smcCount2 += smcCount3;
+		humCount2 += humCount3;
+		gloCount2 += gloCount3;
+		if(rotCount4 < 30) { //1 group rot4
+			
+		}else if(rotCount4 < 60) {//2 group rot4
+			
+		}else if(rotCount4 < 90) {//3 group rot4
+			
+		}else { // 4 group rot4
+			
+		}
 	}
 
 	public void createSchedules() throws IOException, InvalidFormatException {
