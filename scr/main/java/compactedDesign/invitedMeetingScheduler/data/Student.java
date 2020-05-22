@@ -10,7 +10,7 @@ public class Student {
 	private int id;
 	private int rotation;
 	
-	public Student(String firstName, String lastName, String schoolName, boolean smcs, boolean hum, boolean global, int id) {
+	public Student(int id, String firstName, String lastName, String schoolName, boolean smcs, boolean global, boolean hum ) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;

@@ -40,8 +40,8 @@ public class StartViewController {
 	}
 	
 	@FXML
-	private void rotationButtonClick() {
-		
+	private void rotationButtonClick() throws IOException {
+		root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/RotationView.fxml")));
 	}
 
 }

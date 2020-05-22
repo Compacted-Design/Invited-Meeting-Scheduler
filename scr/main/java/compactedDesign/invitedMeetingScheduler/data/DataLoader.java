@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -47,6 +48,27 @@ public class DataLoader {
 	// Where the manual and sheet entry data will be transfered
 	public void loadData() {
 
+	}
+	
+	public void groupSchedules() throws IOException {
+		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/StudentData.xlsx"));
+		@SuppressWarnings("resource")
+		Workbook wb = new XSSFWorkbook(in);
+		Sheet s = wb.getSheet("ScheduleData");
+		int i = 1;
+		List<Student> students = new ArrayList<>();
+		for (; s.getRow(i) != null; i++) {
+			students.add(new Student(
+					(int)s.getRow(i).getCell(0).getNumericCellValue(), 
+					s.getRow(i).getCell(1).getStringCellValue(), 
+					s.getRow(i).getCell(2).getStringCellValue(), 
+					s.getRow(i).getCell(3).getStringCellValue(),
+					s.getRow(i).getCell(4).getStringCellValue().trim().equals("Y"), 
+					s.getRow(i).getCell(5).getStringCellValue().trim().equals("Y"), 
+					s.getRow(i).getCell(6).getStringCellValue().trim().equals("Y")));
+		}
+		List<Student> studentsS, studentsG, studentsH, studentsSG, studentsSH, studentsGH, studentsSGH;
+		
 	}
 
 	public void createSchedules() throws IOException, InvalidFormatException {
