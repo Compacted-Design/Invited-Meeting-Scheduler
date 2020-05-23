@@ -8,7 +8,8 @@ public class Student {
 	private boolean hum;
 	private boolean global;
 	private int id;
-	private int rotation;
+	//Change to an array?
+	private boolean rot1 = false, rot2 = false, rot3 = true, rot4 = true;
 	
 	public Student(int id, String firstName, String lastName, String schoolName, boolean smcs, boolean global, boolean hum ) {
 		super();
@@ -19,6 +20,11 @@ public class Student {
 		this.hum = hum;
 		this.global = global;
 		this.id = id;
+		if(smcs && global && hum) {
+			rot3 = false; rot4 = false;
+		}else if((smcs && (global || hum)) || (global && hum)) {
+			rot3 = false;
+		}
 	}
 
 
@@ -92,14 +98,6 @@ public class Student {
 	}
 
 
-	public int getRotation() {
-		return rotation;
-	}
-
-
-	public void setRotation(int rotation) {
-		this.rotation = rotation;
-	}
 	
 
 }

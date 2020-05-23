@@ -1,3 +1,4 @@
 Notes:
 - Maybe use some more try catch statements rather than just throwing everything
 - Add javadocs comments
+- Change all instances of "smcs" to "smc"

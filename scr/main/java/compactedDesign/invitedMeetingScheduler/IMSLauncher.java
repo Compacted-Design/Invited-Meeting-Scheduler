@@ -33,7 +33,7 @@ public class IMSLauncher extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		//Setting up the window
-		primaryStage.setTitle("Invited Meeting Scheduler");//sets the title of the window
+		primaryStage.setTitle("Invited Meeting Scheduler - by Compacted Design");//sets the title of the window
 		primaryStage.setOnCloseRequest(e -> System.exit(0)); // stops the program upon closing the window
 		primaryStage.setResizable(false); // maybe change later
 		

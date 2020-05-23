@@ -68,55 +68,67 @@ public class DataLoader {
 					s.getRow(i).getCell(5).getStringCellValue().trim().equals("Y"), 
 					s.getRow(i).getCell(6).getStringCellValue().trim().equals("Y")));
 		}
-		int smcCount2 = 0, smcCount3 = 0, humCount2 = 0, humCount3 = 0, gloCount2 = 0, gloCount3 = 0, rotCount4 = 0;
-		//List<Student> studentsS = new ArrayList<>(), studentsG = new ArrayList<>(), studentsH = new ArrayList<>(), studentsSG = new ArrayList<>(), studentsSH = new ArrayList<>(), studentsGH = new ArrayList<>(), studentsSGH = new ArrayList<>();
+		int smcCount1 = 0, smcCount2 = 0, humCount1 = 0, humCount2 = 0, gloCount1 = 0, gloCount2 = 0, allCount = 0;
+		List<Student> studentsS = new ArrayList<>(), studentsG = new ArrayList<>(), studentsH = new ArrayList<>(), studentsSG = new ArrayList<>(), studentsSH = new ArrayList<>(), studentsGH = new ArrayList<>(), studentsSGH = new ArrayList<>();
 		for (Student student : students) {
 			if(student.isGlobal()) {
 				if(student.isHum()) {
 					if(student.isSmcs()) {
-						//studentsSGH.add(student);
-						rotCount4++;
+						studentsSGH.add(student);
+						allCount++;
 					}else {
-						//studentsGH.add(student);
-						humCount3++;
-						gloCount3++;
+						studentsGH.add(student);
+						humCount2++;
+						gloCount2++;
 					}
 				}else if(student.isSmcs()) {
-					//studentsSG.add(student);
-					smcCount3++;
-					gloCount3++;
-				}else {
-					//studentsG.add(student);
+					studentsSG.add(student);
+					smcCount2++;
 					gloCount2++;
+				}else {
+					studentsG.add(student);
+					gloCount1++;
 				}
 			}else if(student.isHum()) {
 				if(student.isSmcs()) {
-					//studentsSH.add(student);
-					smcCount3++;
-					humCount3++;
-				}else {
-					//studentsH.add(student);
+					studentsSH.add(student);
+					smcCount2++;
 					humCount2++;
+				}else {
+					studentsH.add(student);
+					humCount1++;
 				}
 			}else {
-				//studentsS.add(student);
-				smcCount2++;
+				studentsS.add(student);
+				smcCount1++;
 			}
 		}
-		smcCount3 += rotCount4;
-		humCount3 += rotCount4;
-		gloCount3 += rotCount4;
-		smcCount2 += smcCount3;
-		humCount2 += humCount3;
-		gloCount2 += gloCount3;
-		if(rotCount4 < 30) { //1 group rot4
+		//Necessary people in rotations 1 and 2 and with only 1 magnet house
+		int neccessarySmcRot2 = smcCount1/2;
+		int necessarySmcRot1 = smcCount1 - neccessarySmcRot2;
+		int necessaryGloRot2 = gloCount1/2;
+		int necessaryGloRot1 = gloCount1 - necessaryGloRot2;
+		int necessaryHumRot2 = humCount1/2;
+		int necessaryHumRot1 = humCount1 - necessaryHumRot2;
+		int necessaryGenRot1 = neccessarySmcRot2 + necessaryGloRot2 + necessaryHumRot2;
+		int neccesaryGenRot2 = necessaryGloRot1 + necessaryHumRot1 + necessarySmcRot1;
+		//3 magnet Houses
+		RotationGroup[] rotations = {new RotationGroup(RotationID.ROT1, "GE"), new RotationGroup(RotationID.ROT1, "H"), 
+									 new RotationGroup(RotationID.ROT1, "S"), new RotationGroup(RotationID.ROT1, "GL"),
+									 new RotationGroup(RotationID.ROT2, "GE"), new RotationGroup(RotationID.ROT2, "H"), 
+									 new RotationGroup(RotationID.ROT2, "S"), new RotationGroup(RotationID.ROT2, "GL"),
+									 new RotationGroup(RotationID.ROT3, "GE"), new RotationGroup(RotationID.ROT3, "H"), 
+									 new RotationGroup(RotationID.ROT3, "S"), new RotationGroup(RotationID.ROT3, "GL"),
+									 new RotationGroup(RotationID.ROT4, "GE"), new RotationGroup(RotationID.ROT4, "H"), 
+									 new RotationGroup(RotationID.ROT4, "S"), new RotationGroup(RotationID.ROT4, "GL")};
+		for (Student student : studentsS) {
 			
-		}else if(rotCount4 < 60) {//2 group rot4
+		}
+		for (Student student : studentsG) {
 			
-		}else if(rotCount4 < 90) {//3 group rot4
-			
-		}else { // 4 group rot4
-			
+		}
+		for (Student student : studentsH) {
+	
 		}
 	}
 
