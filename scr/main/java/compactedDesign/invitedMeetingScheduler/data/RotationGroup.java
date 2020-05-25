@@ -7,14 +7,14 @@ public class RotationGroup {
 	
 	private List<School> schoolCount;
 	private List<Student> students;
-	private RotationID id;
-	private String nameID;
+	private int rotNum;
+	private String name;
 	
-	public RotationGroup(RotationID id, String nameID) {
+	public RotationGroup(String name, int rotNum) {
 		schoolCount = new ArrayList<>();
 		students = new ArrayList<>();
-		this.id = id;
-		this.nameID = nameID;
+		this.name = name;
+		this.rotNum = rotNum;
 	}
 
 	public List<School> getSchoolCount() {
@@ -24,5 +24,15 @@ public class RotationGroup {
 	public List<Student> getStudents() {
 		return students;
 	}
+
+	public int getRotNum() {
+		return rotNum;
+	}
+
+	public String getName() {
+		return name;
+	}
+	
+	
 
 }

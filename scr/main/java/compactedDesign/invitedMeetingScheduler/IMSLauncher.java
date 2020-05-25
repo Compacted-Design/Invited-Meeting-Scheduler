@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 /**
  * <h1> IMSLauncher </h1>
  * 
- * <p>The Invited Meeting Scheduler Launcher program initializes 
+ * <p>The Invited Meeting Scheduler Launcher program initializes []
  * the application.</p>
  * 
  * @author Jeffrey Jiang
@@ -26,7 +26,6 @@ public class IMSLauncher extends Application {
 	
 	/*
 	 * TODO: Change dl to a local variable.
-	 * TODO: Load all the controllers in the start method first so they can get other needed variables and/or create a main controller
 	 */
 	private static DataLoader dl;
 
