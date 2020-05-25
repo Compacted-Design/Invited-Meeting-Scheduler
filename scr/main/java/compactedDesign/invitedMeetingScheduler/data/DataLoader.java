@@ -142,16 +142,44 @@ public class DataLoader {
 				addStudent(student, glo1);
 			}
 		}
+		
+		
 		//TODO: optimize the final rotation to be based on the block in which the most people are in.
-		for(Student student : studentsSGH) {
-			if(even) {
-				addStudent(student, gen3);
-				addStudent(student, glo4);
-				even = false;
-			}else {
-				addStudent(student, gen4);
-				addStudent(student, glo3);
-				even = true;
+		if(Math.max(smcs, Math.max(global,hum)) == global) {
+			for(Student student : studentsSGH) {
+				if(even) {
+					addStudent(student, gen3);
+					addStudent(student, glo4);
+					even = false;
+				}else {
+					addStudent(student, gen4);
+					addStudent(student, glo3);
+					even = true;
+				}
+			}
+		}else if(Math.max(smcs, Math.max(global,hum)) == hum) {
+			for(Student student : studentsSGH) {
+				if(even) {
+					addStudent(student, gen3);
+					addStudent(student, hum4);
+					even = false;
+				}else {
+					addStudent(student, gen4);
+					addStudent(student, hum3);
+					even = true;
+				}
+			}
+		}else {
+			for(Student student : studentsSGH) {
+				if(even) {
+					addStudent(student, gen3);
+					addStudent(student, smcs4);
+					even = false;
+				}else {
+					addStudent(student, gen4);
+					addStudent(student, smcs3);
+					even = true;
+				}
 			}
 		}
 		
@@ -244,6 +272,7 @@ public class DataLoader {
 				addStudent(student, hum2);
 			}
 		}
+		
 		wb.removeSheetAt(1);
 		wb.createSheet("ScheduleData");
 		Sheet schedule = wb.getSheet("ScheduleData");
