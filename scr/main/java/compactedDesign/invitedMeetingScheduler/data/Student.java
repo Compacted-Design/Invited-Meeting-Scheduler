@@ -64,30 +64,14 @@ public class Student {
 	}
 
 
-	public void setSmcs(boolean smcs) {
-		this.smcs = smcs;
-	}
-
-
 	public boolean isHum() {
 		return hum;
-	}
-
-
-	public void setHum(boolean hum) {
-		this.hum = hum;
 	}
 
 
 	public boolean isGlobal() {
 		return global;
 	}
-
-
-	public void setGlobal(boolean global) {
-		this.global = global;
-	}
-
 
 	public int getId() {
 		return id;

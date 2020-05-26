@@ -51,6 +51,7 @@ public class DataLoader {
 		
 	}
 	
+	//TODO: Compress redundant series of code
 	public void groupSchedules() throws IOException {
 		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/StudentData.xlsx"));
 		@SuppressWarnings("resource")
@@ -103,174 +104,95 @@ public class DataLoader {
 				smcs++;
 			}
 		}
-		RotationGroup smcs1 = new RotationGroup("S", 1), smcs2 = new RotationGroup("S", 2), smcs3 = new RotationGroup("S", 3), smcs4 = new RotationGroup("S", 4);
-		RotationGroup gen1 = new RotationGroup("GE", 1), gen2 = new RotationGroup("GE", 2), gen3 = new RotationGroup("GE", 3), gen4 = new RotationGroup("GE", 4);
-		RotationGroup glo1 = new RotationGroup("GL", 1), glo2 = new RotationGroup("GL", 2), glo3 = new RotationGroup("GL", 3), glo4 = new RotationGroup("GL", 4);
-		RotationGroup hum1 = new RotationGroup("H", 1), hum2 = new RotationGroup("H", 2), hum3 = new RotationGroup("H", 3), hum4 = new RotationGroup("H", 4);
+		RotationGroup[] smcsGroups = {new RotationGroup("S", 1), new RotationGroup("S", 2), new RotationGroup("S", 3), new RotationGroup("S", 4)};
+		RotationGroup[] genGroups = {new RotationGroup("GE", 1), new RotationGroup("GE", 2), new RotationGroup("GE", 3), new RotationGroup("GE", 4)};
+		RotationGroup[] gloGroups = {new RotationGroup("GL", 1), new RotationGroup("GL", 2), new RotationGroup("GL", 3), new RotationGroup("GL", 4)};
+		RotationGroup[] humGroups = {new RotationGroup("H", 1), new RotationGroup("H", 2), new RotationGroup("H", 3), new RotationGroup("H", 4)};
 		
 		boolean even = false;
 		for(Student student : studentsS) {
 			if(even) {
 				even = false;
-				addStudent(student, gen1);
-				addStudent(student, smcs2);
+				addStudent(student, genGroups[0]);
+				addStudent(student, smcsGroups[1]);
 			}else {
 				even = true;
-				addStudent(student, gen2);
-				addStudent(student, smcs1);
+				addStudent(student, genGroups[1]);
+				addStudent(student, smcsGroups[0]);
 			}
 		}
 		for(Student student : studentsH) {
 			if(even) {
 				even = false;
-				addStudent(student, gen1);
-				addStudent(student, hum2);
+				addStudent(student, genGroups[0]);
+				addStudent(student, humGroups[1]);
 			}else {
 				even = true;
-				addStudent(student, gen2);
-				addStudent(student, hum1);
+				addStudent(student, genGroups[1]);
+				addStudent(student, humGroups[0]);
 			}
 		}
 		for(Student student : studentsG) {
 			if(even) {
 				even = false;
-				addStudent(student, gen1);
-				addStudent(student, glo2);
+				addStudent(student, genGroups[0]);
+				addStudent(student, gloGroups[1]);
 			}else {
 				even = true;
-				addStudent(student, gen2);
-				addStudent(student, glo1);
+				addStudent(student, genGroups[1]);
+				addStudent(student, gloGroups[0]);
 			}
 		}
-		
 		
 		//TODO: optimize the final rotation to be based on the block in which the most people are in.
 		if(Math.max(smcs, Math.max(global,hum)) == global) {
 			for(Student student : studentsSGH) {
 				if(even) {
-					addStudent(student, gen3);
-					addStudent(student, glo4);
+					addStudent(student, genGroups[2]);
+					addStudent(student, gloGroups[3]);
 					even = false;
 				}else {
-					addStudent(student, gen4);
-					addStudent(student, glo3);
+					addStudent(student, genGroups[3]);
+					addStudent(student, gloGroups[2]);
 					even = true;
 				}
+				fillLowest(0, student, humGroups, smcsGroups);
 			}
+			fillLowest(0, studentsSH, smcsGroups, humGroups, genGroups);
+			fillLowest(0, studentsSG, smcsGroups, gloGroups, genGroups);
+			fillLowest(0, studentsGH, gloGroups, humGroups, genGroups);
 		}else if(Math.max(smcs, Math.max(global,hum)) == hum) {
 			for(Student student : studentsSGH) {
 				if(even) {
-					addStudent(student, gen3);
-					addStudent(student, hum4);
+					addStudent(student, genGroups[2]);
+					addStudent(student, humGroups[3]);
 					even = false;
 				}else {
-					addStudent(student, gen4);
-					addStudent(student, hum3);
+					addStudent(student, genGroups[3]);
+					addStudent(student, humGroups[2]);
 					even = true;
 				}
+				fillLowest(0, student, gloGroups, smcsGroups);
 			}
+			fillLowest(0, studentsSH, smcsGroups, humGroups, genGroups);
+			fillLowest(0, studentsSG, smcsGroups, gloGroups, genGroups);
+			fillLowest(0, studentsGH, gloGroups, humGroups, genGroups);
 		}else {
 			for(Student student : studentsSGH) {
 				if(even) {
-					addStudent(student, gen3);
-					addStudent(student, smcs4);
+					addStudent(student, genGroups[2]);
+					addStudent(student, smcsGroups[3]);
 					even = false;
 				}else {
-					addStudent(student, gen4);
-					addStudent(student, smcs3);
+					addStudent(student, genGroups[3]);
+					addStudent(student, smcsGroups[2]);
 					even = true;
 				}
+				fillLowest(0, student, gloGroups, humGroups);
 			}
-		}
-		
-		
-		for(Student student : studentsGH) {
-			if(glo1.getStudents().size() < 50) {
-				addStudent(student, glo1);
-			}else if(glo3.getStudents().size() < 50) {
-				addStudent(student, glo3);
-			}else {
-				addStudent(student, glo2);
-			}
-			
-			if(student.getRot2().equals("") && gen2.getStudents().size() < 65) {
-				addStudent(student, gen2);
-			}else if(student.getRot1().equals("") && gen1.getStudents().size() < 65) {
-				addStudent(student, gen1);
-			}else{
-				addStudent(student, gen3);
-			}
-			
-			if(student.getRot1().equals("")) {
-				addStudent(student, hum1);
-			}else if(student.getRot2().equals("")) {
-				addStudent(student, hum2);
-			}else {
-				addStudent(student, hum3);
-			}
-		}
-		
-		
-		for(Student student : studentsSG) {
-			if(glo2.getStudents().size() < 50) {
-				addStudent(student, glo2);
-			}else if(glo3.getStudents().size() < 50) {
-				addStudent(student, glo3);
-			}else {
-				addStudent(student, glo1);
-			}
-			
-			if(student.getRot1().equals("") && gen1.getStudents().size() < 65) {
-				addStudent(student, gen1);
-			}else if(student.getRot3().equals("") && gen3.getStudents().size() < 65) {
-				addStudent(student, gen3);
-			}else{
-				addStudent(student, gen2);
-			}
-			
-			if(student.getRot1().equals("")) {
-				addStudent(student, smcs1);
-			}else if(student.getRot2().equals("")) {
-				addStudent(student, smcs2);
-			}else {
-				addStudent(student, smcs3);
-			}
-		}
-		
-		
-		for(Student student : studentsSH) {
-			if(student.getRot3().equals("") && gen3.getStudents().size() < 65) {
-				addStudent(student, gen3);
-			}else if(student.getRot2().equals("") && gen2.getStudents().size() < 65) {
-				addStudent(student, gen2);
-			}else{
-				addStudent(student, gen1);
-			}
-			
-			if(student.getRot1().equals("") && smcs1.getStudents().size() < 50) {
-				addStudent(student, smcs1);
-			}else if(student.getRot2().equals("") && smcs2.getStudents().size() < 50) {
-				addStudent(student, smcs2);
-			}else {
-				addStudent(student, smcs3);
-			}
-			
-			if(student.getRot1().equals("")) {
-				addStudent(student, hum1);
-			}else if(student.getRot2().equals("")) {
-				addStudent(student, hum2);
-			}else {
-				addStudent(student, hum3);
-			}
-		}
-		for(Student student : studentsSGH) {
-			if(smcs2.getStudents().size() < 50) {
-				addStudent(student, smcs2);
-				addStudent(student, hum1);
-			}else {
-				addStudent(student, smcs1);
-				addStudent(student, hum2);
-			}
+			fillLowest(0, studentsSH, smcsGroups, humGroups, genGroups);
+			fillLowest(0, studentsSG, smcsGroups, gloGroups, genGroups);
+			fillLowest(0, studentsGH, gloGroups, humGroups, genGroups);
 		}
 		
 		wb.removeSheetAt(1);
@@ -305,7 +227,10 @@ public class DataLoader {
 		wb.close();
 		in.close();
 		out.close();
-		
+		for(int j = 0; j < 4; j++) {
+			System.out.println("Rot: "+(j+1)+" SMCS: "+smcsGroups[j].getStudents().size()+" GEN: "+genGroups[j].getStudents().size()+" GLO: "+gloGroups[j].getStudents().size()
+					+" HUM: "+humGroups[j].getStudents().size());
+		}
 	}
 	
 	public void createSchedules() throws IOException, InvalidFormatException {
@@ -369,9 +294,35 @@ public class DataLoader {
 		wb.close();
 	}
 
-	private void addStudent(Student student, RotationGroup rotationGroup) {
+	private boolean addStudent(Student student, RotationGroup rotationGroup) {
 		rotationGroup.getStudents().add(student);
-		student.setRot(rotationGroup.getRotNum(), rotationGroup.getName());
+		return student.setRot(rotationGroup.getRotNum(), rotationGroup.getName());
+	}
+	
+	private void fillLowest(int rot, List<Student> students, RotationGroup[] groups1, RotationGroup[] groups2, RotationGroup[] groups3) {
+		for(Student student : students) {
+			if (Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), groups3[rot].getStudents().size())) == groups1[rot].getStudents().size() &&
+					groups1[rot+1].getStudents().size() > groups1[rot].getStudents().size()) {
+				addStudent(student, groups1[rot]);
+				fillLowest(rot+1, student, groups3, groups2);
+			}else if(Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), groups3[rot].getStudents().size())) == groups2[rot].getStudents().size() &&
+					groups2[rot+1].getStudents().size() > groups2[rot].getStudents().size()) {
+				addStudent(student, groups2[rot]);
+				fillLowest(rot+1, student, groups3, groups1);
+			}else {
+				addStudent(student, groups3[rot]);
+				fillLowest(rot+1, student, groups2, groups1);
+			}
+		}
+	}
+	private void fillLowest(int rot, Student student, RotationGroup[] groups1, RotationGroup[] groups2) {
+		if(groups2[rot].getStudents().size() < groups1[rot].getStudents().size() && groups2[rot+1].getStudents().size() > 9) {
+			addStudent(student, groups2[rot]);
+			addStudent(student, groups1[rot+1]);
+		}else {
+			addStudent(student, groups2[rot+1]);
+			addStudent(student, groups1[rot]);
+		}
 	}
 	
 	private String rotMessage(String rot) {
