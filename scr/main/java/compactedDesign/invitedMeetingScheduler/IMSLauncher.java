@@ -37,13 +37,12 @@ public class IMSLauncher extends Application {
 		primaryStage.setResizable(false); // maybe change later
 		
 		Pane root = FXMLLoader.load(getClass().getResource("/views/StartView.fxml"));
-		Scene scene = new Scene(root,600,600);
+		Scene scene = new Scene(root,900,600);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
 		dl = new DataLoader();
 		dl.groupSchedules();
-		System.out.println("good");
 	}
 	
 	/**

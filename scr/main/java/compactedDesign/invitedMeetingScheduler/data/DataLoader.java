@@ -228,8 +228,8 @@ public class DataLoader {
 		in.close();
 		out.close();
 		for(int j = 0; j < 4; j++) {
-			System.out.println("Rot: "+(j+1)+" SMCS: "+smcsGroups[j].getStudents().size()+" GEN: "+genGroups[j].getStudents().size()+" GLO: "+gloGroups[j].getStudents().size()
-					+" HUM: "+humGroups[j].getStudents().size());
+			System.out.println("Rot: "+(j+1)+"	GEN: "+genGroups[j].getStudents().size()+"	GLO: "+gloGroups[j].getStudents().size()
+					+"	HUM: "+humGroups[j].getStudents().size()+"	SMCS: "+smcsGroups[j].getStudents().size() );
 		}
 	}
 	
@@ -301,12 +301,12 @@ public class DataLoader {
 	
 	private void fillLowest(int rot, List<Student> students, RotationGroup[] groups1, RotationGroup[] groups2, RotationGroup[] groups3) {
 		for(Student student : students) {
-			if (Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), groups3[rot].getStudents().size())) == groups1[rot].getStudents().size() &&
-					groups1[rot+1].getStudents().size() > groups1[rot].getStudents().size()) {
+			if (Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), groups3[rot].getStudents().size()-10)) == groups1[rot].getStudents().size() 
+					&& groups1[rot+1].getStudents().size() > groups1[rot].getStudents().size()) {
 				addStudent(student, groups1[rot]);
 				fillLowest(rot+1, student, groups3, groups2);
-			}else if(Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), groups3[rot].getStudents().size())) == groups2[rot].getStudents().size() &&
-					groups2[rot+1].getStudents().size() > groups2[rot].getStudents().size()) {
+			}else if(Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), groups3[rot].getStudents().size()-10)) == groups2[rot].getStudents().size() 
+					&& groups2[rot+1].getStudents().size() > groups2[rot].getStudents().size()) {
 				addStudent(student, groups2[rot]);
 				fillLowest(rot+1, student, groups3, groups1);
 			}else {
@@ -316,7 +316,7 @@ public class DataLoader {
 		}
 	}
 	private void fillLowest(int rot, Student student, RotationGroup[] groups1, RotationGroup[] groups2) {
-		if(groups2[rot].getStudents().size() < groups1[rot].getStudents().size() && groups2[rot+1].getStudents().size() > 9) {
+		if(groups2[rot].getStudents().size() < groups1[rot].getStudents().size() && (groups2[rot+1].getStudents().size() > 9 || groups1[rot+1].getStudents().size() < 9)) {
 			addStudent(student, groups2[rot]);
 			addStudent(student, groups1[rot+1]);
 		}else {
