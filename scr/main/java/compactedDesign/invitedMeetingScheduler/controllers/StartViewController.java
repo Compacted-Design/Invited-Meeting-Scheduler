@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 public class StartViewController {
 	
 	@FXML
-	private Button guideButton, dataEntryButton, rotationButton;
+	private Button guideButton, dataEntryButton, rotationButton, scheduleButton;
 	@FXML
 	private Pane root;
 	
@@ -42,6 +42,11 @@ public class StartViewController {
 	@FXML
 	private void rotationButtonClick() throws IOException {
 		root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/RotationView.fxml")));
+	}
+	
+	@FXML
+	private void scheduleButtonClick() throws IOException {
+		root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/ScheduleView.fxml")));
 	}
 
 }

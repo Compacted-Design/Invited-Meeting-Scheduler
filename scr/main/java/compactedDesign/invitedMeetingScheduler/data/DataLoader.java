@@ -51,6 +51,10 @@ public class DataLoader {
 		
 	}
 	
+	public void loadData(String inputSheet) {
+		
+	}
+	
 	//TODO: Compress redundant series of code
 	public void groupSchedules() throws IOException {
 		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/StudentData.xlsx"));

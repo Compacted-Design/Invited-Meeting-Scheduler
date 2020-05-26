@@ -42,7 +42,6 @@ public class IMSLauncher extends Application {
 		primaryStage.show();
 
 		dl = new DataLoader();
-		dl.groupSchedules();
 	}
 	
 	/**
