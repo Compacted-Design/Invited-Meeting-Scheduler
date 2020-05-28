@@ -50,14 +50,156 @@ public class DataLoader {
 		}
 		br.close();
 	}
-
+	
 	//TODO: Where the manual and sheet entry data will be transfered to
-	public void loadDataInput() {
-		
+	public void loadDataInput(int id, String first, String last, String school, boolean smcs, boolean global, boolean hum) throws IOException {
+		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
+		Workbook wb = new XSSFWorkbook(in);
+		Sheet s = wb.getSheet("RawData");
+		int left = 1, right = s.getLastRowNum();
+		int mid = (left+right)/2;
+		boolean added = false;
+		while(left <= right) {
+			mid = (left+right)/2;
+			int currentID = (int) s.getRow(mid).getCell(0).getNumericCellValue();
+			if(currentID == id) {
+				dataEntry(mid, s, first, last, school, smcs, global, hum);
+				added = true;
+				break;
+			}else if(currentID < id) {
+				left = mid+1;
+
+			}else {
+				right = mid-1;
+			}
+		}
+		if(!added) {
+			if((int) s.getRow(s.getLastRowNum()).getCell(0).getNumericCellValue() < id) {
+				mid = s.getLastRowNum()+1;
+			}else if((int) s.getRow(1).getCell(0).getNumericCellValue() > id) {
+				mid = 1;
+			}else {
+				mid = left;
+			}
+			if(s.getRow(mid) != null) {
+				s.shiftRows(mid, s.getLastRowNum()+1, 1);
+			}
+			s.createRow(mid);
+			for(int j = 0; j < 7; j++) {
+				s.getRow(mid).createCell(j);
+			}
+			s.getRow(mid).getCell(0).setCellValue(id);
+			dataEntry(mid, s, first, last, school, smcs, global, hum);
+		}
+		in.close();
+		FileOutputStream out = new FileOutputStream(new File(STUDENT_DATA_PATH));
+		wb.write(out);
+		out.close();
+		wb.close();
 	}
 	
-	public void loadDataInput(String inputSheet) {
-		
+	public void loadDataInput(File inputSheetFile) throws IOException, InvalidFormatException {
+		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
+		Workbook wb = new XSSFWorkbook(in);
+		Sheet s = wb.getSheet("RawData");
+		Workbook inputWB = new XSSFWorkbook(inputSheetFile);
+		if(inputWB.getSheetAt(0) != null && inputWB.getSheetAt(0).getRow(0) != null) {
+			Sheet inputSheet = inputWB.getSheetAt(0);
+			Row titleRow = inputSheet.getRow(0);
+			int idCol = -1;
+			int firstCol = -1;
+			int lastCol = -1;
+			int schoolCol = -1;
+			int houseCol = -1;
+			for(int i = 0; titleRow.getCell(i) != null; i++) {
+				if(idCol == -1 && titleRow.getCell(i).getStringCellValue().contains("ID")) {
+					idCol = i;
+				}else if(firstCol == -1 && titleRow.getCell(i).getStringCellValue().toLowerCase().contains("first")) {
+					firstCol = i;
+				}else if(lastCol == -1 && titleRow.getCell(i).getStringCellValue().toLowerCase().contains("last")) {
+					lastCol = i;
+				}else if(schoolCol == -1 && titleRow.getCell(i).getStringCellValue().toLowerCase().contains("school")) {
+					schoolCol = i;
+				}else if(houseCol == -1 && titleRow.getCell(i).getStringCellValue().toLowerCase().contains("house")){
+					houseCol = i;
+				}
+			}
+			if(idCol != -1 && firstCol != -1 && lastCol != -1 && schoolCol != -1 && houseCol != -1) {
+				for(int rowIndex = 1; inputSheet.getRow(rowIndex) != null; rowIndex++) {
+					Row row = inputSheet.getRow(rowIndex);
+					String first = row.getCell(firstCol).getStringCellValue().trim();
+					String last = row.getCell(lastCol).getStringCellValue().trim();
+					String school = row.getCell(schoolCol).getStringCellValue().trim();
+					boolean smcs = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("smcs");
+					boolean global = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("glo");
+					boolean hum = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("hum");
+					
+					int id = (int) row.getCell(idCol).getNumericCellValue();
+					int left = 1, right = s.getLastRowNum();
+					int mid = (left+right)/2;
+					boolean added = false;
+					while(left <= right) {
+						mid = (left+right)/2;
+						int currentID = (int) s.getRow(mid).getCell(0).getNumericCellValue();
+						if(currentID == id) {
+							dataEntry(mid, s, first, last, school, smcs, global, hum);
+							added = true;
+							break;
+						}else if(currentID < id) {
+							left = mid+1;
+
+						}else {
+							right = mid-1;
+						}
+					}
+					if(!added) {
+						if((int) s.getRow(s.getLastRowNum()).getCell(0).getNumericCellValue() < id) {
+							mid = s.getLastRowNum()+1;
+						}else if((int) s.getRow(1).getCell(0).getNumericCellValue() > id) {
+							mid = 1;
+						}else {
+							mid = left;
+						}
+						if(s.getRow(mid) != null) {
+							s.shiftRows(mid, s.getLastRowNum()+1, 1);
+						}
+						s.createRow(mid);
+						for(int j = 0; j < 7; j++) {
+							s.getRow(mid).createCell(j);
+						}
+						s.getRow(mid).getCell(0).setCellValue(id);
+						dataEntry(mid, s, first, last, school, smcs, global, hum);
+					}
+				}
+			}
+		}
+		inputWB.close();
+		in.close();
+		FileOutputStream out = new FileOutputStream(new File(STUDENT_DATA_PATH));
+		wb.write(out);
+		out.close();
+		wb.close();
+	}
+	
+	private void dataEntry(int i, Sheet s, String first, String last, String school, boolean smcs, boolean global, boolean hum) {
+		s.getRow(i).getCell(1).setCellValue(first);
+		s.getRow(i).getCell(2).setCellValue(last);
+		s.getRow(i).getCell(3).setCellValue(school);
+		if(smcs) {
+			s.getRow(i).getCell(4).setCellValue("Y");
+		}else {
+			s.getRow(i).getCell(4).setCellValue("N");
+		}
+		if(global) {
+			s.getRow(i).getCell(5).setCellValue("Y");
+		}else {
+			s.getRow(i).getCell(5).setCellValue("N");
+		}
+		if(hum) {
+			s.getRow(i).getCell(6).setCellValue("Y");
+		}else {
+			s.getRow(i).getCell(6).setCellValue("N");
+		}
 	}
 	
 	//TODO: Compress redundant series of code

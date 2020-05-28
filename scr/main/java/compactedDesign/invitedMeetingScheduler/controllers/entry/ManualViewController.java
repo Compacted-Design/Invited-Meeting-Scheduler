@@ -1,16 +1,9 @@
 package compactedDesign.invitedMeetingScheduler.controllers.entry;
 
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
+import compactedDesign.invitedMeetingScheduler.IMSLauncher;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -38,7 +31,6 @@ public class ManualViewController {
 	@FXML
 	private Label noticeLabel;
 	
-	@SuppressWarnings("resource")
 	@FXML
 	private void submitButtonClick() throws FileNotFoundException, IOException {
 		//TODO: Move this to DataLoader
@@ -62,60 +54,11 @@ public class ManualViewController {
 		if(invalidEntry) {
 			return;
 		}
-		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/StudentData.xlsx"));
-		Workbook wb = new XSSFWorkbook(in);
-		Sheet s = wb.getSheet("RawData");
-		int i = 1;
-		boolean added = false;
-		for(; s.getRow(i) != null; i++) { //TODO: Change to a binary search
-			if((int)s.getRow(i).getCell(0).getNumericCellValue() == Integer.parseInt(idEntry.getText().trim())) {
-				dataEntry(i, s);
-				added = true;
-				break;
-			}else if((int)s.getRow(i).getCell(0).getNumericCellValue() > Integer.parseInt(idEntry.getText().trim())) {
-				break;
-			}
-		}
-		if(!added) {
-			if(s.getRow(i) != null) {
-				s.shiftRows(i, s.getLastRowNum()+1, 1);
-			}
-			s.createRow(i);
-			for(int j = 0; j < 7; j++) {
-				s.getRow(i).createCell(j);
-			}
-			s.getRow(i).getCell(0).setCellValue(Integer.parseInt(idEntry.getText().trim()));
-			dataEntry(i, s);
-		}
-		in.close();
-		FileOutputStream out = new FileOutputStream(new File("scr/main/resources/data/StudentData.xlsx"));
-		wb.write(out);
-		out.close();
-		wb.close();
+		IMSLauncher.getDl().loadDataInput(Integer.parseInt(idEntry.getText().trim()), firstNameEntry.getText().trim(), lastNameEntry.getText().trim(), middleSchoolEntry.getText().trim(), smcsCheck.isSelected(), globalCheck.isSelected(), humanitiesCheck.isSelected());
 		
 		((Pane)root.getParent()).getChildren().remove(root);//TODO: Add data entry successful screen
 	}
 	
-	private void dataEntry(int i, Sheet s) {
-		s.getRow(i).getCell(1).setCellValue(firstNameEntry.getText().trim());
-		s.getRow(i).getCell(2).setCellValue(lastNameEntry.getText().trim());
-		s.getRow(i).getCell(3).setCellValue(middleSchoolEntry.getText().trim());
-		if(smcsCheck.isSelected()) {
-			s.getRow(i).getCell(4).setCellValue("Y");
-		}else {
-			s.getRow(i).getCell(4).setCellValue("N");
-		}
-		if(globalCheck.isSelected()) {
-			s.getRow(i).getCell(5).setCellValue("Y");
-		}else {
-			s.getRow(i).getCell(5).setCellValue("N");
-		}
-		if(humanitiesCheck.isSelected()) {
-			s.getRow(i).getCell(6).setCellValue("Y");
-		}else {
-			s.getRow(i).getCell(6).setCellValue("N");
-		}
-	}
 
 
 }

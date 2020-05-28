@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" onDragOver="#handleDragOver" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="compactedDesign.invitedMeetingScheduler.controllers.entry.SheetViewController">
+<BorderPane fx:id="root" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="compactedDesign.invitedMeetingScheduler.controllers.entry.SheetViewController">
    <center>
       <VBox prefHeight="200.0" BorderPane.alignment="CENTER">
          <children>
