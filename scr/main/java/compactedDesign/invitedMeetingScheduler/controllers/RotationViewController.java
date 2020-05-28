@@ -1,10 +1,6 @@
 package compactedDesign.invitedMeetingScheduler.controllers;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 
 import compactedDesign.invitedMeetingScheduler.IMSLauncher;
 import javafx.fxml.FXML;
@@ -39,20 +35,7 @@ public class RotationViewController {
 	}
 	@FXML
 	private void confirmButtonClick() throws IOException {
-		//TODO: Add a confirmation Message
-		String rotationNames = "gen:" + genTextBox.getText() + "\n" + 
-							   "glo:" + gloTextBox.getText() + "\n" +
-							   "hum:" + humTextBox.getText() + "\n" +
-							   "smc:" + smcTextBox.getText();
-		File fout = new File("scr/main/resources/data/RotationNames.txt");
-		FileOutputStream fos = new FileOutputStream(fout); 	 
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-		bw.write(rotationNames);
-		bw.close();
-		IMSLauncher.getDl().setGenString(genTextBox.getText());
-		IMSLauncher.getDl().setGloString(gloTextBox.getText());
-		IMSLauncher.getDl().setHumString(humTextBox.getText());
-		IMSLauncher.getDl().setSmcString(smcTextBox.getText());
+		IMSLauncher.getDl().setRotationNames(genTextBox.getText(), gloTextBox.getText(), humTextBox.getText(), smcTextBox.getText());
 	}
 
 }

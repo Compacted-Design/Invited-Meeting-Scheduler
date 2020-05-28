@@ -1,11 +1,13 @@
 package compactedDesign.invitedMeetingScheduler.data;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +29,12 @@ public class DataLoader {
 	private String humString;
 	private String gloString;
 	private String smcString;
-	private static String studentDataPath = "data/StudentData.xlsx";
+	private static final String STUDENT_DATA_PATH = "data/StudentData.xlsx";
+	private static final String ROTATION_NAMES_PATH = "data/RotationNames.txt";
+	private static final String TEMPLATE_SCHEDULE_PATH = "data/BlankSchedule.docx";
 
 	public DataLoader() throws IOException {
-		FileReader rotationText = new FileReader(new File(studentDataPath));
+		FileReader rotationText = new FileReader(ROTATION_NAMES_PATH);
 		BufferedReader br = new BufferedReader(rotationText);
 		String line = "";
 		while ((line = br.readLine()) != null) {
@@ -44,20 +48,21 @@ public class DataLoader {
 				smcString = line.substring(4);
 			}
 		}
+		br.close();
 	}
 
 	//TODO: Where the manual and sheet entry data will be transfered to
-	public void loadData() {
+	public void loadDataInput() {
 		
 	}
 	
-	public void loadData(String inputSheet) {
+	public void loadDataInput(String inputSheet) {
 		
 	}
 	
 	//TODO: Compress redundant series of code
-	public void groupSchedules() throws IOException {
-		InputStream in = getClass().getResourceAsStream(studentDataPath);
+	public void groupSchedules() throws IOException, InvalidFormatException {
+		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
 		@SuppressWarnings("resource")
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("RawData");
@@ -198,8 +203,9 @@ public class DataLoader {
 			fillLowest(0, studentsSG, smcsGroups, gloGroups, genGroups);
 			fillLowest(0, studentsGH, gloGroups, humGroups, genGroups);
 		}
-		
-		wb.removeSheetAt(1);
+		if(wb.getSheet("ScheduleData") != null) {
+			wb.removeSheetAt(1);
+		}
 		wb.createSheet("ScheduleData");
 		Sheet schedule = wb.getSheet("ScheduleData");
 		schedule.createRow(0);
@@ -237,10 +243,10 @@ public class DataLoader {
 			row.createCell(7); if(!student.getRots()[3].equals("n/a")) row.getCell(7).setCellValue(student.getRots()[3]);
 			rowIndex++;
 		}
-		FileOutputStream out = new FileOutputStream(new File("StudentData.xlsx"));
+		in.close();
+		FileOutputStream out = new FileOutputStream(new File(STUDENT_DATA_PATH));
 		wb.write(out);
 		wb.close();
-		in.close();
 		out.close();
 		for(int j = 0; j < 4; j++) {
 			System.out.println("Rot: "+(j+1)+"	GEN: "+genGroups[j].getStudents().size()+"	GLO: "+gloGroups[j].getStudents().size()
@@ -250,13 +256,13 @@ public class DataLoader {
 	
 	public void createSchedules() throws IOException, InvalidFormatException {
 		// There will be issues if the rots leave the tables
-		InputStream in = getClass().getResourceAsStream(studentDataPath);
+		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
 		@SuppressWarnings("resource")
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("ScheduleData");
 		int i = 1;
 		for (; s.getRow(i) != null; i++) {
-			InputStream docIn = getClass().getResourceAsStream("/data/BlankSchedule.docx");
+			FileInputStream docIn = new FileInputStream(new File(TEMPLATE_SCHEDULE_PATH));
 			XWPFDocument doc = new XWPFDocument(docIn);
 			for (XWPFParagraph p : doc.getParagraphs()) {
 				List<XWPFRun> runs = p.getRuns();
@@ -303,7 +309,7 @@ public class DataLoader {
 				}
 			}
 			doc.write(new FileOutputStream(
-					"scr/main/resources/data/schedules/" + s.getRow(i).getCell(2).getStringCellValue()
+					"data/schedules/" + (int)s.getRow(i).getCell(1).getNumericCellValue()+s.getRow(i).getCell(2).getStringCellValue()
 							+ s.getRow(i).getCell(3).getStringCellValue() + ".docx"));
 			doc.close();
 		}
@@ -318,11 +324,11 @@ public class DataLoader {
 	
 	private void fillLowest(int rot, List<Student> students, RotationGroup[] groups1, RotationGroup[] groups2, RotationGroup[] genGroups) {
 		for(Student student : students) {
-			if (Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), genGroups[rot].getStudents().size()-10)) == groups1[rot].getStudents().size() 
+			if (Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), genGroups[rot].getStudents().size()-20)) == groups1[rot].getStudents().size() 
 					&& (groups1[rot+1].getStudents().size() > groups1[rot].getStudents().size() || groups2[rot+1].getStudents().size() < groups2[rot].getStudents().size())) {
 				addStudent(student, groups1[rot]);
 				fillLowest(rot+1, student, genGroups, groups2);
-			}else if(Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), genGroups[rot].getStudents().size()-10)) == groups2[rot].getStudents().size() 
+			}else if(Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), genGroups[rot].getStudents().size()-20)) == groups2[rot].getStudents().size() 
 					&& (groups2[rot+1].getStudents().size() > groups2[rot].getStudents().size() || genGroups[rot+1].getStudents().size() < genGroups[rot].getStudents().size())) {
 				addStudent(student, groups2[rot]);
 				fillLowest(rot+1, student, genGroups, groups1);
@@ -395,6 +401,19 @@ public class DataLoader {
 
 	public void setSmcString(String smcString) {
 		this.smcString = smcString;
+	}
+	
+	public void setRotationNames(String genName, String gloName, String humName, String smcName) throws IOException {
+		setGenString(genName); setGloString(gloName); setHumString(humName); setSmcString(smcName);
+		String rotationNames = "gen:" + genName + "\n" + 
+				   	   "glo:" + gloName + "\n" +
+				   	   "hum:" + humName + "\n" +
+				   	   "smc:" + smcName;
+		File fout = new File(ROTATION_NAMES_PATH);
+		FileOutputStream fos = new FileOutputStream(fout); 	 
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+		bw.write(rotationNames);
+		bw.close();
 	}
 
 }

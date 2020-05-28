@@ -29,7 +29,7 @@ public class ScheduleViewController {
 	}
 	
 	@FXML
-	private void createGroupsButtonClick() throws IOException {
+	private void createGroupsButtonClick() throws IOException, InvalidFormatException {
 		IMSLauncher.getDl().groupSchedules();
 	}
 	
