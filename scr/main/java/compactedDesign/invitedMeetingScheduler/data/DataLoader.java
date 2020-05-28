@@ -3,14 +3,13 @@ package compactedDesign.invitedMeetingScheduler.data;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -28,10 +27,10 @@ public class DataLoader {
 	private String humString;
 	private String gloString;
 	private String smcString;
-	private static String studentDataPath = "/data/StudentData.xlsx";
+	private static String studentDataPath = "data/StudentData.xlsx";
 
 	public DataLoader() throws IOException {
-		InputStreamReader rotationText = new InputStreamReader(getClass().getResourceAsStream("/data/RotationNames.txt"));
+		FileReader rotationText = new FileReader(new File(studentDataPath));
 		BufferedReader br = new BufferedReader(rotationText);
 		String line = "";
 		while ((line = br.readLine()) != null) {
