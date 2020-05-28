@@ -10,7 +10,7 @@ public class Student {
 	private boolean gen = true;
 	private int id;
 	//Change to an array?
-	private String rot1 = "", rot2 = "", rot3 = "n/a", rot4 = "n/a";
+	private String[] rots = {"","","n/a","n/a"};
 	
 	public Student(int id, String firstName, String lastName, String schoolName, boolean smcs, boolean global, boolean hum ) {
 		super();
@@ -22,9 +22,9 @@ public class Student {
 		this.global = global;
 		this.id = id;
 		if(smcs && global && hum) {
-			rot3 = ""; rot4 = "";
+			rots[2] = ""; rots[3] = "";
 		}else if((smcs && (global || hum)) || (global && hum)) {
-			rot3 = "";
+			rots[2] = "";
 		}
 	}
 
@@ -82,24 +82,8 @@ public class Student {
 		this.id = id;
 	}
 
-
-	public String getRot1() {
-		return rot1;
-	}
-
-
-	public String getRot2() {
-		return rot2;
-	}
-
-
-	public String getRot3() {
-		return rot3;
-	}
-
-
-	public String getRot4() {
-		return rot4;
+	public String[] getRots() {
+		return rots;
 	}
 	
 	public boolean setRot(int rotNum, String name) {
@@ -114,17 +98,11 @@ public class Student {
 		}else {
 			return false;
 		}
-		if(rotNum == 1) {
-			rot1 = name;
+		if(rotNum == 0 || rotNum == 1) {
+			rots[rotNum] = name;
 			return true;
-		}else if(rotNum == 2) {
-			rot2 = name;
-			return true;
-		}else if(!rot3.equals("n/a") && rotNum == 3) {
-			rot3 = name;
-			return true;
-		}else if(!rot4.equals("n/a") && rotNum == 4) {
-			rot4 = name;
+		}else if(!rots[rotNum].equals("n/a")) {
+			rots[rotNum] = name;
 			return true;
 		}
 		return false;

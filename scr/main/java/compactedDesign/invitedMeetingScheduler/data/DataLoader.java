@@ -2,10 +2,10 @@ package compactedDesign.invitedMeetingScheduler.data;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +28,10 @@ public class DataLoader {
 	private String humString;
 	private String gloString;
 	private String smcString;
+	private static String studentDataPath = "/data/StudentData.xlsx";
 
 	public DataLoader() throws IOException {
-		FileReader rotationText = new FileReader(new File("scr/main/resources/data/RotationNames.txt"));
+		InputStreamReader rotationText = new InputStreamReader(getClass().getResourceAsStream("/data/RotationNames.txt"));
 		BufferedReader br = new BufferedReader(rotationText);
 		String line = "";
 		while ((line = br.readLine()) != null) {
@@ -57,7 +58,7 @@ public class DataLoader {
 	
 	//TODO: Compress redundant series of code
 	public void groupSchedules() throws IOException {
-		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/StudentData.xlsx"));
+		InputStream in = getClass().getResourceAsStream(studentDataPath);
 		@SuppressWarnings("resource")
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("RawData");
@@ -108,10 +109,10 @@ public class DataLoader {
 				smcs++;
 			}
 		}
-		RotationGroup[] smcsGroups = {new RotationGroup("S", 1), new RotationGroup("S", 2), new RotationGroup("S", 3), new RotationGroup("S", 4)};
-		RotationGroup[] genGroups = {new RotationGroup("GE", 1), new RotationGroup("GE", 2), new RotationGroup("GE", 3), new RotationGroup("GE", 4)};
-		RotationGroup[] gloGroups = {new RotationGroup("GL", 1), new RotationGroup("GL", 2), new RotationGroup("GL", 3), new RotationGroup("GL", 4)};
-		RotationGroup[] humGroups = {new RotationGroup("H", 1), new RotationGroup("H", 2), new RotationGroup("H", 3), new RotationGroup("H", 4)};
+		RotationGroup[] smcsGroups = {new RotationGroup("S", 0), new RotationGroup("S", 1), new RotationGroup("S", 2), new RotationGroup("S", 3)};
+		RotationGroup[] genGroups = {new RotationGroup("GE", 0), new RotationGroup("GE", 1), new RotationGroup("GE", 2), new RotationGroup("GE", 3)};
+		RotationGroup[] gloGroups = {new RotationGroup("GL", 0), new RotationGroup("GL", 1), new RotationGroup("GL", 2), new RotationGroup("GL", 3)};
+		RotationGroup[] humGroups = {new RotationGroup("H", 0), new RotationGroup("H", 1), new RotationGroup("H", 2), new RotationGroup("H", 3)};
 		
 		boolean even = false;
 		for(Student student : studentsS) {
@@ -204,7 +205,7 @@ public class DataLoader {
 		Sheet schedule = wb.getSheet("ScheduleData");
 		schedule.createRow(0);
 		Row titleRow = schedule.getRow(0);
-		titleRow.createCell(0); titleRow.getCell(0).setCellValue("ROT");
+		titleRow.createCell(0); titleRow.getCell(0).setCellValue("Rotations Needed");
 		titleRow.createCell(1); titleRow.getCell(1).setCellValue("ID");
 		titleRow.createCell(2); titleRow.getCell(2).setCellValue("First");
 		titleRow.createCell(3); titleRow.getCell(3).setCellValue("Last");
@@ -217,16 +218,27 @@ public class DataLoader {
 			schedule.createRow(rowIndex);
 			Row row = schedule.getRow(rowIndex);
 			row.createCell(0);
+			String rotations = "";
+			for(int j = 0; j < student.getRots().length; j++) {
+				if(!student.getRots()[j].equals("GE") && !student.getRots()[j].equals("n/a")) {
+					if(rotations.equals("")) {
+						rotations += student.getRots()[j];
+					}else {
+						rotations += ", "+student.getRots()[j];
+					}
+				}
+			}
+			row.getCell(0).setCellValue(rotations);
 			row.createCell(1); row.getCell(1).setCellValue(student.getId());
 			row.createCell(2); row.getCell(2).setCellValue(student.getFirstName());
 			row.createCell(3); row.getCell(3).setCellValue(student.getLastName());
-			row.createCell(4); row.getCell(4).setCellValue(student.getRot1());
-			row.createCell(5); row.getCell(5).setCellValue(student.getRot2());
-			row.createCell(6); if(!student.getRot3().equals("n/a")) row.getCell(6).setCellValue(student.getRot3());
-			row.createCell(7); if(!student.getRot4().equals("n/a")) row.getCell(7).setCellValue(student.getRot4());
+			row.createCell(4); row.getCell(4).setCellValue(student.getRots()[0]);
+			row.createCell(5); row.getCell(5).setCellValue(student.getRots()[1]);
+			row.createCell(6); if(!student.getRots()[2].equals("n/a")) row.getCell(6).setCellValue(student.getRots()[2]);
+			row.createCell(7); if(!student.getRots()[3].equals("n/a")) row.getCell(7).setCellValue(student.getRots()[3]);
 			rowIndex++;
 		}
-		FileOutputStream out = new FileOutputStream(new File("scr/main/resources/data/StudentData.xlsx"));
+		FileOutputStream out = new FileOutputStream(new File("StudentData.xlsx"));
 		wb.write(out);
 		wb.close();
 		in.close();
@@ -239,13 +251,14 @@ public class DataLoader {
 	
 	public void createSchedules() throws IOException, InvalidFormatException {
 		// There will be issues if the rots leave the tables
-		FileInputStream in = new FileInputStream(new File("scr/main/resources/data/StudentData.xlsx"));
+		InputStream in = getClass().getResourceAsStream(studentDataPath);
 		@SuppressWarnings("resource")
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("ScheduleData");
 		int i = 1;
 		for (; s.getRow(i) != null; i++) {
-			XWPFDocument doc = new XWPFDocument(OPCPackage.open("scr/main/resources/data/BlankSchedule.docx"));
+			InputStream docIn = getClass().getResourceAsStream("/data/BlankSchedule.docx");
+			XWPFDocument doc = new XWPFDocument(docIn);
 			for (XWPFParagraph p : doc.getParagraphs()) {
 				List<XWPFRun> runs = p.getRuns();
 				if (runs != null) {
@@ -293,6 +306,7 @@ public class DataLoader {
 			doc.write(new FileOutputStream(
 					"scr/main/resources/data/schedules/" + s.getRow(i).getCell(2).getStringCellValue()
 							+ s.getRow(i).getCell(3).getStringCellValue() + ".docx"));
+			doc.close();
 		}
 		in.close();
 		wb.close();
@@ -303,29 +317,39 @@ public class DataLoader {
 		return student.setRot(rotationGroup.getRotNum(), rotationGroup.getName());
 	}
 	
-	private void fillLowest(int rot, List<Student> students, RotationGroup[] groups1, RotationGroup[] groups2, RotationGroup[] groups3) {
+	private void fillLowest(int rot, List<Student> students, RotationGroup[] groups1, RotationGroup[] groups2, RotationGroup[] genGroups) {
 		for(Student student : students) {
-			if (Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), groups3[rot].getStudents().size()-10)) == groups1[rot].getStudents().size() 
-					&& groups1[rot+1].getStudents().size() > groups1[rot].getStudents().size()) {
+			if (Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), genGroups[rot].getStudents().size()-10)) == groups1[rot].getStudents().size() 
+					&& (groups1[rot+1].getStudents().size() > groups1[rot].getStudents().size() || groups2[rot+1].getStudents().size() < groups2[rot].getStudents().size())) {
 				addStudent(student, groups1[rot]);
-				fillLowest(rot+1, student, groups3, groups2);
-			}else if(Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), groups3[rot].getStudents().size()-10)) == groups2[rot].getStudents().size() 
-					&& groups2[rot+1].getStudents().size() > groups2[rot].getStudents().size()) {
+				fillLowest(rot+1, student, genGroups, groups2);
+			}else if(Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), genGroups[rot].getStudents().size()-10)) == groups2[rot].getStudents().size() 
+					&& (groups2[rot+1].getStudents().size() > groups2[rot].getStudents().size() || genGroups[rot+1].getStudents().size() < genGroups[rot].getStudents().size())) {
 				addStudent(student, groups2[rot]);
-				fillLowest(rot+1, student, groups3, groups1);
+				fillLowest(rot+1, student, genGroups, groups1);
 			}else {
-				addStudent(student, groups3[rot]);
+				addStudent(student, genGroups[rot]);
 				fillLowest(rot+1, student, groups2, groups1);
 			}
 		}
 	}
 	private void fillLowest(int rot, Student student, RotationGroup[] groups1, RotationGroup[] groups2) {
-		if(groups2[rot].getStudents().size() < groups1[rot].getStudents().size() && (groups2[rot+1].getStudents().size() > 9 || groups1[rot+1].getStudents().size() < 9)) {
-			addStudent(student, groups2[rot]);
-			addStudent(student, groups1[rot+1]);
+		if(groups1[rot].getName().equals("GE")) {
+			if(groups2[rot].getStudents().size() < groups1[rot].getStudents().size() - 10 && (groups2[rot+1].getStudents().size() > 9 || groups1[rot+1].getStudents().size() < 9)) {
+				addStudent(student, groups2[rot]);
+				addStudent(student, groups1[rot+1]);
+			}else {
+				addStudent(student, groups2[rot+1]);
+				addStudent(student, groups1[rot]);
+			}
 		}else {
-			addStudent(student, groups2[rot+1]);
-			addStudent(student, groups1[rot]);
+			if(groups2[rot].getStudents().size() < groups1[rot].getStudents().size() && (groups2[rot+1].getStudents().size() > 9 || groups1[rot+1].getStudents().size() < 9)) {
+				addStudent(student, groups2[rot]);
+				addStudent(student, groups1[rot+1]);
+			}else {
+				addStudent(student, groups2[rot+1]);
+				addStudent(student, groups1[rot]);
+			}
 		}
 	}
 	
