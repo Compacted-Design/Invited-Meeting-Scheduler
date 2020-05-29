@@ -51,7 +51,6 @@ public class DataLoader {
 		br.close();
 	}
 	
-	//TODO: Where the manual and sheet entry data will be transfered to
 	public void loadDataInput(int id, String first, String last, String school, boolean smcs, boolean global, boolean hum) throws IOException {
 		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
 		Workbook wb = new XSSFWorkbook(in);
@@ -122,6 +121,8 @@ public class DataLoader {
 					schoolCol = i;
 				}else if(houseCol == -1 && titleRow.getCell(i).getStringCellValue().toLowerCase().contains("house")){
 					houseCol = i;
+				}else if(houseCol != -1 && !titleRow.getCell(i).getStringCellValue().toLowerCase().contains("inv")) {
+					houseCol = 1;
 				}
 			}
 			if(idCol != -1 && firstCol != -1 && lastCol != -1 && schoolCol != -1 && houseCol != -1) {
