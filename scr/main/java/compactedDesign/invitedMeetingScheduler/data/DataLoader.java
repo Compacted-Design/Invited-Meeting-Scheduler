@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -32,6 +33,12 @@ public class DataLoader {
 	private static final String STUDENT_DATA_PATH = "data/StudentData.xlsx";
 	private static final String ROTATION_NAMES_PATH = "data/RotationNames.txt";
 	private static final String TEMPLATE_SCHEDULE_PATH = "data/BlankSchedule.docx";
+	private static final int GEN_LIMIT = 70;
+	private static final int MAG_LIMIT = 50;
+	private RotationGroup[] smcsGroups = new RotationGroup[4];
+	private RotationGroup[] humGroups = new RotationGroup[4];
+	private RotationGroup[] genGroups = new RotationGroup[4];
+	private RotationGroup[] gloGroups = new RotationGroup[4];
 
 	public DataLoader() throws IOException {
 		FileReader rotationText = new FileReader(ROTATION_NAMES_PATH);
@@ -111,7 +118,7 @@ public class DataLoader {
 			int schoolCol = -1;
 			int houseCol = -1;
 			for(int i = 0; titleRow.getCell(i) != null; i++) {
-				if(idCol == -1 && titleRow.getCell(i).getStringCellValue().contains("ID")) {
+				if(idCol == -1 && titleRow.getCell(i).getStringCellValue().contains("ID") && inputSheet.getRow(1).getCell(i).getCellType() == CellType.NUMERIC) {
 					idCol = i;
 				}else if(firstCol == -1 && titleRow.getCell(i).getStringCellValue().toLowerCase().contains("first")) {
 					firstCol = i;
@@ -134,7 +141,9 @@ public class DataLoader {
 					boolean smcs = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("smcs");
 					boolean global = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("glo");
 					boolean hum = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("hum");
-					
+					if(first.equals("") || last.equals("") || (!smcs && !global && !hum)) {
+						continue;
+					}
 					int id = (int) row.getCell(idCol).getNumericCellValue();
 					int left = 1, right = s.getLastRowNum();
 					int mid = (left+right)/2;
@@ -256,10 +265,8 @@ public class DataLoader {
 				smcs++;
 			}
 		}
-		RotationGroup[] smcsGroups = {new RotationGroup("S", 0), new RotationGroup("S", 1), new RotationGroup("S", 2), new RotationGroup("S", 3)};
-		RotationGroup[] genGroups = {new RotationGroup("GE", 0), new RotationGroup("GE", 1), new RotationGroup("GE", 2), new RotationGroup("GE", 3)};
-		RotationGroup[] gloGroups = {new RotationGroup("GL", 0), new RotationGroup("GL", 1), new RotationGroup("GL", 2), new RotationGroup("GL", 3)};
-		RotationGroup[] humGroups = {new RotationGroup("H", 0), new RotationGroup("H", 1), new RotationGroup("H", 2), new RotationGroup("H", 3)};
+		
+		resetRotationGroups();
 		
 		boolean even = false;
 		for(Student student : studentsS) {
@@ -310,9 +317,6 @@ public class DataLoader {
 				}
 				fillLowest(0, student, humGroups, smcsGroups);
 			}
-			fillLowest(0, studentsSH, smcsGroups, humGroups, genGroups);
-			fillLowest(0, studentsSG, smcsGroups, gloGroups, genGroups);
-			fillLowest(0, studentsGH, gloGroups, humGroups, genGroups);
 		}else if(Math.max(smcs, Math.max(global,hum)) == hum) {
 			for(Student student : studentsSGH) {
 				if(even) {
@@ -326,9 +330,6 @@ public class DataLoader {
 				}
 				fillLowest(0, student, gloGroups, smcsGroups);
 			}
-			fillLowest(0, studentsSH, smcsGroups, humGroups, genGroups);
-			fillLowest(0, studentsSG, smcsGroups, gloGroups, genGroups);
-			fillLowest(0, studentsGH, gloGroups, humGroups, genGroups);
 		}else {
 			for(Student student : studentsSGH) {
 				if(even) {
@@ -342,10 +343,22 @@ public class DataLoader {
 				}
 				fillLowest(0, student, gloGroups, humGroups);
 			}
-			fillLowest(0, studentsSH, smcsGroups, humGroups, genGroups);
-			fillLowest(0, studentsSG, smcsGroups, gloGroups, genGroups);
-			fillLowest(0, studentsGH, gloGroups, humGroups, genGroups);
 		}
+		fillLowest(0, studentsSH, smcsGroups, humGroups, genGroups);
+		fillLowest(0, studentsSG, smcsGroups, gloGroups, genGroups);
+		fillLowest(0, studentsGH, gloGroups, humGroups, genGroups);
+		//TODO: Make Optimization code better
+		moveStudents(1, 0, studentsS, smcsGroups, genGroups, true);
+		moveStudents(1, 0, studentsG, gloGroups, genGroups, true);
+		moveStudents(1, 0, studentsH, humGroups, genGroups, true);
+		moveStudents(1, 0, studentsG, gloGroups, genGroups, true);
+		moveStudents(1, 0, studentsS, smcsGroups, genGroups, true);
+		moveStudents(0, 1, studentsH, humGroups, genGroups, true);
+		moveStudents(0, 1, studentsG, gloGroups, genGroups, true);
+		moveStudents(0, 1, studentsS, smcsGroups, genGroups, true);
+		moveStudents(0, 1, studentsG, gloGroups, genGroups, true);
+		moveStudents(0, 1, studentsH, humGroups, genGroups, true);
+		
 		if(wb.getSheet("ScheduleData") != null) {
 			wb.removeSheetAt(1);
 		}
@@ -461,8 +474,15 @@ public class DataLoader {
 	}
 
 	private boolean addStudent(Student student, RotationGroup rotationGroup) {
-		rotationGroup.getStudents().add(student);
-		return student.setRot(rotationGroup.getRotNum(), rotationGroup.getName());
+		boolean returnValue = student.setRot(rotationGroup.getRotNum(), rotationGroup.getName());
+		if(returnValue) {
+			rotationGroup.getStudents().add(student);
+		}
+		return returnValue;
+	}
+	private boolean removeStudent(Student student, RotationGroup rotationGroup) {
+		rotationGroup.getStudents().remove(student);
+		return student.removeRot(rotationGroup.getRotNum(), rotationGroup.getName());
 	}
 	
 	private void fillLowest(int rot, List<Student> students, RotationGroup[] groups1, RotationGroup[] groups2, RotationGroup[] genGroups) {
@@ -497,6 +517,78 @@ public class DataLoader {
 			}else {
 				addStudent(student, groups2[rot+1]);
 				addStudent(student, groups1[rot]);
+			}
+		}
+	}
+	
+	//TODO: Assess whether this is needed
+	/*private void optimizeRotations(int rot1, int rot2, List<Student> students, RotationGroup[] group1, RotationGroup[] group2, boolean isGroup2Gen) {
+		int counter = 0;
+		if(isGroup2Gen) {
+			while(group1[rot1].getStudents().size() > 50 && group2[rot1].getStudents().size() < 70 && group1[rot2].getStudents().size() < 50) {
+				if(group2[rot1].getStudents().size() < 70 && students.get(counter).getRots()[rot1].equals(group1[rot1].getName())) {
+					removeStudent(students.get(counter), group1[rot1]);
+					removeStudent(students.get(counter), group2[rot2]);
+					addStudent(students.get(counter), group1[rot2]);
+					addStudent(students.get(counter), group2[rot1]);
+					counter++;
+				}else if(group2[rot1].getStudents().size() < 70){
+					counter++;
+				}
+			}
+		}else {
+			while(group1[rot1].getStudents().size() > 50 && group2[rot1].getStudents().size() < 50 && group1[rot2].getStudents().size() < 50) {
+				if(group2[rot1].getStudents().size() < 50 && students.get(counter).getRots()[rot1].equals(group1[rot1].getName())) {
+					removeStudent(students.get(counter), group1[rot1]);
+					removeStudent(students.get(counter), group2[rot2]);
+					addStudent(students.get(counter), group1[rot2]);
+					addStudent(students.get(counter), group2[rot1]);
+					counter++;
+				}else if(group2[rot1].getStudents().size() < 50){
+					counter++;
+				}
+			}
+		}
+		
+	}*/
+	
+	/**
+	 * Switches the rotation block of students with a rotation for group1 and group2
+	 * @param rot1 rotation block 1
+	 * @param rot2 rotation block 2
+	 * @param students
+	 * @param group1
+	 * @param group2
+	 * @param isGroup2Gen
+	 */
+	private void moveStudents(int rot1, int rot2, List<Student> students, RotationGroup[] group1, RotationGroup[] group2, boolean isGroup2Gen) {
+		if(rot1 == rot2) {
+			return;
+		}
+		int counter = 0;
+		if(isGroup2Gen) {
+			while(group1[rot2].getStudents().size() < MAG_LIMIT && group2[rot1].getStudents().size() < GEN_LIMIT) {
+				if(group2[rot1].getStudents().size() < GEN_LIMIT && students.get(counter).getRots()[rot1].equals(group1[rot1].getName())) {
+					removeStudent(students.get(counter), group1[rot1]);
+					removeStudent(students.get(counter), group2[rot2]);
+					addStudent(students.get(counter), group1[rot2]);
+					addStudent(students.get(counter), group2[rot1]);
+					counter++;
+				}else if(group2[rot1].getStudents().size() < GEN_LIMIT){
+					counter++;
+				}
+			}
+		}else {
+			while(group1[rot2].getStudents().size() < MAG_LIMIT && group2[rot1].getStudents().size() < MAG_LIMIT) {
+				if(group2[rot1].getStudents().size() < MAG_LIMIT && students.get(counter).getRots()[rot1].equals(group1[rot1].getName())) {
+					removeStudent(students.get(counter), group1[rot1]);
+					removeStudent(students.get(counter), group2[rot2]);
+					addStudent(students.get(counter), group1[rot2]);
+					addStudent(students.get(counter), group2[rot1]);
+					counter++;
+				}else if(group2[rot1].getStudents().size() < MAG_LIMIT){
+					counter++;
+				}
 			}
 		}
 	}
@@ -559,4 +651,12 @@ public class DataLoader {
 		bw.close();
 	}
 
+	public void resetRotationGroups() {
+		for(int i = 0; i < 4; i++) {
+			smcsGroups[i] = new RotationGroup("S", i);
+			humGroups[i] = new RotationGroup("H", i);
+			gloGroups[i] = new RotationGroup("GL", i);
+			genGroups[i] = new RotationGroup("GE", i);
+		}
+	}
 }

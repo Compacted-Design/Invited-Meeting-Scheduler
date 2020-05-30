@@ -44,8 +44,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="createGroupsButton" mnemonicParsing="false" onAction="#createGroupsButtonClick" text="Create Groups" GridPane.halignment="CENTER" />
-                  <Button fx:id="createScheduleDocumentsButton" mnemonicParsing="false" onAction="#createScheduleDocumentsButtonClick" text="Create Schedule Documents" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Button fx:id="createGroupsButton" mnemonicParsing="false" onAction="#createGroupsButtonClick" text="Create New Groups" GridPane.halignment="CENTER" />
+                  <Button fx:id="createScheduleDocumentsButton" mnemonicParsing="false" onAction="#createScheduleDocumentsButtonClick" text="Create New Schedule Documents" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
          </children>

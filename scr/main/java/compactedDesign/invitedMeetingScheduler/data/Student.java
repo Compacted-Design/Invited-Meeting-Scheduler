@@ -7,6 +7,9 @@ public class Student {
 	private boolean smcs;
 	private boolean hum;
 	private boolean global;
+	private final boolean SMCS;
+	private final boolean HUM;
+	private final boolean GLOBAL;
 	private boolean gen = true;
 	private int id;
 	//Change to an array?
@@ -20,6 +23,9 @@ public class Student {
 		this.smcs = smcs;
 		this.hum = hum;
 		this.global = global;
+		SMCS = smcs;
+		HUM = hum;
+		GLOBAL = global;
 		this.id = id;
 		if(smcs && global && hum) {
 			rots[2] = ""; rots[3] = "";
@@ -107,6 +113,32 @@ public class Student {
 		}
 		return false;
 	}
+	public boolean removeRot(int rotNum, String name) {
+		if(name.equals("GE") && !gen && rots[rotNum].equals(name)) {
+			gen = true;
+			rots[rotNum] = "";
+		}else if(name.equals("GL") && !global && GLOBAL && rots[rotNum].equals(name)) {
+			global = false;
+			rots[rotNum] = "";
+		}else if(name.equals("H") && !hum && HUM && rots[rotNum].equals(name)) {
+			hum = true;
+			rots[rotNum] = "";
+		}else if(name.equals("S") && !smcs && SMCS && rots[rotNum].equals(name)) {
+			smcs = true;
+			rots[rotNum] = "";
+		}else {
+			return false;
+		}
+		return true;
+		
+	}
+
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + "]";
+	}
+	
 
 
 	

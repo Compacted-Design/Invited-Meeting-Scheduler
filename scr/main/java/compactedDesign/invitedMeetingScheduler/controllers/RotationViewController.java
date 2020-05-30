@@ -35,6 +35,18 @@ public class RotationViewController {
 	}
 	@FXML
 	private void confirmButtonClick() throws IOException {
+		if(genTextBox.getText().equals("")) {
+			genTextBox.setText(IMSLauncher.getDl().getGenString());
+		}
+		if(gloTextBox.getText().equals("")) {
+			gloTextBox.setText(IMSLauncher.getDl().getGloString());
+		}
+		if(humTextBox.getText().equals("")) {
+			humTextBox.setText(IMSLauncher.getDl().getHumString());
+		}
+		if(smcTextBox.getText().equals("")) {
+			smcTextBox.setText(IMSLauncher.getDl().getSmcString());
+		}
 		IMSLauncher.getDl().setRotationNames(genTextBox.getText(), gloTextBox.getText(), humTextBox.getText(), smcTextBox.getText());
 	}
 

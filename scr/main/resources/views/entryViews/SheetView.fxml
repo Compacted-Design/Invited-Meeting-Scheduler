@@ -2,14 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="compactedDesign.invitedMeetingScheduler.controllers.entry.SheetViewController">
+<BorderPane fx:id="root" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="compactedDesign.invitedMeetingScheduler.controllers.entry.SheetViewController">
    <center>
-      <VBox prefHeight="200.0" BorderPane.alignment="CENTER">
+      <VBox maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <children>
             <Label text="Spreadsheet Entry">
                <font>
@@ -17,8 +16,10 @@
                </font>
             </Label>
             <Label text="Drag the spreadsheet into the window, or find it in the directory" />
-            <TextField fx:id="urlTextBox" promptText="Excel Sheet Directory" />
-            <Button mnemonicParsing="false" text="Submit" />
+            <Button fx:id="selectFileButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectFileButtonClick" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" prefHeight="300.0" text="Click to Select a File or Drag and Drop into the Box" textOverrun="CLIP" wrapText="true">
+               <font>
+                  <Font size="25.0" />
+               </font></Button>
          </children>
       </VBox>
    </center>
