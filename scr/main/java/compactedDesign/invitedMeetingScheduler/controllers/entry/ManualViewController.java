@@ -46,8 +46,7 @@ public class ManualViewController {
 			noticeLabel.setText("ID should be 6 digits");
 			invalidEntry = true;
 		}
-		if(firstNameEntry.getText().trim().equals("") || lastNameEntry.getText().trim().equals("") || middleSchoolEntry.getText().trim().equals("") || 
-				!(smcsCheck.isSelected() || globalCheck.isSelected() || humanitiesCheck.isSelected())) {
+		if(firstNameEntry.getText().trim().equals("") || lastNameEntry.getText().trim().equals("") || middleSchoolEntry.getText().trim().equals("")) {
 			noticeLabel.setText(noticeLabel.getText() + "\n"+"Missing required information");
 			invalidEntry = true;
 		}

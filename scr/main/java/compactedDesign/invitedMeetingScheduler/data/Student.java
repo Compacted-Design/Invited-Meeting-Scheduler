@@ -138,6 +138,21 @@ public class Student {
 	public String toString() {
 		return "Student [id=" + id + "]";
 	}
+
+
+	public boolean isSMCS() {
+		return SMCS;
+	}
+
+
+	public boolean isHUM() {
+		return HUM;
+	}
+
+
+	public boolean isGLOBAL() {
+		return GLOBAL;
+	}
 	
 
 

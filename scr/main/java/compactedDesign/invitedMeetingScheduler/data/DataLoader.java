@@ -65,13 +65,20 @@ public class DataLoader {
 		int left = 1, right = s.getLastRowNum();
 		int mid = (left+right)/2;
 		boolean added = false;
-		while(left <= right) {
+		while(left <= right && !added) {
 			mid = (left+right)/2;
 			int currentID = (int) s.getRow(mid).getCell(0).getNumericCellValue();
 			if(currentID == id) {
-				dataEntry(mid, s, first, last, school, smcs, global, hum);
+				if((!smcs && !global && !hum)) {
+					if(mid == s.getLastRowNum()) {
+						s.removeRow(s.getRow(mid));
+					}else {
+						s.shiftRows(mid+1,s.getLastRowNum()+1, -1);
+					}
+				}else {
+					dataEntry(mid, s, first, last, school, smcs, global, hum);
+				}
 				added = true;
-				break;
 			}else if(currentID < id) {
 				left = mid+1;
 
@@ -79,7 +86,7 @@ public class DataLoader {
 				right = mid-1;
 			}
 		}
-		if(!added) {
+		if(!added && (smcs || global || hum)) {
 			if((int) s.getRow(s.getLastRowNum()).getCell(0).getNumericCellValue() < id) {
 				mid = s.getLastRowNum()+1;
 			}else if((int) s.getRow(1).getCell(0).getNumericCellValue() > id) {
@@ -130,7 +137,7 @@ public class DataLoader {
 				}else if(houseCol == -1 && titleRow.getCell(i).getStringCellValue().toLowerCase().contains("house")){
 					houseCol = i;
 				}else if(houseCol != -1 && !titleRow.getCell(i).getStringCellValue().toLowerCase().contains("inv")) {
-					houseCol = 1;
+					houseCol = i;
 				}
 			}
 			if(idCol != -1 && firstCol != -1 && lastCol != -1 && schoolCol != -1 && houseCol != -1) {
@@ -142,20 +149,30 @@ public class DataLoader {
 					boolean smcs = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("smcs");
 					boolean global = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("glo");
 					boolean hum = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("hum");
-					if(first.equals("") || last.equals("") || (!smcs && !global && !hum)) {
+					if(first.equals("") || last.equals("")) {
 						continue;
 					}
 					int id = (int) row.getCell(idCol).getNumericCellValue();
+					if(id < 100000 || id > 999999) {
+						continue;
+					}
 					int left = 1, right = s.getLastRowNum();
 					int mid = (left+right)/2;
 					boolean added = false;
-					while(left <= right) {
+					while(left <= right && !added) {
 						mid = (left+right)/2;
 						int currentID = (int) s.getRow(mid).getCell(0).getNumericCellValue();
 						if(currentID == id) {
-							dataEntry(mid, s, first, last, school, smcs, global, hum);
+							if((!smcs && !global && !hum)) {
+								if(mid == s.getLastRowNum()) {
+									s.removeRow(s.getRow(mid));
+								}else {
+									s.shiftRows(mid+1,s.getLastRowNum()+1, -1);
+								}
+							}else {
+								dataEntry(mid, s, first, last, school, smcs, global, hum);
+							}
 							added = true;
-							break;
 						}else if(currentID < id) {
 							left = mid+1;
 
@@ -163,7 +180,7 @@ public class DataLoader {
 							right = mid-1;
 						}
 					}
-					if(!added) {
+					if(!added && (smcs || global || hum)) {
 						if((int) s.getRow(s.getLastRowNum()).getCell(0).getNumericCellValue() < id) {
 							mid = s.getLastRowNum()+1;
 						}else if((int) s.getRow(1).getCell(0).getNumericCellValue() > id) {
@@ -382,13 +399,21 @@ public class DataLoader {
 			Row row = schedule.getRow(rowIndex);
 			row.createCell(0);
 			String rotations = "";
-			for(int j = 0; j < student.getRots().length; j++) {
-				if(!student.getRots()[j].equals("GE") && !student.getRots()[j].equals("n/a")) {
-					if(rotations.equals("")) {
-						rotations += student.getRots()[j];
-					}else {
-						rotations += ", "+student.getRots()[j];
-					}
+			if(student.isGLOBAL()) {
+				rotations += "Global";
+			}
+			if(student.isHUM()) {
+				if(rotations.equals("")) {
+					rotations += "Humanities";
+				}else {
+					rotations += ", Humanities";
+				}
+			}
+			if(student.isSMCS()) {
+				if(rotations.equals("")) {
+					rotations += "SMCS";
+				}else {
+					rotations += ", SMCS";
 				}
 			}
 			row.getCell(0).setCellValue(rotations);
