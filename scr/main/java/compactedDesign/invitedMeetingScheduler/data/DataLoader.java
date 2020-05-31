@@ -109,8 +109,9 @@ public class DataLoader {
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("RawData");
 		Workbook inputWB = new XSSFWorkbook(inputSheetFile);
-		if(inputWB.getSheetAt(0) != null && inputWB.getSheetAt(0).getRow(0) != null) {
-			Sheet inputSheet = inputWB.getSheetAt(0);
+		int sheetIndex = 0;
+		while(inputWB.getSheetAt(sheetIndex) != null && inputWB.getSheetAt(0).getRow(0) != null) {
+			Sheet inputSheet = inputWB.getSheetAt(sheetIndex);
 			Row titleRow = inputSheet.getRow(0);
 			int idCol = -1;
 			int firstCol = -1;
@@ -182,6 +183,7 @@ public class DataLoader {
 					}
 				}
 			}
+			sheetIndex++;
 		}
 		inputWB.close();
 		in.close();
