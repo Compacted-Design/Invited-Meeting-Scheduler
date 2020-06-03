@@ -33,27 +33,27 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Clubs" GridPane.rowIndex="1" />
-                  <Label text="Bus Routes" GridPane.rowIndex="2" />
-                  <Label text="PHS Website" GridPane.rowIndex="3" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Clubs" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                  <Label text="Bus Routes" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                  <Label text="PHS Website" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
                   <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                   <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                   <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP" />
                   <Label text="Caption" GridPane.columnIndex="2" />
                   <Label text="Links" GridPane.columnIndex="1" />
                   <Label text="QR Codes" GridPane.columnIndex="3" />
-                  <Label text="Colleges" GridPane.rowIndex="4" />
-                  <Label text="Sports" GridPane.rowIndex="5" />
-                  <Label prefHeight="0.0" prefWidth="68.0" text="Communication" GridPane.rowIndex="6" />
+                  <Label text="Colleges" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+                  <Label text="Sports" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+                  <Label prefHeight="0.0" prefWidth="68.0" text="Communication" GridPane.rowIndex="6" GridPane.valignment="TOP" />
                </children>
             </GridPane>
          </content>

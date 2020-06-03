@@ -24,6 +24,12 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
 public class DataLoader {
 	//Decide whether it should be static or not
 	private String genString;
@@ -39,6 +45,7 @@ public class DataLoader {
 	private RotationGroup[] humGroups = new RotationGroup[4];
 	private RotationGroup[] genGroups = new RotationGroup[4];
 	private RotationGroup[] gloGroups = new RotationGroup[4];
+	private static final int QRCODE_SIDE_LENGTH = 200;
 
 	public DataLoader() throws IOException {
 		FileReader rotationText = new FileReader(ROTATION_NAMES_PATH);
@@ -231,8 +238,12 @@ public class DataLoader {
 		}
 	}
 	
-	public void makeQRCode(String link) {
-		
+	public void makeQRCode(String link, String fileName) throws WriterException, IOException {
+		QRCodeWriter qrCodeWriter = new QRCodeWriter();
+		BitMatrix bitMatrix = qrCodeWriter.encode(link, BarcodeFormat.QR_CODE, QRCODE_SIDE_LENGTH, QRCODE_SIDE_LENGTH);
+
+        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", new FileOutputStream(new File("./data/QRCodes/"+fileName+".png")));
+        
 	}
 	
 	//TODO: Compress redundant series of code
@@ -496,8 +507,8 @@ public class DataLoader {
 				}
 			}
 			doc.write(new FileOutputStream(
-					"data/schedules/" + (int)s.getRow(i).getCell(1).getNumericCellValue()+s.getRow(i).getCell(2).getStringCellValue()
-							+ s.getRow(i).getCell(3).getStringCellValue() + ".docx"));
+					"./data/schedules/" +s.getRow(i).getCell(3).getStringCellValue() + "_"
+							+ s.getRow(i).getCell(2).getStringCellValue() + "_" + (int)s.getRow(i).getCell(1).getNumericCellValue() + ".docx"));
 			doc.close();
 		}
 		in.close();

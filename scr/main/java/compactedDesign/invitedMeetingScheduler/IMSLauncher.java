@@ -47,6 +47,7 @@ public class IMSLauncher extends Application {
 		primaryStage.show();
 
 		dl = new DataLoader();
+		dl.makeQRCode("https://github.com/Compacted-Design/Invited-Meeting-Scheduler", "test1");
 	}
 	
 	/**
