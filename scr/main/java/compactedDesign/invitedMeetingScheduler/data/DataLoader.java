@@ -117,7 +117,7 @@ public class DataLoader {
 		Sheet s = wb.getSheet("RawData");
 		Workbook inputWB = new XSSFWorkbook(inputSheetFile);
 		int sheetIndex = 0;
-		while(inputWB.getSheetAt(sheetIndex) != null && inputWB.getSheetAt(0).getRow(0) != null) {
+		while(sheetIndex < inputWB.getNumberOfSheets() && inputWB.getSheetAt(0).getRow(0) != null) {
 			Sheet inputSheet = inputWB.getSheetAt(sheetIndex);
 			Row titleRow = inputSheet.getRow(0);
 			int idCol = -1;
@@ -229,6 +229,10 @@ public class DataLoader {
 		}else {
 			s.getRow(i).getCell(6).setCellValue("N");
 		}
+	}
+	
+	public void makeQRCode(String link) {
+		
 	}
 	
 	//TODO: Compress redundant series of code

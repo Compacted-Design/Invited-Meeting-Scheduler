@@ -10,6 +10,15 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="compactedDesign.invitedMeetingScheduler.controllers.StartViewController">
+   <padding>
+      <Insets bottom="10.0" top="20.0" />
+   </padding>
+   <top>
+      <Label text="Invited Meeting Scheduler" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="25.0" />
+         </font></Label>
+   </top>
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -24,18 +33,10 @@
          <children>
             <Button fx:id="guideButton" mnemonicParsing="false" onAction="#guideButtonClick" text="Guides" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <Button fx:id="dataEntryButton" mnemonicParsing="false" onAction="#dataEntryButtonClick" text="Data Entry" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button fx:id="rotationButton" mnemonicParsing="false" onAction="#rotationButtonClick" text="Rotations" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="rotationButton" mnemonicParsing="false" onAction="#rotationButtonClick" text="Rotation Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Button fx:id="scheduleButton" mnemonicParsing="false" onAction="#scheduleButtonClick" text="Schedule Manager" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="informationSheetButton" mnemonicParsing="false" onAction="#informationSheetButtonClick" text="Information Sheet" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </center>
-   <padding>
-      <Insets bottom="10.0" top="20.0" />
-   </padding>
-   <top>
-      <Label text="Invited Meeting Scheduler" BorderPane.alignment="CENTER">
-         <font>
-            <Font size="25.0" />
-         </font></Label>
-   </top>
 </BorderPane>

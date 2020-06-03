@@ -7,10 +7,13 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import compactedDesign.invitedMeetingScheduler.IMSLauncher;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -49,13 +52,12 @@ public class SheetViewController {
 				if(file.getAbsolutePath().substring(file.getAbsolutePath().length()-5).equals(".xlsx")) {
 					IMSLauncher.getDl().loadDataInput(file);
 					hasExcel = true;
-					
 				}
 			}
 		}
 		event.consume();
 		if(hasExcel) {
-			((Pane)root.getParent()).getChildren().remove(root);//TODO: Add data entry successful screen
+			dataInputed();
 		}
 	}
 	
@@ -67,12 +69,18 @@ public class SheetViewController {
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Excel Files", "*.xlsx"));
 		File selectedFile = fileChooser.showOpenDialog(root.getScene().getWindow());
 		if(selectedFile != null) {
-			//IMSLauncher.getDl().loadDataInput(selectedFile);
+			IMSLauncher.getDl().loadDataInput(selectedFile);
 			fileChooserOpen = false;
-			//((Pane)root.getParent()).getChildren().remove(root);//TODO: Add data entry successful screen
+			dataInputed();
 		}else {
 			fileChooserOpen = false;
 		}
+	}
+	
+	private void dataInputed() throws IOException {
+		Node dataInputNode = FXMLLoader.load(getClass().getResource("/views/entryViews/DataInputedView.fxml"));
+		((GridPane)root.getParent()).add(dataInputNode, 0, 1);
+		((Pane)root.getParent()).getChildren().remove(root);
 	}
 
 }

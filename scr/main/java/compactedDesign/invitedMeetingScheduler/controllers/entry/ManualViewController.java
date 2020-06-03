@@ -5,11 +5,14 @@ import java.io.IOException;
 
 import compactedDesign.invitedMeetingScheduler.IMSLauncher;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 public class ManualViewController {
 	
@@ -54,8 +57,10 @@ public class ManualViewController {
 			return;
 		}
 		IMSLauncher.getDl().loadDataInput(Integer.parseInt(idEntry.getText().trim()), firstNameEntry.getText().trim(), lastNameEntry.getText().trim(), middleSchoolEntry.getText().trim(), smcsCheck.isSelected(), globalCheck.isSelected(), humanitiesCheck.isSelected());
+		Node dataInputNode = FXMLLoader.load(getClass().getResource("/views/entryViews/DataInputedView.fxml"));
+		((GridPane)root.getParent()).add(dataInputNode, 0, 1);
+		((GridPane)root.getParent()).getChildren().remove(root);//TODO: Add data entry successful screen
 		
-		((Pane)root.getParent()).getChildren().remove(root);//TODO: Add data entry successful screen
 	}
 	
 
