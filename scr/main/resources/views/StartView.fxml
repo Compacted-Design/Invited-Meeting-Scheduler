@@ -36,6 +36,7 @@
             <Button fx:id="rotationButton" mnemonicParsing="false" onAction="#rotationButtonClick" text="Rotation Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Button fx:id="scheduleButton" mnemonicParsing="false" onAction="#scheduleButtonClick" text="Schedule Manager" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Button fx:id="informationSheetButton" mnemonicParsing="false" onAction="#informationSheetButtonClick" text="Information Sheet" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="mapButton" mnemonicParsing="false" onAction="#mapButtonClick" text="Map" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </center>

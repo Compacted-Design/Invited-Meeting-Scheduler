@@ -18,7 +18,7 @@
          <content>
             <GridPane fx:id="informationGrid" vgap="2.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -53,7 +53,7 @@
                   <Label text="QR Codes" GridPane.columnIndex="3" />
                   <Label text="Colleges" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                   <Label text="Sports" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-                  <Label prefHeight="0.0" prefWidth="68.0" text="Communication" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+                  <Label text="Communication" textOverrun="CLIP" wrapText="true" GridPane.rowIndex="6" GridPane.valignment="TOP" />
                </children>
             </GridPane>
          </content>
