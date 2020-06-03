@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -16,52 +17,55 @@
    <center>
       <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
          <content>
-            <GridPane fx:id="informationGrid" vgap="2.0">
+            <GridPane fx:id="informationGrid" vgap="5.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Clubs" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                  <Label text="Bus Routes" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                  <Label text="Transportation" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                   <Label text="PHS Website" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+                  <TextField fx:id="clubLinkField" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                  <TextField fx:id="busLinkField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                  <TextField fx:id="webLinkField" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+                  <TextArea fx:id="clubCapArea" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextArea fx:id="busCapArea" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextArea fx:id="webCapArea" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <TextArea fx:id="colCapArea" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <TextArea fx:id="sportCapArea" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <TextArea fx:id="comCapArea" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <TextField fx:id="colLinkField" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+                  <TextField fx:id="sportLinkField" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+                  <TextField fx:id="comLinkField" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP" />
                   <Label text="Caption" GridPane.columnIndex="2" />
                   <Label text="Links" GridPane.columnIndex="1" />
                   <Label text="QR Codes" GridPane.columnIndex="3" />
                   <Label text="Colleges" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                   <Label text="Sports" GridPane.rowIndex="5" GridPane.valignment="TOP" />
                   <Label text="Communication" textOverrun="CLIP" wrapText="true" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+                  <ImageView fx:id="clubImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <ImageView fx:id="busImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <ImageView fx:id="webImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <ImageView fx:id="colImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <ImageView fx:id="sportImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <ImageView fx:id="comImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
                </children>
             </GridPane>
          </content>
       </ScrollPane>
    </center>
-   <bottom>
-      <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Back" BorderPane.alignment="BOTTOM_LEFT" />
-   </bottom>
    <padding>
       <Insets bottom="5.0" left="5.0" right="20.0" top="20.0" />
    </padding>
@@ -83,4 +87,19 @@
          </children>
       </GridPane>
    </top>
+   <bottom>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Back" />
+            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonClick" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+         </children>
+      </GridPane>
+   </bottom>
 </BorderPane>

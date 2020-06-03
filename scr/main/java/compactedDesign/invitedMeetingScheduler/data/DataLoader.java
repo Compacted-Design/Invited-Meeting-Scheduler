@@ -1,22 +1,29 @@
 package compactedDesign.invitedMeetingScheduler.data;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.util.Units;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.Document;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -30,22 +37,34 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import javafx.scene.image.Image;
+
 public class DataLoader {
 	//Decide whether it should be static or not
-	private String genString;
-	private String humString;
-	private String gloString;
-	private String smcString;
+	
+	private String genString, humString, gloString, smcString;
+	
 	private static final String STUDENT_DATA_PATH = "data/StudentData.xlsx";
 	private static final String ROTATION_NAMES_PATH = "data/RotationNames.txt";
 	private static final String TEMPLATE_SCHEDULE_PATH = "data/BlankSchedule.docx";
+	private static final String TEMPLATE_INFORMATION_PATH = "data/BlankInfo.docx";
+	private static final String QRCODE_CAPTIONS_PATH = "data/QRCodeCaptions.txt";
+	private static final String QRCODE_LINKS_PATH = "data/QRCodeLinks.txt";
 	private static final int GEN_LIMIT = 70;
 	private static final int MAG_LIMIT = 50;
+	private static final String IMG_PATH = "data/img/";
+	private static final String CLUB_CODE = "club.png", COM_CODE = "comn.png", SPORT_CODE = "spor.png", WEB_CODE = "phsw.png", COL_CODE = "colg.png", BUS_CODE = "busr.png";
+	
 	private RotationGroup[] smcsGroups = new RotationGroup[4];
 	private RotationGroup[] humGroups = new RotationGroup[4];
 	private RotationGroup[] genGroups = new RotationGroup[4];
 	private RotationGroup[] gloGroups = new RotationGroup[4];
-	private static final int QRCODE_SIDE_LENGTH = 200;
+	
+	private static final int QRCODE_SIDE_LENGTH = 150;
+	private static final int MAP_SIDE_LENGTH = 500;
+	
+	private String clubCap, busrCap, phswCap, colgCap, sporCap, comnCap;
+	private String clubLink, busrLink, phswLink, colgLink, sporLink, comnLink;
 
 	public DataLoader() throws IOException {
 		FileReader rotationText = new FileReader(ROTATION_NAMES_PATH);
@@ -60,6 +79,42 @@ public class DataLoader {
 				gloString = line.substring(4);
 			}else if(line.substring(0, 4).equals("smc:")) {
 				smcString = line.substring(4);
+			}
+		}
+		br.close();
+		FileReader qrCodeCapText = new FileReader(QRCODE_CAPTIONS_PATH);
+		br = new BufferedReader(qrCodeCapText);
+		while((line = br.readLine()) != null) {
+			if(line.substring(0, 5).equals("club:")) {
+				clubCap = line.substring(5);
+			}else if(line.substring(0, 5).equals("busr:")) {
+				busrCap = line.substring(5);
+			}else if(line.substring(0, 5).equals("phsw:")) {
+				phswCap = line.substring(5);
+			}else if(line.substring(0, 5).equals("colg:")) {
+				colgCap = line.substring(5);
+			}else if(line.substring(0, 5).equals("spor:")) {
+				sporCap = line.substring(5);
+			}else if(line.substring(0, 5).equals("comn:")) {
+				comnCap = line.substring(5);
+			}
+		}
+		br.close();
+		FileReader qrCodeLinkText = new FileReader(QRCODE_LINKS_PATH);
+		br = new BufferedReader(qrCodeLinkText);
+		while((line = br.readLine()) != null) {
+			if(line.substring(0, 5).equals("club:")) {
+				clubLink = line.substring(5);
+			}else if(line.substring(0, 5).equals("busr:")) {
+				busrLink = line.substring(5);
+			}else if(line.substring(0, 5).equals("phsw:")) {
+				phswLink = line.substring(5);
+			}else if(line.substring(0, 5).equals("colg:")) {
+				colgLink = line.substring(5);
+			}else if(line.substring(0, 5).equals("spor:")) {
+				sporLink = line.substring(5);
+			}else if(line.substring(0, 5).equals("comn:")) {
+				comnLink = line.substring(5);
 			}
 		}
 		br.close();
@@ -242,7 +297,7 @@ public class DataLoader {
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		BitMatrix bitMatrix = qrCodeWriter.encode(link, BarcodeFormat.QR_CODE, QRCODE_SIDE_LENGTH, QRCODE_SIDE_LENGTH);
 
-        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", new FileOutputStream(new File("./data/QRCodes/"+fileName+".png")));
+        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", new FileOutputStream(new File("./data/img/"+fileName)));
         
 	}
 	
@@ -452,6 +507,71 @@ public class DataLoader {
 		}
 	}
 	
+	public void createTemplateSchedule() throws IOException, InvalidFormatException {
+		FileInputStream docIn = new FileInputStream(new File(TEMPLATE_INFORMATION_PATH));
+		XWPFDocument doc = new XWPFDocument(docIn);
+		for (XWPFTable tbl : doc.getTables()) {
+			for (XWPFTableRow row : tbl.getRows()) {
+				for (XWPFTableCell cell : row.getTableCells()) {
+					for (XWPFParagraph p : cell.getParagraphs()) {
+						String text = p.getText().trim();
+						if(text.contains(".png")) {
+							InputStream image = new FileInputStream(IMG_PATH+text);
+							if(text.contains("map")) {
+								BufferedImage bimg = ImageIO.read(new File(IMG_PATH+text));
+								int width = bimg.getWidth();
+								int height = bimg.getHeight();
+								p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+text, Units.toEMU(MAP_SIDE_LENGTH), Units.toEMU(MAP_SIDE_LENGTH*(height*1.0/width)));
+							}else {
+								p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+text, Units.toEMU(QRCODE_SIDE_LENGTH), Units.toEMU(QRCODE_SIDE_LENGTH));
+							}
+							p.removeRun(0);
+							image.close();
+						}else if(text.equals("club")) {
+							p.removeRun(0);
+							p.createRun().setText(clubCap);
+						}else if(text.equals("busr")) {
+							p.removeRun(0);
+							p.createRun().setText(busrCap);
+						}else if(text.equals("phsw")) {
+							p.removeRun(0);
+							p.createRun().setText(phswCap);
+						}else if(text.equals("colg")) {
+							p.removeRun(0);
+							p.createRun().setText(colgCap);
+						}else if(text.equals("spor")) {
+							p.removeRun(0);
+							p.createRun().setText(sporCap);
+						}else if(text.equals("comn")) {
+							p.removeRun(0);
+							p.createRun().setText(comnCap);
+						}
+					}
+				}
+			}
+		}
+		
+		//TODO: fix this up if wanted
+		/*XWPFHeaderFooterPolicy headerFooterPolicy = doc.getHeaderFooterPolicy();
+		XWPFFooter footer = headerFooterPolicy.createFooter(XWPFHeaderFooterPolicy.FIRST);
+		XWPFParagraph footerParagraph = footer.createParagraph();
+		footerParagraph.createRun().setText("	-"+sporCap + " " + sporLink);
+		footerParagraph.createRun().addBreak();
+		footerParagraph.createRun().setText("	-"+clubCap + " " + clubLink);
+		footerParagraph.createRun().addBreak();
+		footerParagraph.createRun().setText("	-"+busrCap + " " + busrLink);
+		footerParagraph.createRun().addBreak();
+		footerParagraph.createRun().setText("	-"+phswCap + " " + phswLink);
+		footerParagraph.createRun().addBreak();
+		footerParagraph.createRun().setText("	-"+colgCap + " " + colgLink);
+		footerParagraph.createRun().addBreak();
+		footerParagraph.createRun().setText("	-"+comnCap + " " + comnLink);
+		footerParagraph.createRun().addBreak();*/
+		
+		doc.write(new FileOutputStream(TEMPLATE_SCHEDULE_PATH));
+		doc.close();
+	}
+	
 	public void createSchedules() throws IOException, InvalidFormatException {
 		// There will be issues if the rots leave the tables
 		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
@@ -652,36 +772,20 @@ public class DataLoader {
 		return genString;
 	}
 
-	public void setGenString(String genString) {
-		this.genString = genString;
-	}
-
 	public String getHumString() {
 		return humString;
-	}
-
-	public void setHumString(String humString) {
-		this.humString = humString;
 	}
 
 	public String getGloString() {
 		return gloString;
 	}
 
-	public void setGloString(String gloString) {
-		this.gloString = gloString;
-	}
-
 	public String getSmcString() {
 		return smcString;
 	}
 
-	public void setSmcString(String smcString) {
-		this.smcString = smcString;
-	}
-	
 	public void setRotationNames(String genName, String gloName, String humName, String smcName) throws IOException {
-		setGenString(genName); setGloString(gloName); setHumString(humName); setSmcString(smcName);
+		genString = genName; gloString = gloName; humString = humName; smcString = smcName;
 		String rotationNames = "gen:" + genName + "\n" + 
 				   	   "glo:" + gloName + "\n" +
 				   	   "hum:" + humName + "\n" +
@@ -701,4 +805,98 @@ public class DataLoader {
 			genGroups[i] = new RotationGroup("GE", i);
 		}
 	}
+
+	public String getClubCap() {
+		return clubCap;
+	}
+
+	public String getBusrCap() {
+		return busrCap;
+	}
+
+	public String getPhswCap() {
+		return phswCap;
+	}
+
+	public String getColgCap() {
+		return colgCap;
+	}
+
+	public String getSporCap() {
+		return sporCap;
+	}
+
+	public String getComnCap() {
+		return comnCap;
+	}
+
+	public String getClubLink() {
+		return clubLink;
+	}
+
+	public String getBusrLink() {
+		return busrLink;
+	}
+
+	public String getPhswLink() {
+		return phswLink;
+	}
+
+	public String getColgLink() {
+		return colgLink;
+	}
+
+	public String getSporLink() {
+		return sporLink;
+	}
+
+	public String getComnLink() {
+		return comnLink;
+	}
+
+	
+	public Image getClubImage() throws FileNotFoundException {
+		return new Image(new FileInputStream(IMG_PATH+CLUB_CODE));
+	}
+	public Image getBusImage() throws FileNotFoundException {
+		return new Image(new FileInputStream(IMG_PATH+BUS_CODE));
+	}
+	public Image getWebImage() throws FileNotFoundException {
+		return new Image(new FileInputStream(IMG_PATH+WEB_CODE));
+	}
+	public Image getSportImage() throws FileNotFoundException {
+		return new Image(new FileInputStream(IMG_PATH+SPORT_CODE));
+	}
+	public Image getComImage() throws FileNotFoundException {
+		return new Image(new FileInputStream(IMG_PATH+COM_CODE));
+	}
+	public Image getColImage() throws FileNotFoundException {
+		return new Image(new FileInputStream(IMG_PATH+COL_CODE));
+	}
+
+	public static String getClubCode() {
+		return CLUB_CODE;
+	}
+
+	public static String getComCode() {
+		return COM_CODE;
+	}
+
+	public static String getSportCode() {
+		return SPORT_CODE;
+	}
+
+	public static String getWebCode() {
+		return WEB_CODE;
+	}
+
+	public static String getColCode() {
+		return COL_CODE;
+	}
+
+	public static String getBusCode() {
+		return BUS_CODE;
+	}
+	
+
 }
