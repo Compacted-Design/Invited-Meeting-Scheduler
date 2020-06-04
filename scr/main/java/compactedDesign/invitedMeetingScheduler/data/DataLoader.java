@@ -50,11 +50,13 @@ public class DataLoader {
 	private static final String TEMPLATE_INFORMATION_PATH = "data/BlankInfo.docx";
 	private static final String QRCODE_CAPTIONS_PATH = "data/QRCodeCaptions.txt";
 	private static final String QRCODE_LINKS_PATH = "data/QRCodeLinks.txt";
+	private static final String SCHEDULE_INFO_PATH = "data/ScheduleInfo.txt";
 	private static final int GEN_LIMIT = 70;
 	private static final int MAG_LIMIT = 50;
 	private static final String IMG_PATH = "data/img/";
 	private static final String CLUB_CODE = "club.png", COM_CODE = "comn.png", SPORT_CODE = "spor.png", WEB_CODE = "phsw.png", COL_CODE = "colg.png", BUS_CODE = "busr.png";
 	private static final String MAP_CODE = "map.png";
+	private String schedulePath;
 	
 	private RotationGroup[] smcsGroups = new RotationGroup[4];
 	private RotationGroup[] humGroups = new RotationGroup[4];
@@ -116,6 +118,14 @@ public class DataLoader {
 				sporLink = line.substring(5);
 			}else if(line.substring(0, 5).equals("comn:")) {
 				comnLink = line.substring(5);
+			}
+		}
+		br.close();
+		FileReader scheduleText = new FileReader(SCHEDULE_INFO_PATH);
+		br = new BufferedReader(scheduleText);
+		while((line = br.readLine()) != null) {
+			if(line.substring(0,4).equals("dir:")) {
+				schedulePath = line.substring(4);
 			}
 		}
 		br.close();
@@ -438,16 +448,29 @@ public class DataLoader {
 		fillLowest(0, studentsSG, smcsGroups, gloGroups, genGroups);
 		fillLowest(0, studentsGH, gloGroups, humGroups, genGroups);
 		//TODO: Make Optimization code better
-		moveStudents(1, 0, studentsS, smcsGroups, genGroups, true);
-		moveStudents(1, 0, studentsG, gloGroups, genGroups, true);
-		moveStudents(1, 0, studentsH, humGroups, genGroups, true);
-		moveStudents(1, 0, studentsG, gloGroups, genGroups, true);
-		moveStudents(1, 0, studentsS, smcsGroups, genGroups, true);
 		moveStudents(0, 1, studentsH, humGroups, genGroups, true);
 		moveStudents(0, 1, studentsG, gloGroups, genGroups, true);
 		moveStudents(0, 1, studentsS, smcsGroups, genGroups, true);
 		moveStudents(0, 1, studentsG, gloGroups, genGroups, true);
 		moveStudents(0, 1, studentsH, humGroups, genGroups, true);
+		if(smcs+studentsSGH.size() < 100) {
+			moveStudents(2, 0, studentsSH, smcsGroups, genGroups, true);
+			moveStudents(2, 1, studentsSH, smcsGroups, genGroups, true);
+			moveStudents(2, 0, studentsSG, smcsGroups, genGroups, true);
+			moveStudents(2, 1, studentsSG, smcsGroups, genGroups, true);
+		}
+		if(hum+studentsSGH.size() < 100) {
+			moveStudents(2, 0, studentsSH, humGroups, genGroups, true);
+			moveStudents(2, 1, studentsSH, humGroups, genGroups, true);
+			moveStudents(2, 0, studentsGH, humGroups, genGroups, true);
+			moveStudents(2, 1, studentsGH, humGroups, genGroups, true);
+		}
+		if(global+studentsSGH.size() < 100) {
+			moveStudents(2, 0, studentsGH, gloGroups, genGroups, true);
+			moveStudents(2, 1, studentsGH, gloGroups, genGroups, true);
+			moveStudents(2, 0, studentsSG, gloGroups, genGroups, true);
+			moveStudents(2, 1, studentsSG, gloGroups, genGroups, true);
+		}
 		
 		if(wb.getSheet("ScheduleData") != null) {
 			wb.removeSheetAt(1);
@@ -470,8 +493,10 @@ public class DataLoader {
 			Row row = schedule.getRow(rowIndex);
 			row.createCell(0);
 			String rotations = "";
+			int blockCounter = 0;
 			if(student.isGLOBAL()) {
 				rotations += "Global";
+				blockCounter++;
 			}
 			if(student.isHUM()) {
 				if(rotations.equals("")) {
@@ -479,6 +504,7 @@ public class DataLoader {
 				}else {
 					rotations += ", Humanities";
 				}
+				blockCounter++;
 			}
 			if(student.isSMCS()) {
 				if(rotations.equals("")) {
@@ -486,8 +512,9 @@ public class DataLoader {
 				}else {
 					rotations += ", SMCS";
 				}
+				blockCounter++;
 			}
-			row.getCell(0).setCellValue(rotations);
+			row.getCell(0).setCellValue(blockCounter+" Rotations: "+rotations);
 			row.createCell(1); row.getCell(1).setCellValue(student.getId());
 			row.createCell(2); row.getCell(2).setCellValue(student.getFirstName());
 			row.createCell(3); row.getCell(3).setCellValue(student.getLastName());
@@ -629,7 +656,7 @@ public class DataLoader {
 				}
 			}
 			doc.write(new FileOutputStream(
-					"./data/schedules/" +s.getRow(i).getCell(3).getStringCellValue() + "_"
+					schedulePath+s.getRow(i).getCell(3).getStringCellValue() + "_"
 							+ s.getRow(i).getCell(2).getStringCellValue() + "_" + (int)s.getRow(i).getCell(1).getNumericCellValue() + ".docx"));
 			doc.close();
 		}
@@ -645,8 +672,11 @@ public class DataLoader {
 		return returnValue;
 	}
 	private boolean removeStudent(Student student, RotationGroup rotationGroup) {
-		rotationGroup.getStudents().remove(student);
-		return student.removeRot(rotationGroup.getRotNum(), rotationGroup.getName());
+		boolean returnValue = student.removeRot(rotationGroup.getRotNum(), rotationGroup.getName());
+		if(returnValue) {
+			rotationGroup.getStudents().remove(student);
+		}
+		return returnValue;
 	}
 	
 	private void fillLowest(int rot, List<Student> students, RotationGroup[] groups1, RotationGroup[] groups2, RotationGroup[] genGroups) {
@@ -731,7 +761,7 @@ public class DataLoader {
 		}
 		int counter = 0;
 		if(isGroup2Gen) {
-			while(group1[rot2].getStudents().size() < MAG_LIMIT && group2[rot1].getStudents().size() < GEN_LIMIT) {
+			while(group1[rot2].getStudents().size() < MAG_LIMIT && group2[rot1].getStudents().size() < GEN_LIMIT && counter < students.size()) {
 				if(group2[rot1].getStudents().size() < GEN_LIMIT && students.get(counter).getRots()[rot1].equals(group1[rot1].getName())) {
 					removeStudent(students.get(counter), group1[rot1]);
 					removeStudent(students.get(counter), group2[rot2]);
@@ -743,7 +773,7 @@ public class DataLoader {
 				}
 			}
 		}else {
-			while(group1[rot2].getStudents().size() < MAG_LIMIT && group2[rot1].getStudents().size() < MAG_LIMIT) {
+			while(group1[rot2].getStudents().size() < MAG_LIMIT && group2[rot1].getStudents().size() < MAG_LIMIT && counter < students.size()) {
 				if(group2[rot1].getStudents().size() < MAG_LIMIT && students.get(counter).getRots()[rot1].equals(group1[rot1].getName())) {
 					removeStudent(students.get(counter), group1[rot1]);
 					removeStudent(students.get(counter), group2[rot2]);

@@ -118,7 +118,7 @@ public class Student {
 			gen = true;
 			rots[rotNum] = "";
 		}else if(name.equals("GL") && !global && GLOBAL && rots[rotNum].equals(name)) {
-			global = false;
+			global = true;
 			rots[rotNum] = "";
 		}else if(name.equals("H") && !hum && HUM && rots[rotNum].equals(name)) {
 			hum = true;
