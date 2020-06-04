@@ -18,7 +18,7 @@ import javafx.scene.layout.Pane;
 public class InformationSheetViewController {
 	
 	@FXML
-	private Button backButton, confirmButton;
+	private Button confirmButton, backButton;
 	
 	@FXML
 	private Pane root;
@@ -60,10 +60,6 @@ public class InformationSheetViewController {
 		setImages();
 	}
 	
-	@FXML
-	private void backButtonClick() throws IOException {
-		root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/StartView.fxml")));
-	}
 	
 	@FXML
 	private void confirmButtonClick() throws WriterException, IOException {
@@ -79,6 +75,11 @@ public class InformationSheetViewController {
 		sportImageView.setImage(IMSLauncher.getDl().getSportImage());
 		comImageView.setImage(IMSLauncher.getDl().getComImage());
 		colImageView.setImage(IMSLauncher.getDl().getColImage());
+	}
+	
+	@FXML
+	private void backButtonClick() throws IOException {
+		root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/StartView.fxml")));
 	}
 
 }

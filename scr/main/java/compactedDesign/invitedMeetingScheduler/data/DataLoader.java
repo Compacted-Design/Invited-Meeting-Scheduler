@@ -54,6 +54,7 @@ public class DataLoader {
 	private static final int MAG_LIMIT = 50;
 	private static final String IMG_PATH = "data/img/";
 	private static final String CLUB_CODE = "club.png", COM_CODE = "comn.png", SPORT_CODE = "spor.png", WEB_CODE = "phsw.png", COL_CODE = "colg.png", BUS_CODE = "busr.png";
+	private static final String MAP_CODE = "map.png";
 	
 	private RotationGroup[] smcsGroups = new RotationGroup[4];
 	private RotationGroup[] humGroups = new RotationGroup[4];
@@ -518,12 +519,12 @@ public class DataLoader {
 						if(text.contains(".png")) {
 							InputStream image = new FileInputStream(IMG_PATH+text);
 							if(text.contains("map")) {
-								BufferedImage bimg = ImageIO.read(new File(IMG_PATH+text));
+								BufferedImage bimg = ImageIO.read(new File(IMG_PATH+MAP_CODE));
 								int width = bimg.getWidth();
 								int height = bimg.getHeight();
-								p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+text, Units.toEMU(MAP_SIDE_LENGTH), Units.toEMU(MAP_SIDE_LENGTH*(height*1.0/width)));
+								p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+MAP_CODE, Units.toEMU(MAP_SIDE_LENGTH), Units.toEMU(MAP_SIDE_LENGTH*(height*1.0/width)));
 							}else {
-								p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+text, Units.toEMU(QRCODE_SIDE_LENGTH), Units.toEMU(QRCODE_SIDE_LENGTH));
+								p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+MAP_CODE, Units.toEMU(QRCODE_SIDE_LENGTH), Units.toEMU(QRCODE_SIDE_LENGTH));
 							}
 							p.removeRun(0);
 							image.close();
@@ -874,6 +875,9 @@ public class DataLoader {
 	public Image getColImage() throws FileNotFoundException {
 		return new Image(new FileInputStream(IMG_PATH+COL_CODE));
 	}
+	public Image getMapImage() throws FileNotFoundException {
+		return new Image(new FileInputStream(IMG_PATH+MAP_CODE));
+	}
 
 	public static String getClubCode() {
 		return CLUB_CODE;
@@ -904,5 +908,13 @@ public class DataLoader {
 		this.clubCap = clubCap; this.comnCap = comnCap; this.phswCap = phswCap; this.sporCap = sporCap; this.busrCap = busrCap; this.colgCap = colgCap;
 		this.clubLink = clubLink; this.comnLink = comnLink; this.phswLink = phswLink; this.sporLink = sporLink; this.busrLink = busrLink; this.colgLink = colgLink;
 		makeQRCode(clubLink, CLUB_CODE); makeQRCode(comnLink, COM_CODE); makeQRCode(phswLink, WEB_CODE); makeQRCode(sporLink, SPORT_CODE); makeQRCode(busrLink, BUS_CODE); makeQRCode(colgLink, COL_CODE);
+	}
+
+
+	public void setMap(File mapImage) throws IOException {
+		FileInputStream sourceImage = new FileInputStream(mapImage);
+		FileOutputStream mapLocation = new FileOutputStream(IMG_PATH+MAP_CODE);
+		BufferedImage inputImage = ImageIO.read(sourceImage);
+		ImageIO.write(inputImage, "PNG", mapLocation);
 	}
 }

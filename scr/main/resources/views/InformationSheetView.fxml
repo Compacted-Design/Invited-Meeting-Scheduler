@@ -14,13 +14,16 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="compactedDesign.invitedMeetingScheduler.controllers.InformationSheetViewController">
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="20.0" top="20.0" />
+   </padding>
    <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
+      <ScrollPane BorderPane.alignment="CENTER">
          <content>
-            <GridPane fx:id="informationGrid" vgap="5.0">
+            <GridPane fx:id="informationGrid" alignment="CENTER" vgap="5.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
               </columnConstraints>
@@ -40,12 +43,12 @@
                   <TextField fx:id="clubLinkField" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                   <TextField fx:id="busLinkField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                   <TextField fx:id="webLinkField" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-                  <TextArea fx:id="clubCapArea" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextArea fx:id="busCapArea" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <TextArea fx:id="webCapArea" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <TextArea fx:id="colCapArea" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <TextArea fx:id="sportCapArea" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <TextArea fx:id="comCapArea" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <TextArea fx:id="clubCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextArea fx:id="busCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextArea fx:id="webCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <TextArea fx:id="colCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <TextArea fx:id="sportCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <TextArea fx:id="comCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                   <TextField fx:id="colLinkField" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                   <TextField fx:id="sportLinkField" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
                   <TextField fx:id="comLinkField" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP" />
@@ -55,38 +58,17 @@
                   <Label text="Colleges" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                   <Label text="Sports" GridPane.rowIndex="5" GridPane.valignment="TOP" />
                   <Label text="Communication" textOverrun="CLIP" wrapText="true" GridPane.rowIndex="6" GridPane.valignment="TOP" />
-                  <ImageView fx:id="clubImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <ImageView fx:id="busImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <ImageView fx:id="webImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <ImageView fx:id="colImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                  <ImageView fx:id="sportImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                  <ImageView fx:id="comImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                  <ImageView fx:id="clubImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <ImageView fx:id="busImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <ImageView fx:id="webImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <ImageView fx:id="colImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <ImageView fx:id="sportImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <ImageView fx:id="comImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
                </children>
             </GridPane>
          </content>
       </ScrollPane>
    </center>
-   <padding>
-      <Insets bottom="5.0" left="5.0" right="20.0" top="20.0" />
-   </padding>
-   <top>
-      <GridPane BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="Information Sheet Settings" GridPane.halignment="CENTER">
-               <font>
-                  <Font size="20.0" />
-               </font></Label>
-            <Label text="Label" GridPane.rowIndex="1" />
-         </children>
-      </GridPane>
-   </top>
    <bottom>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -97,9 +79,28 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
+            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonClick" text="Confirm" GridPane.columnIndex="1" />
             <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Back" />
-            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonClick" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
    </bottom>
+   <top>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Information Sheet" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label text="Label" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+   </top>
 </BorderPane>

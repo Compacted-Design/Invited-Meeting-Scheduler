@@ -54,8 +54,8 @@ public class StartViewController {
 		root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/InformationSheetView.fxml")));
 	}
 	@FXML
-	private void mapButtonClick() {
-		
+	private void mapButtonClick() throws IOException {
+		root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/MapView.fxml")));
 	}
 
 }
