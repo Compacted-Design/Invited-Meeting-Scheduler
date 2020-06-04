@@ -573,6 +573,7 @@ public class DataLoader {
 	}
 	
 	public void createSchedules() throws IOException, InvalidFormatException {
+		createTemplateSchedule();
 		// There will be issues if the rots leave the tables
 		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
 		@SuppressWarnings("resource")
@@ -898,5 +899,10 @@ public class DataLoader {
 		return BUS_CODE;
 	}
 	
-
+	public void setInformation(String clubCap, String comnCap, String phswCap, String sporCap, String busrCap, String colgCap,
+							   String clubLink, String comnLink, String phswLink, String sporLink, String busrLink, String colgLink) throws WriterException, IOException {
+		this.clubCap = clubCap; this.comnCap = comnCap; this.phswCap = phswCap; this.sporCap = sporCap; this.busrCap = busrCap; this.colgCap = colgCap;
+		this.clubLink = clubLink; this.comnLink = comnLink; this.phswLink = phswLink; this.sporLink = sporLink; this.busrLink = busrLink; this.colgLink = colgLink;
+		makeQRCode(clubLink, CLUB_CODE); makeQRCode(comnLink, COM_CODE); makeQRCode(phswLink, WEB_CODE); makeQRCode(sporLink, SPORT_CODE); makeQRCode(busrLink, BUS_CODE); makeQRCode(colgLink, COL_CODE);
+	}
 }
