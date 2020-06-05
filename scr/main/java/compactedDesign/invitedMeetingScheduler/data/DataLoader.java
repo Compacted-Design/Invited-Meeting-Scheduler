@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -44,18 +45,18 @@ public class DataLoader {
 	
 	private String genString, humString, gloString, smcString;
 	
-	private static final String STUDENT_DATA_PATH = "data/StudentData.xlsx", STUDENT_DATA_BACKUP_PATH = "";
-	private static final String ROTATION_NAMES_PATH = "data/RotationNames.txt", ROTATION_NAMES_BACKUP_PATH = "";
+	private static final String STUDENT_DATA_PATH = "data/StudentData.xlsx", STUDENT_DATA_BACKUP_PATH = "/backups/StudentData_Backup.xlsx";
+	private static final String ROTATION_NAMES_PATH = "data/RotationNames.txt", ROTATION_NAMES_BACKUP_PATH = "/backups/RotationNames_Backup.txt";
 	private static final String TEMPLATE_SCHEDULE_PATH = "data/BlankSchedule.docx";
-	private static final String TEMPLATE_INFORMATION_PATH = "data/BlankInfo.docx", TEMPLATE_INFORMATION_BACKUP_PATH = "";
-	private static final String QRCODE_CAPTIONS_PATH = "data/QRCodeCaptions.txt", QRCODE_CAPTIONS_BACKUP_PATH = "";
-	private static final String QRCODE_LINKS_PATH = "data/QRCodeLinks.txt", QRCODE_LINKS_BACKUP_PATH = "";
-	private static final String SCHEDULE_INFO_PATH = "data/ScheduleInfo.txt";
+	private static final String TEMPLATE_INFORMATION_PATH = "data/BlankInfo.docx", TEMPLATE_INFORMATION_BACKUP_PATH = "/backups/BlankInfo.docx";
+	private static final String QRCODE_CAPTIONS_PATH = "data/QRCodeCaptions.txt", QRCODE_CAPTIONS_BACKUP_PATH = "/backups/QRCodeCaptions_Backup.txt";
+	private static final String QRCODE_LINKS_PATH = "data/QRCodeLinks.txt", QRCODE_LINKS_BACKUP_PATH = "/backups/QRCodeLinks_Backup.txt";
+	private static final String SCHEDULE_INFO_PATH = "data/ScheduleInfo.txt", SCHEDULE_INFO_BACKUP_PATH = "/backups/ScheduleInfo_Backup.txt";
 	private static final int GEN_LIMIT = 70;
 	private static final int MAG_LIMIT = 50;
 	private static final String IMG_PATH = "data/img/";
 	private static final String CLUB_CODE = "club.png", COM_CODE = "comn.png", SPORT_CODE = "spor.png", WEB_CODE = "phsw.png", COL_CODE = "colg.png", BUS_CODE = "busr.png";
-	private static final String MAP_CODE = "map.png";
+	private static final String MAP_CODE = "map.png", MAP_BACKUP_PATH = "/backups/img/map_Backup.png";
 	private String schedulePath;
 	
 	private RotationGroup[] smcsGroups = new RotationGroup[4];
@@ -71,7 +72,19 @@ public class DataLoader {
 	private String clubLink, busrLink, phswLink, colgLink, sporLink, comnLink;
 
 	public DataLoader() throws IOException {
-		FileReader rotationText = new FileReader(ROTATION_NAMES_PATH);
+		String missingFiles = "";
+		FileReader rotationText = null;
+		try {
+			rotationText = new FileReader(ROTATION_NAMES_PATH);
+		}catch (IOException e) {
+			InputStream backup = getClass().getResourceAsStream(ROTATION_NAMES_BACKUP_PATH);
+			File source = new File(ROTATION_NAMES_PATH);
+			source.getParentFile().mkdirs();
+			FileUtils.copyInputStreamToFile(backup, source);
+			backup.close();
+			rotationText = new FileReader(ROTATION_NAMES_PATH);
+			missingFiles += "RotationNames.txt \n";
+		}
 		BufferedReader br = new BufferedReader(rotationText);
 		String line = "";
 		while ((line = br.readLine()) != null) {
@@ -86,7 +99,20 @@ public class DataLoader {
 			}
 		}
 		br.close();
-		FileReader qrCodeCapText = new FileReader(QRCODE_CAPTIONS_PATH);
+		
+		
+		FileReader qrCodeCapText = null;
+		try {
+			qrCodeCapText = new FileReader(QRCODE_CAPTIONS_PATH);
+		}catch (IOException e) {
+			InputStream backup = getClass().getResourceAsStream(QRCODE_CAPTIONS_BACKUP_PATH);
+			File source = new File(QRCODE_CAPTIONS_PATH);
+			source.getParentFile().mkdirs();
+			FileUtils.copyInputStreamToFile(backup, source);
+			backup.close();
+			qrCodeCapText = new FileReader(QRCODE_CAPTIONS_PATH);
+			missingFiles += "QRCodeCaptions.txt \n";
+		}
 		br = new BufferedReader(qrCodeCapText);
 		while((line = br.readLine()) != null) {
 			if(line.substring(0, 5).equals("club:")) {
@@ -104,7 +130,20 @@ public class DataLoader {
 			}
 		}
 		br.close();
-		FileReader qrCodeLinkText = new FileReader(QRCODE_LINKS_PATH);
+		
+		
+		FileReader qrCodeLinkText = null;
+		try {
+			qrCodeLinkText = new FileReader(QRCODE_LINKS_PATH);
+		} catch (IOException e) {
+			InputStream backup = getClass().getResourceAsStream(QRCODE_LINKS_BACKUP_PATH);
+			File source = new File(QRCODE_LINKS_PATH);
+			source.getParentFile().mkdirs();
+			FileUtils.copyInputStreamToFile(backup, source);
+			backup.close();
+			qrCodeLinkText = new FileReader(QRCODE_LINKS_PATH);
+			missingFiles += "QRCodeLinks.txt \n";
+		}
 		br = new BufferedReader(qrCodeLinkText);
 		while((line = br.readLine()) != null) {
 			if(line.substring(0, 5).equals("club:")) {
@@ -122,13 +161,28 @@ public class DataLoader {
 			}
 		}
 		br.close();
-		FileReader scheduleText = new FileReader(SCHEDULE_INFO_PATH);
+		
+		
+		FileReader scheduleText = null;
+		try {
+			scheduleText = new FileReader(SCHEDULE_INFO_PATH);
+		} catch (IOException e) {
+			InputStream backup = getClass().getResourceAsStream(SCHEDULE_INFO_BACKUP_PATH);
+			File source = new File(SCHEDULE_INFO_PATH);
+			source.getParentFile().mkdirs();
+			FileUtils.copyInputStreamToFile(backup, source);
+			backup.close();
+			scheduleText = new FileReader(SCHEDULE_INFO_PATH);
+			missingFiles += "ScheduleInfo.txt \n";
+		}
 		br = new BufferedReader(scheduleText);
 		while((line = br.readLine()) != null) {
 			if(line.substring(0,4).equals("dir:")) {
 				schedulePath = line.substring(4);
 			}
 		}
+		File scheduleFilePath = new File(schedulePath);
+		schedulePath = scheduleFilePath.getAbsolutePath();
 		br.close();
 	}
 	
