@@ -429,8 +429,9 @@ public class DataLoader {
 	public void makeQRCode(String link, String fileName) throws WriterException, IOException {
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		BitMatrix bitMatrix = qrCodeWriter.encode(link, BarcodeFormat.QR_CODE, QRCODE_SIDE_LENGTH, QRCODE_SIDE_LENGTH);
-
-        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", new FileOutputStream(new File("./data/img/"+fileName)));
+		File temp = new File(IMG_PATH+fileName);
+		temp.createNewFile();
+        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", new FileOutputStream(new File(IMG_PATH+fileName)));
         
 	}
 	
@@ -751,12 +752,12 @@ public class DataLoader {
 									missingFiles += "map.png \n";
 									image = new FileInputStream(IMG_PATH+MAP_CODE);
 								}else {
-									makeQRCode(clubLink, IMG_PATH+CLUB_CODE);
-									makeQRCode(comnLink, IMG_PATH+COM_CODE);
-									makeQRCode(phswLink, IMG_PATH+WEB_CODE);
-									makeQRCode(sporLink, IMG_PATH+SPORT_CODE);
-									makeQRCode(busrLink, IMG_PATH+BUS_CODE);
-									makeQRCode(colgLink, IMG_PATH+COL_CODE);
+									makeQRCode(clubLink, CLUB_CODE);
+									makeQRCode(comnLink, COM_CODE);
+									makeQRCode(phswLink, WEB_CODE);
+									makeQRCode(sporLink, SPORT_CODE);
+									makeQRCode(busrLink, BUS_CODE);
+									makeQRCode(colgLink, COL_CODE);
 									image = new FileInputStream(IMG_PATH+text);
 								}
 							}
@@ -833,7 +834,6 @@ public class DataLoader {
 				if (runs != null) {
 					for (XWPFRun r : runs) {
 						String text = r.getText(0);
-						System.out.println(text);
 						if (text != null && text.contains("First")) {
 							text = text.replace("First", s.getRow(i).getCell(2).getStringCellValue());
 							r.setText(text, 0);
