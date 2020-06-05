@@ -1,5 +1,7 @@
 package compactedDesign.invitedMeetingScheduler;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;

@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="compactedDesign.invitedMeetingScheduler.controllers.RotationViewController">
    <top>
@@ -17,11 +18,17 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Rotation Names" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Label text="Label" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label text="Rotation Names and Information" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="25.0" />
+               </font></Label>
+            <Label text="The general infomation for each session goes here. Please remember to input the location of the session, its name, and other general information a student might need to know." wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
          </children>
       </GridPane>
    </top>

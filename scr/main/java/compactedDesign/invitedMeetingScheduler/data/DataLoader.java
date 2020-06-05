@@ -44,12 +44,12 @@ public class DataLoader {
 	
 	private String genString, humString, gloString, smcString;
 	
-	private static final String STUDENT_DATA_PATH = "data/StudentData.xlsx";
-	private static final String ROTATION_NAMES_PATH = "data/RotationNames.txt";
+	private static final String STUDENT_DATA_PATH = "data/StudentData.xlsx", STUDENT_DATA_BACKUP_PATH = "";
+	private static final String ROTATION_NAMES_PATH = "data/RotationNames.txt", ROTATION_NAMES_BACKUP_PATH = "";
 	private static final String TEMPLATE_SCHEDULE_PATH = "data/BlankSchedule.docx";
-	private static final String TEMPLATE_INFORMATION_PATH = "data/BlankInfo.docx";
-	private static final String QRCODE_CAPTIONS_PATH = "data/QRCodeCaptions.txt";
-	private static final String QRCODE_LINKS_PATH = "data/QRCodeLinks.txt";
+	private static final String TEMPLATE_INFORMATION_PATH = "data/BlankInfo.docx", TEMPLATE_INFORMATION_BACKUP_PATH = "";
+	private static final String QRCODE_CAPTIONS_PATH = "data/QRCodeCaptions.txt", QRCODE_CAPTIONS_BACKUP_PATH = "";
+	private static final String QRCODE_LINKS_PATH = "data/QRCodeLinks.txt", QRCODE_LINKS_BACKUP_PATH = "";
 	private static final String SCHEDULE_INFO_PATH = "data/ScheduleInfo.txt";
 	private static final int GEN_LIMIT = 70;
 	private static final int MAG_LIMIT = 50;
@@ -700,6 +700,7 @@ public class DataLoader {
 		
 		doc.write(new FileOutputStream(TEMPLATE_SCHEDULE_PATH));
 		doc.close();
+		docIn.close();
 	}
 	
 	public void createSchedules() throws IOException, InvalidFormatException {
