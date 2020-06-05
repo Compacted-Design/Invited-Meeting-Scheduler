@@ -62,6 +62,7 @@ public class DataLoader {
 	private RotationGroup[] humGroups = new RotationGroup[4];
 	private RotationGroup[] genGroups = new RotationGroup[4];
 	private RotationGroup[] gloGroups = new RotationGroup[4];
+	private List<Student> students, studentsS, studentsG, studentsH, studentsSG, studentsSH, studentsGH, studentsSGH;
 	
 	private static final int QRCODE_SIDE_LENGTH = 150;
 	private static final int MAP_SIDE_LENGTH = 500;
@@ -312,6 +313,26 @@ public class DataLoader {
         
 	}
 	
+	public void clearData() throws IOException {
+		students = null; studentsG = null; studentsGH = null; studentsH = null; studentsS = null; studentsSG = null; studentsSGH = null; studentsSH = null;
+		smcsGroups = new RotationGroup[4]; humGroups = new RotationGroup[4]; genGroups = new RotationGroup[4]; gloGroups = new RotationGroup[4];
+		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
+		Workbook wb = new XSSFWorkbook(in);
+		if(wb.getSheet("ScheduleData") != null) {
+			wb.removeSheetAt(1);
+		}
+		Sheet s = wb.getSheet("RawData");
+		int lastIndex = s.getLastRowNum();
+		for(int i = lastIndex; i > 0; i--) {
+			s.removeRow(s.getRow(i));
+		}
+		in.close();
+		FileOutputStream out = new FileOutputStream(new File(STUDENT_DATA_PATH));
+		wb.write(out);
+		wb.close();
+		out.close();
+	}
+	
 	//TODO: Compress redundant series of code
 	public void groupSchedules() throws IOException, InvalidFormatException {
 		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
@@ -320,7 +341,7 @@ public class DataLoader {
 		Sheet s = wb.getSheet("RawData");
 		int i = 1;
 		//TODO: Combine into 1 for loop
-		List<Student> students = new ArrayList<>();
+		students = new ArrayList<>();
 		for (; s.getRow(i) != null; i++) {
 			students.add(new Student(
 					(int)s.getRow(i).getCell(0).getNumericCellValue(), 
@@ -331,7 +352,7 @@ public class DataLoader {
 					s.getRow(i).getCell(5).getStringCellValue().trim().equals("Y"), 
 					s.getRow(i).getCell(6).getStringCellValue().trim().equals("Y")));
 		}
-		List<Student> studentsS = new ArrayList<>(), studentsG = new ArrayList<>(), studentsH = new ArrayList<>(), studentsSG = new ArrayList<>(), studentsSH = new ArrayList<>(), studentsGH = new ArrayList<>(), studentsSGH = new ArrayList<>();
+		studentsS = new ArrayList<>(); studentsG = new ArrayList<>(); studentsH = new ArrayList<>(); studentsSG = new ArrayList<>(); studentsSH = new ArrayList<>(); studentsGH = new ArrayList<>(); studentsSGH = new ArrayList<>();
 		int smcs = 0, hum = 0, global = 0;
 		for (Student student : students) {
 			if(student.isGlobal()) {
@@ -402,9 +423,10 @@ public class DataLoader {
 				addStudent(student, gloGroups[0]);
 			}
 		}
-		
+		int max = 0;
 		//TODO: optimize the final rotation to be based on the block in which the most people are in.
 		if(Math.max(smcs, Math.max(global,hum)) == global) {
+			max = global;
 			for(Student student : studentsSGH) {
 				if(even) {
 					addStudent(student, genGroups[2]);
@@ -418,6 +440,7 @@ public class DataLoader {
 				fillLowest(0, student, humGroups, smcsGroups);
 			}
 		}else if(Math.max(smcs, Math.max(global,hum)) == hum) {
+			max = hum;
 			for(Student student : studentsSGH) {
 				if(even) {
 					addStudent(student, genGroups[2]);
@@ -431,6 +454,7 @@ public class DataLoader {
 				fillLowest(0, student, gloGroups, smcsGroups);
 			}
 		}else {
+			max = smcs;
 			for(Student student : studentsSGH) {
 				if(even) {
 					addStudent(student, genGroups[2]);
@@ -453,23 +477,65 @@ public class DataLoader {
 		moveStudents(0, 1, studentsS, smcsGroups, genGroups, true);
 		moveStudents(0, 1, studentsG, gloGroups, genGroups, true);
 		moveStudents(0, 1, studentsH, humGroups, genGroups, true);
-		if(smcs+studentsSGH.size() < 100) {
-			moveStudents(2, 0, studentsSH, smcsGroups, genGroups, true);
-			moveStudents(2, 1, studentsSH, smcsGroups, genGroups, true);
-			moveStudents(2, 0, studentsSG, smcsGroups, genGroups, true);
-			moveStudents(2, 1, studentsSG, smcsGroups, genGroups, true);
-		}
-		if(hum+studentsSGH.size() < 100) {
-			moveStudents(2, 0, studentsSH, humGroups, genGroups, true);
-			moveStudents(2, 1, studentsSH, humGroups, genGroups, true);
-			moveStudents(2, 0, studentsGH, humGroups, genGroups, true);
-			moveStudents(2, 1, studentsGH, humGroups, genGroups, true);
-		}
-		if(global+studentsSGH.size() < 100) {
-			moveStudents(2, 0, studentsGH, gloGroups, genGroups, true);
-			moveStudents(2, 1, studentsGH, gloGroups, genGroups, true);
-			moveStudents(2, 0, studentsSG, gloGroups, genGroups, true);
-			moveStudents(2, 1, studentsSG, gloGroups, genGroups, true);
+		if(max == global) {
+			if(smcs+studentsSGH.size() < 100) {
+				moveStudents(2, 0, studentsSH, smcsGroups, genGroups, true);
+				moveStudents(2, 1, studentsSH, smcsGroups, genGroups, true);
+				
+				moveStudents(2, 0, studentsSG, smcsGroups, genGroups, true);
+				moveStudents(2, 1, studentsSG, smcsGroups, genGroups, true);
+				
+				moveStudents(2, 1, studentsSG, smcsGroups, gloGroups, false);
+				moveStudents(2, 0, studentsSG, smcsGroups, gloGroups, false);
+			}
+			if(hum+studentsSGH.size() < 100) {
+				moveStudents(2, 0, studentsSH, humGroups, genGroups, true);
+				moveStudents(2, 1, studentsSH, humGroups, genGroups, true);
+				
+				moveStudents(2, 0, studentsGH, humGroups, genGroups, true);
+				moveStudents(2, 1, studentsGH, humGroups, genGroups, true);
+				
+				moveStudents(2, 1, studentsGH, humGroups, gloGroups, false);
+				moveStudents(2, 0, studentsGH, humGroups, gloGroups, false);
+			}
+		}else if(max == hum) {
+			if(smcs+studentsSGH.size() < 100) {
+				moveStudents(2, 0, studentsSH, smcsGroups, genGroups, true);
+				moveStudents(2, 1, studentsSH, smcsGroups, genGroups, true);
+				moveStudents(2, 0, studentsSG, smcsGroups, genGroups, true);
+				moveStudents(2, 1, studentsSG, smcsGroups, genGroups, true);
+				
+				moveStudents(2, 0, studentsSH, smcsGroups, humGroups, false);
+				moveStudents(2, 1, studentsSH, smcsGroups, humGroups, false);
+			}
+			if(global+studentsSGH.size() < 100) {
+				moveStudents(2, 0, studentsGH, gloGroups, genGroups, true);
+				moveStudents(2, 1, studentsGH, gloGroups, genGroups, true);
+				moveStudents(2, 0, studentsSG, gloGroups, genGroups, true);
+				moveStudents(2, 1, studentsSG, gloGroups, genGroups, true);
+				
+				moveStudents(2, 0, studentsGH, gloGroups, humGroups, false);
+				moveStudents(2, 1, studentsGH, gloGroups, humGroups, false);
+			}
+		}else {
+			if(hum+studentsSGH.size() < 100) {
+				moveStudents(2, 0, studentsSH, humGroups, genGroups, true);
+				moveStudents(2, 1, studentsSH, humGroups, genGroups, true);
+				moveStudents(2, 0, studentsGH, humGroups, genGroups, true);
+				moveStudents(2, 1, studentsGH, humGroups, genGroups, true);
+				
+				moveStudents(2, 0, studentsSH, humGroups, smcsGroups, false);
+				moveStudents(2, 1, studentsSH, humGroups, smcsGroups, false);
+			}
+			if(global+studentsSGH.size() < 100) {
+				moveStudents(2, 0, studentsGH, gloGroups, genGroups, true);
+				moveStudents(2, 1, studentsGH, gloGroups, genGroups, true);
+				moveStudents(2, 0, studentsSG, gloGroups, genGroups, true);
+				moveStudents(2, 1, studentsSG, gloGroups, genGroups, true);
+				
+				moveStudents(2, 0, studentsSG, gloGroups, smcsGroups, false);
+				moveStudents(2, 1, studentsSG, gloGroups, smcsGroups, false);
+			}
 		}
 		
 		if(wb.getSheet("ScheduleData") != null) {
@@ -529,10 +595,6 @@ public class DataLoader {
 		wb.write(out);
 		wb.close();
 		out.close();
-		for(int j = 0; j < 4; j++) {
-			System.out.println("Rot: "+(j+1)+"	GEN: "+genGroups[j].getStudents().size()+"	GLO: "+gloGroups[j].getStudents().size()
-					+"	HUM: "+humGroups[j].getStudents().size()+"	SMCS: "+smcsGroups[j].getStudents().size() );
-		}
 	}
 	
 	public void createTemplateSchedule() throws IOException, InvalidFormatException {
@@ -656,7 +718,7 @@ public class DataLoader {
 				}
 			}
 			doc.write(new FileOutputStream(
-					schedulePath+s.getRow(i).getCell(3).getStringCellValue() + "_"
+					schedulePath+"/"+s.getRow(i).getCell(3).getStringCellValue() + "_"
 							+ s.getRow(i).getCell(2).getStringCellValue() + "_" + (int)s.getRow(i).getCell(1).getNumericCellValue() + ".docx"));
 			doc.close();
 		}
@@ -762,7 +824,8 @@ public class DataLoader {
 		int counter = 0;
 		if(isGroup2Gen) {
 			while(group1[rot2].getStudents().size() < MAG_LIMIT && group2[rot1].getStudents().size() < GEN_LIMIT && counter < students.size()) {
-				if(group2[rot1].getStudents().size() < GEN_LIMIT && students.get(counter).getRots()[rot1].equals(group1[rot1].getName())) {
+				if(group2[rot1].getStudents().size() < GEN_LIMIT && students.get(counter).getRots()[rot1].equals(group1[rot1].getName()) &&
+						students.get(counter).getRots()[rot1].equals(group1[rot1].getName()) && students.get(counter).getRots()[rot2].equals(group2[rot2].getName())) {
 					removeStudent(students.get(counter), group1[rot1]);
 					removeStudent(students.get(counter), group2[rot2]);
 					addStudent(students.get(counter), group1[rot2]);
@@ -774,7 +837,8 @@ public class DataLoader {
 			}
 		}else {
 			while(group1[rot2].getStudents().size() < MAG_LIMIT && group2[rot1].getStudents().size() < MAG_LIMIT && counter < students.size()) {
-				if(group2[rot1].getStudents().size() < MAG_LIMIT && students.get(counter).getRots()[rot1].equals(group1[rot1].getName())) {
+				if(group2[rot1].getStudents().size() < MAG_LIMIT && students.get(counter).getRots()[rot1].equals(group1[rot1].getName()) &&
+						students.get(counter).getRots()[rot1].equals(group1[rot1].getName()) && students.get(counter).getRots()[rot2].equals(group2[rot2].getName())) {
 					removeStudent(students.get(counter), group1[rot1]);
 					removeStudent(students.get(counter), group2[rot2]);
 					addStudent(students.get(counter), group1[rot2]);
@@ -946,5 +1010,91 @@ public class DataLoader {
 		FileOutputStream mapLocation = new FileOutputStream(IMG_PATH+MAP_CODE);
 		BufferedImage inputImage = ImageIO.read(sourceImage);
 		ImageIO.write(inputImage, "PNG", mapLocation);
+	}
+	
+	public List<Student> getStudents(){
+		return students;
+	}
+	
+	public RotationGroup[] getSmcsGroups(){
+		return smcsGroups;
+	}
+	public RotationGroup[] getHumGroups(){
+		return humGroups;
+	}
+	public RotationGroup[] getGloGroups(){
+		return gloGroups;
+	}
+	public RotationGroup[] getGenGroups(){
+		return genGroups;
+	}
+
+	public String getSchedulePath() {
+		return schedulePath;
+	}
+
+	public void setSchedulePath(String schedulePath) throws IOException {
+		this.schedulePath = schedulePath;
+		String scheduleDirectory = "dir:"+schedulePath;
+	File fout = new File(SCHEDULE_INFO_PATH);
+	FileOutputStream fos = new FileOutputStream(fout); 	 
+	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+	bw.write(scheduleDirectory);
+	bw.close();
+	}
+
+	public void changeStudentSchedule(String[] rots, Student student) throws IOException {
+		for(int i = 0; i < 4; i++) {
+			if(student.getRots()[i].equals("GE")) {
+				removeStudent(student, genGroups[i]);
+			}else if(student.getRots()[i].equals("GL")) {
+				removeStudent(student, gloGroups[i]);
+			}else if(student.getRots()[i].equals("H")) {
+				removeStudent(student, humGroups[i]);
+			}else if(student.getRots()[i].equals("S")) {
+				removeStudent(student, smcsGroups[i]);
+			}else if(student.getRots()[i].equals("n/a")) {
+				break;
+			}
+		}
+		for(int i = 0; i < 4; i++) {
+			if(rots[i].equals("GE")) {
+				addStudent(student, genGroups[i]);
+			}else if(rots[i].equals("GL")) {
+				addStudent(student, gloGroups[i]);
+			}else if(rots[i].equals("H")) {
+				addStudent(student, humGroups[i]);
+			}else if(rots[i].equals("S")) {
+				addStudent(student, smcsGroups[i]);
+			}else if(rots[i].equals("n/a")) {
+				break;
+			}
+		}
+		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
+		Workbook wb = new XSSFWorkbook(in);
+		Sheet s = wb.getSheet("ScheduleData");
+		int left = 1, right = s.getLastRowNum();
+		int mid = (left+right)/2;
+		while(left <= right) {
+			mid = (left+right)/2;
+			int currentID = (int) s.getRow(mid).getCell(1).getNumericCellValue();
+			if(currentID == student.getId()) {
+				s.getRow(mid).getCell(4).setCellValue(student.getRots()[0]);
+				s.getRow(mid).getCell(5).setCellValue(student.getRots()[1]);
+				if(!student.getRots()[2].equals("n/a")) s.getRow(mid).getCell(6).setCellValue(student.getRots()[2]);;
+				if(!student.getRots()[3].equals("n/a")) s.getRow(mid).getCell(7).setCellValue(student.getRots()[3]);;
+				break;
+			}else if(currentID < student.getId()) {
+				left = mid+1;
+
+			}else {
+				right = mid-1;
+			}
+		}
+		in.close();
+		FileOutputStream out = new FileOutputStream(new File(STUDENT_DATA_PATH));
+		wb.write(out);
+		out.close();
+		wb.close();
 	}
 }

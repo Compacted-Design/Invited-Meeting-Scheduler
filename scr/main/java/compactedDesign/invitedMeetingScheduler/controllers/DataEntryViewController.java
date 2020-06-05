@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class DataEntryViewController {
 	
@@ -15,7 +17,7 @@ public class DataEntryViewController {
 	@FXML
 	private GridPane dataEntryContainerPane;
 	@FXML
-	private Button backButton, manualButton, spreadsheetButton;
+	private Button backButton, manualButton, spreadsheetButton, clearButton;
 	
 	@FXML
 	private void backButtonClick() throws IOException {
@@ -42,6 +44,17 @@ public class DataEntryViewController {
 		dataEntryContainerPane.getChildren().remove(dataEntryPane);
 		dataEntryPane = FXMLLoader.load(getClass().getResource("/views/entryViews/SheetView.fxml"));
 		dataEntryContainerPane.add(dataEntryPane, 0, 1);
+	}
+	
+	@FXML
+	private void clearButtonClick() throws IOException {
+		Stage popUp = new Stage();
+		popUp.setTitle("No Groups Avaliable");
+		popUp.setResizable(false);
+		Pane popUpRoot = FXMLLoader.load(getClass().getResource("/views/popupViews/ClearDataPopUpView.fxml"));
+		Scene popUpScene = new Scene(popUpRoot);
+		popUp.setScene(popUpScene);
+		popUp.show();
 	}
 
 }

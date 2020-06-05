@@ -1,5 +1,7 @@
 package compactedDesign.invitedMeetingScheduler.controllers;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
@@ -28,7 +30,9 @@ public class StartViewController {
 	 */
 	@FXML
 	private void guideButtonClick() throws IOException {
-		root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/GuideView.fxml")));
+		//TODO: Remove GuideView and GuideControl
+		//root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/GuideView.fxml")));
+		Desktop.getDesktop().open(new File("Guide.docx"));
 	}
 	/**
 	 * Action which occurs upon clicking the dataEntryButton

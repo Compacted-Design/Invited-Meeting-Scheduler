@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -17,13 +18,20 @@
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Back" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <Label text="Data Entry" />
+            <Label text="Label" GridPane.rowIndex="1" />
+            <Label text="Label" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </center>
    <padding>
       <Insets bottom="5.0" left="5.0" />
    </padding>
+   <bottom>
+      <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Back" BorderPane.alignment="BOTTOM_LEFT" />
+   </bottom>
 </BorderPane>
