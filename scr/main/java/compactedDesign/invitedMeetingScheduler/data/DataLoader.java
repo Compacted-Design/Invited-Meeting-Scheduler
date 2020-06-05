@@ -214,7 +214,19 @@ public class DataLoader {
 	}
 	
 	public void loadDataInput(int id, String first, String last, String school, boolean smcs, boolean global, boolean hum) throws IOException {
-		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
+		FileInputStream in = null;
+		try {
+			in = new FileInputStream(new File(STUDENT_DATA_PATH));
+		} catch (IOException e) {
+			InputStream backup = getClass().getResourceAsStream(STUDENT_DATA_BACKUP_PATH);
+			File source = new File(STUDENT_DATA_PATH);
+			source.getParentFile().mkdirs();
+			FileUtils.copyInputStreamToFile(backup, source);
+			backup.close();
+			missingFiles = "StudentData.xlsx";
+			openMissingFilesPopup();
+			in = new FileInputStream(new File(STUDENT_DATA_PATH));
+		}
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("RawData");
 		int left = 1, right = s.getLastRowNum();
@@ -267,7 +279,19 @@ public class DataLoader {
 	}
 	
 	public void loadDataInput(File inputSheetFile) throws IOException, InvalidFormatException {
-		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
+		FileInputStream in = null;
+		try {
+			in = new FileInputStream(new File(STUDENT_DATA_PATH));
+		} catch (IOException e) {
+			InputStream backup = getClass().getResourceAsStream(STUDENT_DATA_BACKUP_PATH);
+			File source = new File(STUDENT_DATA_PATH);
+			source.getParentFile().mkdirs();
+			FileUtils.copyInputStreamToFile(backup, source);
+			backup.close();
+			missingFiles = "StudentData.xlsx";
+			in = new FileInputStream(new File(STUDENT_DATA_PATH));
+			openMissingFilesPopup();
+		}
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("RawData");
 		Workbook inputWB = new XSSFWorkbook(inputSheetFile);
@@ -457,7 +481,19 @@ public class DataLoader {
 	
 	//TODO: Compress redundant series of code
 	public void groupSchedules() throws IOException, InvalidFormatException {
-		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
+		FileInputStream in = null;
+		try {
+			in = new FileInputStream(new File(STUDENT_DATA_PATH));
+		} catch (IOException e) {
+			InputStream backup = getClass().getResourceAsStream(STUDENT_DATA_BACKUP_PATH);
+			File source = new File(STUDENT_DATA_PATH);
+			source.getParentFile().mkdirs();
+			FileUtils.copyInputStreamToFile(backup, source);
+			backup.close();
+			missingFiles = "StudentData.xlsx";
+			openMissingFilesPopup();
+			return;
+		}
 		@SuppressWarnings("resource")
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("RawData");
