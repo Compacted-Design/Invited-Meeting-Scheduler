@@ -72,6 +72,7 @@ public class MapViewController {
 			for(File file : db.getFiles()) {
 				if(ImageIO.read(file) != null) {
 					hasImage = true;
+					
 					IMSLauncher.getDl().setMap(file);
 				}
 			}

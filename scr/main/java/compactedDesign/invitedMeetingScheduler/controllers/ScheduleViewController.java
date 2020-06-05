@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
@@ -39,6 +41,8 @@ public class ScheduleViewController {
 	private String valid = "-fx-background-color: lightgreen;", invalid = "-fx-background-color: red;";
 	
 	private Student target;
+	
+	private boolean enterKeyPressed = false;
 	
 	@FXML
 	private void initialize() {
@@ -78,7 +82,22 @@ public class ScheduleViewController {
 		}
 		
 	}*/
-
+	@FXML
+	private void searchFieldHandleKeyPress(KeyEvent event) {
+		if(event.getCode().equals(KeyCode.ENTER)) {
+			enterKeyPressed = true;
+		}
+	}
+	
+	@FXML
+	private void searchFieldHandleKeyRelease(KeyEvent event) throws IOException {
+		if(event.getCode().equals(KeyCode.ENTER) && enterKeyPressed) {
+			enterKeyPressed = false;
+			searchButtonClick();
+		}
+		event.consume();
+	}
+	
 	@FXML
 	private void searchButtonClick() throws IOException {
 		searchErrorsLabel.setText("");
@@ -109,10 +128,19 @@ public class ScheduleViewController {
 				}
 			}
 		} catch (Exception e) {
-			String name1 = searchField.getText(), name2 = null;
-			if(searchField.getText().contains(" ")) {
+			String name1 = searchField.getText().trim(), name2 = null;
+			if(searchField.getText().contains(" ") && searchField.getText().split(" ").length >= 2) {
 				name1 = searchField.getText().split(" ")[0];
 				name2 = searchField.getText().split(" ")[1];
+				int counter = 2;
+				while(name2 != null && name2.equals("")) {
+					if(searchField.getText().split(" ").length > counter) {
+						name2 =searchField.getText().split(" ")[counter];
+						counter++;
+					}else {
+						name2 = null;
+					}
+				}
 			}
 			for(Student student: IMSLauncher.getDl().getStudents()) {
 				if(name2 != null) {

@@ -199,6 +199,9 @@ public class DataLoader {
 			int lastCol = -1;
 			int schoolCol = -1;
 			int houseCol = -1;
+			int smcsCol = -1;
+			int humCol = -1;
+			int gloCol = -1;
 			for(int i = 0; titleRow.getCell(i) != null; i++) {
 				if(idCol == -1 && titleRow.getCell(i).getStringCellValue().contains("ID") && inputSheet.getRow(1).getCell(i).getCellType() == CellType.NUMERIC) {
 					idCol = i;
@@ -212,17 +215,54 @@ public class DataLoader {
 					houseCol = i;
 				}else if(houseCol != -1 && !titleRow.getCell(i).getStringCellValue().toLowerCase().contains("inv")) {
 					houseCol = i;
+				}else if(smcsCol == -1 && (titleRow.getCell(i).getStringCellValue().toLowerCase().contains("smc") || titleRow.getCell(i).getStringCellValue().toLowerCase().contains("math") || 
+						titleRow.getCell(i).getStringCellValue().toLowerCase().contains("sci"))) {
+					smcsCol = i;
+				}else if(humCol == -1 && titleRow.getCell(i).getStringCellValue().toLowerCase().contains("hum")) {
+					humCol = i;
+				}else if(gloCol == -1 && titleRow.getCell(i).getStringCellValue().toLowerCase().contains("glo")) {
+					gloCol = i;
 				}
 			}
-			if(idCol != -1 && firstCol != -1 && lastCol != -1 && schoolCol != -1 && houseCol != -1) {
+			if(idCol != -1 && firstCol != -1 && lastCol != -1 && schoolCol != -1 && (houseCol != -1 || (smcsCol != -1 && humCol != -1 && gloCol != -1))) {
 				for(int rowIndex = 1; inputSheet.getRow(rowIndex) != null; rowIndex++) {
 					Row row = inputSheet.getRow(rowIndex);
 					String first = row.getCell(firstCol).getStringCellValue().trim();
 					String last = row.getCell(lastCol).getStringCellValue().trim();
 					String school = row.getCell(schoolCol).getStringCellValue().trim();
-					boolean smcs = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("smcs");
-					boolean global = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("glo");
-					boolean hum = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("hum");
+					boolean smcs = false, global = false, hum = false;
+					if(smcsCol != -1 && humCol != -1 && gloCol != -1) {
+						if(row.getCell(smcsCol).getCellType() == CellType.STRING) {
+							smcs = row.getCell(smcsCol).getStringCellValue().toLowerCase().contains("y") || row.getCell(smcsCol).getStringCellValue().toLowerCase().contains("true");
+						}else if(row.getCell(smcsCol).getCellType() == CellType.NUMERIC) {
+							smcs = row.getCell(smcsCol).getNumericCellValue() == 1;
+						}else if(row.getCell(smcsCol).getCellType() == CellType.BOOLEAN) {
+							smcs = row.getCell(smcsCol).getBooleanCellValue();
+						}
+						
+						if(row.getCell(humCol).getCellType() == CellType.STRING) {
+							hum = row.getCell(humCol).getStringCellValue().toLowerCase().contains("y") || row.getCell(humCol).getStringCellValue().toLowerCase().contains("true");
+						}else if(row.getCell(humCol).getCellType() == CellType.STRING) {
+							hum = row.getCell(humCol).getNumericCellValue() == 1;
+						}else if(row.getCell(humCol).getCellType() == CellType.STRING) {
+							hum = row.getCell(humCol).getBooleanCellValue();
+						}
+						
+						if(row.getCell(gloCol).getCellType() == CellType.STRING) {
+							global = row.getCell(gloCol).getStringCellValue().toLowerCase().contains("y") || row.getCell(gloCol).getStringCellValue().toLowerCase().contains("true");
+						}else if(row.getCell(gloCol).getCellType() == CellType.STRING) {
+							global = row.getCell(gloCol).getNumericCellValue() == 1;
+						}else if(row.getCell(gloCol).getCellType() == CellType.STRING) {
+							global = row.getCell(gloCol).getBooleanCellValue();
+						}
+						
+						
+					}else if(houseCol != -1) {
+						smcs = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("smcs") || row.getCell(houseCol).getStringCellValue().toLowerCase().contains("math") ||
+								row.getCell(houseCol).getStringCellValue().toLowerCase().contains("sci");
+						global = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("glo");
+						hum = row.getCell(houseCol).getStringCellValue().toLowerCase().contains("hum");
+					}
 					if(first.equals("") || last.equals("")) {
 						continue;
 					}

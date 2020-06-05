@@ -44,6 +44,14 @@ public class ManualViewController {
 			if(idEntry.getText().trim().length() != 6) {
 				noticeLabel.setText("ID should be 6 digits ");
 				invalidEntry = true;
+			}else {
+				for(int i = 0; i < idEntry.getText().trim().length(); i++) {
+					if(!Character.isDigit(idEntry.getText().trim().charAt(i))) {
+						noticeLabel.setText("ID should be 6 digits ");
+						invalidEntry = true;
+						break;
+					}
+				}
 			}
 		} catch (Exception e) {
 			noticeLabel.setText("ID should be 6 digits");
@@ -52,6 +60,19 @@ public class ManualViewController {
 		if(firstNameEntry.getText().trim().equals("") || lastNameEntry.getText().trim().equals("") || middleSchoolEntry.getText().trim().equals("")) {
 			noticeLabel.setText(noticeLabel.getText() + "\n"+"Missing required information");
 			invalidEntry = true;
+		}
+		for (int i = 0; i < firstNameEntry.getText().trim().length(); i++) {
+			if(Character.isDigit(firstNameEntry.getText().trim().charAt(i))) {
+				noticeLabel.setText(noticeLabel.getText() + "\n"+"Please Don't Use Digits in the First Name");
+				invalidEntry = true;
+				break;
+			}
+		}
+		for (int i = 0; i < lastNameEntry.getText().trim().length(); i++) {
+			if(Character.isDigit(lastNameEntry.getText().trim().charAt(i))) {
+				noticeLabel.setText(noticeLabel.getText() + "\n"+"Please Don't Use Digits in the Last Name");
+				invalidEntry = true;
+			}
 		}
 		if(invalidEntry) {
 			return;

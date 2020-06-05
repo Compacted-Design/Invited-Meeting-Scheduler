@@ -91,7 +91,7 @@
                     </rowConstraints>
                      <children>
                         <Label text="Search (Enter a student name or id)" />
-                        <TextField fx:id="searchField" GridPane.columnIndex="1" />
+                        <TextField fx:id="searchField" onKeyPressed="#searchFieldHandleKeyPress" onKeyReleased="#searchFieldHandleKeyRelease" GridPane.columnIndex="1" />
                         <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonClick" text="Search" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>

@@ -6,7 +6,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <Label text="Data Inputed into the System" BorderPane.alignment="CENTER">
+      <Label text="The Data was successfully inputed into the System." BorderPane.alignment="CENTER">
          <font>
             <Font size="25.0" />
          </font></Label>

@@ -41,7 +41,7 @@ public class SheetViewController {
 	}
 	
 	@FXML
-	private void handleDragDropped(DragEvent event) throws InvalidFormatException, IOException {
+	private void handleDragDropped(DragEvent event) throws IOException {
 		if(fileChooserOpen) {
 			return;
 		}
@@ -50,7 +50,7 @@ public class SheetViewController {
 		if (db.hasFiles()) {
 			for(File file : db.getFiles()) {
 				if(file.getAbsolutePath().substring(file.getAbsolutePath().length()-5).equals(".xlsx")) {
-					IMSLauncher.getDl().loadDataInput(file);
+					fileInput(file);
 					hasExcel = true;
 				}
 			}
@@ -62,14 +62,14 @@ public class SheetViewController {
 	}
 	
 	@FXML
-	private void selectFileButtonClick() throws InvalidFormatException, IOException, InterruptedException {
+	private void selectFileButtonClick() throws IOException {
 		fileChooserOpen = true;
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Excel File");
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Excel Files", "*.xlsx"));
 		File selectedFile = fileChooser.showOpenDialog(root.getScene().getWindow());
 		if(selectedFile != null) {
-			IMSLauncher.getDl().loadDataInput(selectedFile);
+			fileInput(selectedFile);
 			fileChooserOpen = false;
 			dataInputed();
 		}else {
@@ -81,6 +81,16 @@ public class SheetViewController {
 		Node dataInputNode = FXMLLoader.load(getClass().getResource("/views/entryViews/DataInputedView.fxml"));
 		((GridPane)root.getParent()).add(dataInputNode, 0, 1);
 		((Pane)root.getParent()).getChildren().remove(root);
+	}
+	
+	private void fileInput(File file) throws IOException {
+		try {
+			IMSLauncher.getDl().loadDataInput(file);
+		} catch (Exception e) {
+			Node dataInputNode = FXMLLoader.load(getClass().getResource("/views/entryViews/DataNotInputedView.fxml"));
+			((GridPane)root.getParent()).add(dataInputNode, 0, 1);
+			((Pane)root.getParent()).getChildren().remove(root);
+		}
 	}
 
 }

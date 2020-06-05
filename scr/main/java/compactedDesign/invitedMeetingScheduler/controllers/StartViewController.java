@@ -32,7 +32,11 @@ public class StartViewController {
 	private void guideButtonClick() throws IOException {
 		//TODO: Remove GuideView and GuideControl
 		//root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/GuideView.fxml")));
-		Desktop.getDesktop().open(new File("Guide.docx"));
+		try {
+			Desktop.getDesktop().open(new File("Guide.docx"));
+		}catch (IOException e) {
+			
+		}
 	}
 	/**
 	 * Action which occurs upon clicking the dataEntryButton
