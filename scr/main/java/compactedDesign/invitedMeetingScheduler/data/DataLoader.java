@@ -52,7 +52,7 @@ public class DataLoader {
 	private static final String STUDENT_DATA_PATH = "data/StudentData.xlsx", STUDENT_DATA_BACKUP_PATH = "/backups/StudentData_Backup.xlsx";
 	private static final String ROTATION_NAMES_PATH = "data/RotationNames.txt", ROTATION_NAMES_BACKUP_PATH = "/backups/RotationNames_Backup.txt";
 	private static final String TEMPLATE_SCHEDULE_PATH = "data/BlankSchedule.docx";
-	private static final String TEMPLATE_INFORMATION_PATH = "data/BlankInfo.docx", TEMPLATE_INFORMATION_BACKUP_PATH = "/backups/BlankInfo.docx";
+	private static final String TEMPLATE_INFORMATION_PATH = "data/BlankInfo.docx", TEMPLATE_INFORMATION_BACKUP_PATH = "/backups/BlankInfo_Backup.docx";
 	private static final String QRCODE_CAPTIONS_PATH = "data/QRCodeCaptions.txt", QRCODE_CAPTIONS_BACKUP_PATH = "/backups/QRCodeCaptions_Backup.txt";
 	private static final String QRCODE_LINKS_PATH = "data/QRCodeLinks.txt", QRCODE_LINKS_BACKUP_PATH = "/backups/QRCodeLinks_Backup.txt";
 	private static final String SCHEDULE_INFO_PATH = "data/ScheduleInfo.txt", SCHEDULE_INFO_BACKUP_PATH = "/backups/ScheduleInfo_Backup.txt";
@@ -76,7 +76,7 @@ public class DataLoader {
 	private String clubLink, busrLink, phswLink, colgLink, sporLink, comnLink;
 	private String missingFiles;
 
-	public DataLoader() throws IOException {
+	public DataLoader() throws IOException, WriterException {
 		missingFiles = "";
 		FileReader rotationText = null;
 		try {
@@ -165,6 +165,14 @@ public class DataLoader {
 				comnLink = line.substring(5);
 			}
 		}
+		if(missingFiles.contains("QRCodeLinks")) {
+			makeQRCode(clubLink, IMG_PATH+CLUB_CODE);
+			makeQRCode(comnLink, IMG_PATH+COM_CODE);
+			makeQRCode(phswLink, IMG_PATH+WEB_CODE);
+			makeQRCode(sporLink, IMG_PATH+SPORT_CODE);
+			makeQRCode(busrLink, IMG_PATH+BUS_CODE);
+			makeQRCode(colgLink, IMG_PATH+COL_CODE);
+		}
 		br.close();
 		
 		
@@ -192,6 +200,9 @@ public class DataLoader {
 	}
 	
 	public void openMissingFilesPopup() throws IOException {
+		if(missingFiles.equals("")) {
+			return;
+		}
 		Stage popUp = new Stage();
 		popUp.setTitle("Missing Files");
 		popUp.setResizable(false);
@@ -707,8 +718,19 @@ public class DataLoader {
 		out.close();
 	}
 	
-	public void createTemplateSchedule() throws IOException, InvalidFormatException {
-		FileInputStream docIn = new FileInputStream(new File(TEMPLATE_INFORMATION_PATH));
+	public void createTemplateSchedule() throws IOException, InvalidFormatException, WriterException {
+		FileInputStream docIn = null;
+		try {
+			docIn = new FileInputStream(new File(TEMPLATE_INFORMATION_PATH));
+		} catch (IOException e) {
+			InputStream backup = getClass().getResourceAsStream(TEMPLATE_INFORMATION_BACKUP_PATH);
+			File source = new File(TEMPLATE_INFORMATION_PATH);
+			source.getParentFile().mkdirs();
+			FileUtils.copyInputStreamToFile(backup, source);
+			backup.close();
+			missingFiles += "BlankInfo.docx \n";
+			docIn = new FileInputStream(new File(TEMPLATE_INFORMATION_PATH));
+		}
 		XWPFDocument doc = new XWPFDocument(docIn);
 		for (XWPFTable tbl : doc.getTables()) {
 			for (XWPFTableRow row : tbl.getRows()) {
@@ -716,14 +738,35 @@ public class DataLoader {
 					for (XWPFParagraph p : cell.getParagraphs()) {
 						String text = p.getText().trim();
 						if(text.contains(".png")) {
-							InputStream image = new FileInputStream(IMG_PATH+text);
+							InputStream image = null;
+							try {
+								image = new FileInputStream(IMG_PATH+text);
+							} catch (IOException e) {
+								if(text.contains("map")) {
+									InputStream backup = getClass().getResourceAsStream(MAP_BACKUP_PATH);
+									File source = new File(IMG_PATH+MAP_CODE);
+									source.getParentFile().mkdirs();
+									FileUtils.copyInputStreamToFile(backup, source);
+									backup.close();
+									missingFiles += "map.png \n";
+									image = new FileInputStream(IMG_PATH+MAP_CODE);
+								}else {
+									makeQRCode(clubLink, IMG_PATH+CLUB_CODE);
+									makeQRCode(comnLink, IMG_PATH+COM_CODE);
+									makeQRCode(phswLink, IMG_PATH+WEB_CODE);
+									makeQRCode(sporLink, IMG_PATH+SPORT_CODE);
+									makeQRCode(busrLink, IMG_PATH+BUS_CODE);
+									makeQRCode(colgLink, IMG_PATH+COL_CODE);
+									image = new FileInputStream(IMG_PATH+text);
+								}
+							}
 							if(text.contains("map")) {
 								BufferedImage bimg = ImageIO.read(new File(IMG_PATH+MAP_CODE));
 								int width = bimg.getWidth();
 								int height = bimg.getHeight();
 								p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+MAP_CODE, Units.toEMU(MAP_SIDE_LENGTH), Units.toEMU(MAP_SIDE_LENGTH*(height*1.0/width)));
 							}else {
-								p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+MAP_CODE, Units.toEMU(QRCODE_SIDE_LENGTH), Units.toEMU(QRCODE_SIDE_LENGTH));
+								p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+text, Units.toEMU(QRCODE_SIDE_LENGTH), Units.toEMU(QRCODE_SIDE_LENGTH));
 							}
 							p.removeRun(0);
 							image.close();
@@ -771,9 +814,10 @@ public class DataLoader {
 		doc.write(new FileOutputStream(TEMPLATE_SCHEDULE_PATH));
 		doc.close();
 		docIn.close();
+		openMissingFilesPopup();
 	}
 	
-	public void createSchedules() throws IOException, InvalidFormatException {
+	public void createSchedules() throws IOException, InvalidFormatException, WriterException {
 		createTemplateSchedule();
 		// There will be issues if the rots leave the tables
 		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
@@ -789,6 +833,7 @@ public class DataLoader {
 				if (runs != null) {
 					for (XWPFRun r : runs) {
 						String text = r.getText(0);
+						System.out.println(text);
 						if (text != null && text.contains("First")) {
 							text = text.replace("First", s.getRow(i).getCell(2).getStringCellValue());
 							r.setText(text, 0);

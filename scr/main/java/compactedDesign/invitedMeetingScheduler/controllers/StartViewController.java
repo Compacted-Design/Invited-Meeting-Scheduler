@@ -25,9 +25,7 @@ public class StartViewController {
 	
 	@FXML
 	private void initialize() throws IOException {
-		if(!IMSLauncher.getDl().getMissingFiles().equals("")) {
-			IMSLauncher.getDl().openMissingFilesPopup();
-		}
+		IMSLauncher.getDl().openMissingFilesPopup();
 	}
 	/**
 	 * Action which occurs upon clicking the guideButton. 

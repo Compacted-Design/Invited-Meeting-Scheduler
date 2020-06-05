@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
+import com.google.zxing.WriterException;
+
 import compactedDesign.invitedMeetingScheduler.IMSLauncher;
 import compactedDesign.invitedMeetingScheduler.data.Student;
 import javafx.fxml.FXML;
@@ -69,7 +71,7 @@ public class ScheduleViewController {
 	}
 	
 	@FXML
-	private void createScheduleDocumentsButtonClick() throws InvalidFormatException, IOException {
+	private void createScheduleDocumentsButtonClick() throws InvalidFormatException, IOException, WriterException {
 		IMSLauncher.getDl().createSchedules();
 	}
 	
