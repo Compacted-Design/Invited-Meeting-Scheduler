@@ -70,9 +70,10 @@ public class DataLoader {
 	
 	private String clubCap, busrCap, phswCap, colgCap, sporCap, comnCap;
 	private String clubLink, busrLink, phswLink, colgLink, sporLink, comnLink;
+	private String missingFiles;
 
 	public DataLoader() throws IOException {
-		String missingFiles = "";
+		missingFiles = "";
 		FileReader rotationText = null;
 		try {
 			rotationText = new FileReader(ROTATION_NAMES_PATH);
@@ -184,6 +185,15 @@ public class DataLoader {
 		File scheduleFilePath = new File(schedulePath);
 		schedulePath = scheduleFilePath.getAbsolutePath();
 		br.close();
+	}
+	
+	public String getMissingFilesText() {
+		if(missingFiles == null || missingFiles.equals("")) {
+			return null;
+		}
+		String returnString = missingFiles;
+		missingFiles = "";
+		return returnString;
 	}
 	
 	public void loadDataInput(int id, String first, String last, String school, boolean smcs, boolean global, boolean hum) throws IOException {
