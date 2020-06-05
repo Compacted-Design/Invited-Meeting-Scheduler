@@ -3,8 +3,6 @@ package compactedDesign.invitedMeetingScheduler.controllers.entry;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-
 import compactedDesign.invitedMeetingScheduler.IMSLauncher;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -38,7 +38,11 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class DataLoader {
 	//Decide whether it should be static or not
@@ -174,7 +178,7 @@ public class DataLoader {
 			FileUtils.copyInputStreamToFile(backup, source);
 			backup.close();
 			scheduleText = new FileReader(SCHEDULE_INFO_PATH);
-			missingFiles += "ScheduleInfo.txt \n";
+			missingFiles += "ScheduleInfo.txt";
 		}
 		br = new BufferedReader(scheduleText);
 		while((line = br.readLine()) != null) {
@@ -187,13 +191,15 @@ public class DataLoader {
 		br.close();
 	}
 	
-	public String getMissingFilesText() {
-		if(missingFiles == null || missingFiles.equals("")) {
-			return null;
-		}
-		String returnString = missingFiles;
+	public void openMissingFilesPopup() throws IOException {
+		Stage popUp = new Stage();
+		popUp.setTitle("Missing Files");
+		popUp.setResizable(false);
+		Pane popUpRoot = FXMLLoader.load(getClass().getResource("/views/popupViews/MissingFilesPopUpView.fxml"));
+		Scene popUpScene = new Scene(popUpRoot);
+		popUp.setScene(popUpScene);
+		popUp.show();
 		missingFiles = "";
-		return returnString;
 	}
 	
 	public void loadDataInput(int id, String first, String last, String school, boolean smcs, boolean global, boolean hum) throws IOException {
@@ -1201,5 +1207,9 @@ public class DataLoader {
 		wb.write(out);
 		out.close();
 		wb.close();
+	}
+
+	public String getMissingFiles() {
+		return missingFiles;
 	}
 }

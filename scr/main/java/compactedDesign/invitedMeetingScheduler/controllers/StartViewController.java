@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
+import compactedDesign.invitedMeetingScheduler.IMSLauncher;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -22,7 +23,12 @@ public class StartViewController {
 	@FXML
 	private Pane root;
 	
-	
+	@FXML
+	private void initialize() throws IOException {
+		if(!IMSLauncher.getDl().getMissingFiles().equals("")) {
+			IMSLauncher.getDl().openMissingFilesPopup();
+		}
+	}
 	/**
 	 * Action which occurs upon clicking the guideButton. 
 	 * Changes the root node of the scene to the GuideView.

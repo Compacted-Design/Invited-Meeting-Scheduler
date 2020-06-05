@@ -11,7 +11,7 @@ public class MissingFilesPopUpViewController {
 	
 	@FXML
 	private void initialize() {
-		missingFilesLabel.setText(IMSLauncher.getDl().getMissingFilesText());
+		missingFilesLabel.setText(IMSLauncher.getDl().getMissingFiles());
 	}
 
 }
