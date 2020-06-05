@@ -454,6 +454,7 @@ public class DataLoader {
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		BitMatrix bitMatrix = qrCodeWriter.encode(link, BarcodeFormat.QR_CODE, QRCODE_SIDE_LENGTH, QRCODE_SIDE_LENGTH);
 		File temp = new File(IMG_PATH+fileName);
+		temp.getParentFile().mkdirs();
 		temp.createNewFile();
         MatrixToImageWriter.writeToStream(bitMatrix, "PNG", new FileOutputStream(new File(IMG_PATH+fileName)));
         
@@ -462,21 +463,11 @@ public class DataLoader {
 	public void clearData() throws IOException {
 		students = null; studentsG = null; studentsGH = null; studentsH = null; studentsS = null; studentsSG = null; studentsSGH = null; studentsSH = null;
 		smcsGroups = new RotationGroup[4]; humGroups = new RotationGroup[4]; genGroups = new RotationGroup[4]; gloGroups = new RotationGroup[4];
-		FileInputStream in = new FileInputStream(new File(STUDENT_DATA_PATH));
-		Workbook wb = new XSSFWorkbook(in);
-		if(wb.getSheet("ScheduleData") != null) {
-			wb.removeSheetAt(1);
-		}
-		Sheet s = wb.getSheet("RawData");
-		int lastIndex = s.getLastRowNum();
-		for(int i = lastIndex; i > 0; i--) {
-			s.removeRow(s.getRow(i));
-		}
-		in.close();
-		FileOutputStream out = new FileOutputStream(new File(STUDENT_DATA_PATH));
-		wb.write(out);
-		wb.close();
-		out.close();
+		InputStream backup = getClass().getResourceAsStream(STUDENT_DATA_BACKUP_PATH);
+		File source = new File(STUDENT_DATA_PATH);
+		source.getParentFile().mkdirs();
+		FileUtils.copyInputStreamToFile(backup, source);
+		backup.close();
 	}
 	
 	//TODO: Compress redundant series of code
@@ -1079,10 +1070,13 @@ public class DataLoader {
 				   	   "hum:" + humName + "\n" +
 				   	   "smc:" + smcName;
 		File fout = new File(ROTATION_NAMES_PATH);
+		fout.getParentFile().mkdirs();
+		fout.createNewFile();
 		FileOutputStream fos = new FileOutputStream(fout); 	 
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 		bw.write(rotationNames);
 		bw.close();
+		fos.close();
 	}
 
 	public void resetRotationGroups() {
@@ -1194,14 +1188,47 @@ public class DataLoader {
 		this.clubCap = clubCap; this.comnCap = comnCap; this.phswCap = phswCap; this.sporCap = sporCap; this.busrCap = busrCap; this.colgCap = colgCap;
 		this.clubLink = clubLink; this.comnLink = comnLink; this.phswLink = phswLink; this.sporLink = sporLink; this.busrLink = busrLink; this.colgLink = colgLink;
 		makeQRCode(clubLink, CLUB_CODE); makeQRCode(comnLink, COM_CODE); makeQRCode(phswLink, WEB_CODE); makeQRCode(sporLink, SPORT_CODE); makeQRCode(busrLink, BUS_CODE); makeQRCode(colgLink, COL_CODE);
+		String captions = "club:" + clubCap + "\n" +
+						  "busr:" + busrCap + "\n" +
+						  "phsw:" + phswCap + "\n" +
+						  "colg:" + colgCap + "\n" +
+						  "spor:" + sporCap + "\n" +
+						  "comn:" + comnCap + "\n";
+		String links = "club:" + clubLink + "\n" +
+				  	   "busr:" + busrLink + "\n" +
+				  	   "phsw:" + phswLink + "\n" +
+				  	   "colg:" + colgLink + "\n" +
+				  	   "spor:" + sporLink + "\n" +
+				  	   "comn:" + comnLink + "\n";
+		File fout = new File(QRCODE_CAPTIONS_PATH);
+		fout.getParentFile().mkdirs();
+		fout.createNewFile();
+		FileOutputStream fos = new FileOutputStream(fout); 	 
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+		bw.write(captions);
+		bw.close();
+		fos.close();
+		fout = new File(QRCODE_LINKS_PATH);
+		fout.getParentFile().mkdirs();
+		fout.createNewFile();
+		fos = new FileOutputStream(fout); 	 
+		bw = new BufferedWriter(new OutputStreamWriter(fos));
+		bw.write(links);
+		bw.close();
+		fos.close();
 	}
 
 
 	public void setMap(File mapImage) throws IOException {
 		FileInputStream sourceImage = new FileInputStream(mapImage);
-		FileOutputStream mapLocation = new FileOutputStream(IMG_PATH+MAP_CODE);
+		File fout = new File(IMG_PATH+MAP_CODE);
+		fout.getParentFile().mkdirs();
+		fout.createNewFile();
+		FileOutputStream mapLocation = new FileOutputStream(fout);
 		BufferedImage inputImage = ImageIO.read(sourceImage);
 		ImageIO.write(inputImage, "PNG", mapLocation);
+		mapLocation.close();
+		sourceImage.close();
 	}
 	
 	public List<Student> getStudents(){
@@ -1228,11 +1255,14 @@ public class DataLoader {
 	public void setSchedulePath(String schedulePath) throws IOException {
 		this.schedulePath = schedulePath;
 		String scheduleDirectory = "dir:"+schedulePath;
-	File fout = new File(SCHEDULE_INFO_PATH);
-	FileOutputStream fos = new FileOutputStream(fout); 	 
-	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-	bw.write(scheduleDirectory);
-	bw.close();
+		File fout = new File(SCHEDULE_INFO_PATH);
+		fout.getParentFile().mkdirs();
+		fout.createNewFile();
+		FileOutputStream fos = new FileOutputStream(fout); 	 
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+		bw.write(scheduleDirectory);
+		bw.close();
+		fos.close();
 	}
 
 	public void changeStudentSchedule(String[] rots, Student student) throws IOException {
