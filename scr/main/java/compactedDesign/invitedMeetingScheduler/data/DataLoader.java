@@ -1392,4 +1392,32 @@ public class DataLoader {
 	public String getMissingFiles() {
 		return missingFiles;
 	}
+
+	public List<Student> getStudentsS() {
+		return studentsS;
+	}
+
+	public List<Student> getStudentsG() {
+		return studentsG;
+	}
+
+	public List<Student> getStudentsH() {
+		return studentsH;
+	}
+
+	public List<Student> getStudentsSG() {
+		return studentsSG;
+	}
+
+	public List<Student> getStudentsSH() {
+		return studentsSH;
+	}
+
+	public List<Student> getStudentsGH() {
+		return studentsGH;
+	}
+
+	public List<Student> getStudentsSGH() {
+		return studentsSGH;
+	}
 }

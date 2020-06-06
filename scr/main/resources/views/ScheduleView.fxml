@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -107,6 +108,7 @@
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -120,22 +122,24 @@
                      <children>
                         <Label text="First Name" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                         <Label text="Last Name" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                        <Label text="Rotation 1" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
-                        <Label text="Rotation 2" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
-                        <Label text="Rotation 3" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
-                        <Label text="Rotation 4" GridPane.columnIndex="6" GridPane.halignment="CENTER" />
+                        <Label text="Rotation 1" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+                        <Label text="Rotation 2" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
+                        <Label text="Rotation 3" GridPane.columnIndex="6" GridPane.halignment="CENTER" />
+                        <Label text="Rotation 4" GridPane.columnIndex="7" GridPane.halignment="CENTER" />
                         <Label text="ID" GridPane.halignment="CENTER" />
                         <Label fx:id="idLabel" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <Label fx:id="firstNameLabel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <Label fx:id="lastNameLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Button fx:id="rot1ButtonUp" disable="true" mnemonicParsing="false" onAction="#rot1ButtonUpClick" text="Button" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Button fx:id="rot2ButtonUp" disable="true" mnemonicParsing="false" onAction="#rot2ButtonUpClick" text="Button" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Button fx:id="rot3ButtonUp" disable="true" mnemonicParsing="false" onAction="#rot3ButtonUpClick" text="Button" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Button fx:id="rot4ButtonUp" disable="true" mnemonicParsing="false" onAction="#rot4ButtonUpClick" text="Button" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Button fx:id="rot1ButtonDown" disable="true" mnemonicParsing="false" onAction="#rot1ButtonDownClick" text="Button" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Button fx:id="rot2ButtonDown" disable="true" mnemonicParsing="false" onAction="#rot2ButtonDownClick" text="Button" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Button fx:id="rot3ButtonDown" disable="true" mnemonicParsing="false" onAction="#rot3ButtonDownClick" text="Button" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Button fx:id="rot4ButtonDown" disable="true" mnemonicParsing="false" onAction="#rot4ButtonDownClick" text="Button" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button fx:id="rot1ButtonUp" disable="true" mnemonicParsing="false" onAction="#rot1ButtonUpClick" text="Button" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button fx:id="rot2ButtonUp" disable="true" mnemonicParsing="false" onAction="#rot2ButtonUpClick" text="Button" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button fx:id="rot3ButtonUp" disable="true" mnemonicParsing="false" onAction="#rot3ButtonUpClick" text="Button" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button fx:id="rot4ButtonUp" disable="true" mnemonicParsing="false" onAction="#rot4ButtonUpClick" text="Button" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button fx:id="rot1ButtonDown" disable="true" mnemonicParsing="false" onAction="#rot1ButtonDownClick" text="Button" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button fx:id="rot2ButtonDown" disable="true" mnemonicParsing="false" onAction="#rot2ButtonDownClick" text="Button" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button fx:id="rot3ButtonDown" disable="true" mnemonicParsing="false" onAction="#rot3ButtonDownClick" text="Button" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button fx:id="rot4ButtonDown" disable="true" mnemonicParsing="false" onAction="#rot4ButtonDownClick" text="Button" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label text="School" GridPane.columnIndex="3" />
+                        <Label fx:id="schoolLabel" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                   <GridPane fx:id="rotationGrid" gridLinesVisible="true" GridPane.rowIndex="6">
@@ -165,22 +169,22 @@
                         <Label text="SMCS Rotation" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                         <Label text="Humanities Rotation" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
                         <Label text="Global Rotation" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
-                        <Label fx:id="gen1Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Label fx:id="gen2Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Label fx:id="gen3Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                        <Label fx:id="gen4Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                        <Label fx:id="smc1Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Label fx:id="smc2Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Label fx:id="smc3Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                        <Label fx:id="smc4Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                        <Label fx:id="hum1Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Label fx:id="hum2Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Label fx:id="hum3Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                        <Label fx:id="hum4Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                        <Label fx:id="glo1Label" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Label fx:id="glo2Label" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Label fx:id="glo3Label" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                        <Label fx:id="glo4Label" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Label fx:id="gen1Label" onMouseClicked="#gen1Click" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="gen2Label" onMouseClicked="#gen2Click" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label fx:id="gen3Label" onMouseClicked="#gen3Click" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label fx:id="gen4Label" onMouseClicked="#gen4Click" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Label fx:id="smc1Label" onMouseClicked="#smc1Click" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="smc2Label" onMouseClicked="#smc2Click" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label fx:id="smc3Label" onMouseClicked="#smc3Click" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label fx:id="smc4Label" onMouseClicked="#smc4Click" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Label fx:id="hum1Label" onMouseClicked="#hum1Click" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="hum2Label" onMouseClicked="#hum2Click" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label fx:id="hum3Label" onMouseClicked="#hum3Click" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label fx:id="hum4Label" onMouseClicked="#hum4Click" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Label fx:id="glo1Label" onMouseClicked="#glo1Click" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="glo2Label" onMouseClicked="#glo2Click" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label fx:id="glo3Label" onMouseClicked="#glo3Click" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label fx:id="glo4Label" onMouseClicked="#glo4Click" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                      </children>
                      <padding>
                         <Insets left="5.0" />
@@ -209,6 +213,14 @@
                      </GridPane.margin>
                   </GridPane>
                   <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonClick" text="Confirm Schedule Changes" GridPane.halignment="RIGHT" GridPane.rowIndex="13" />
+                  <Label text="Check to sort students by ID rather than Name" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                     <graphic>
+                        <CheckBox fx:id="idCheck" mnemonicParsing="false" />
+                     </graphic>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                </children>
                <padding>
                   <Insets bottom="5.0" />

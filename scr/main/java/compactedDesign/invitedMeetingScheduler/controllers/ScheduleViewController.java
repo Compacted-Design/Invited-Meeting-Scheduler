@@ -3,17 +3,22 @@ package compactedDesign.invitedMeetingScheduler.controllers;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import com.google.zxing.WriterException;
 
 import compactedDesign.invitedMeetingScheduler.IMSLauncher;
+import compactedDesign.invitedMeetingScheduler.controllers.popup.StudentListPopUpViewController;
 import compactedDesign.invitedMeetingScheduler.data.Student;
+import compactedDesign.invitedMeetingScheduler.data.StudentIdComparator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -34,7 +39,7 @@ public class ScheduleViewController {
 	private Pane root;
 	@FXML
 	private Label gen1Label, gen2Label, gen3Label, gen4Label, smc1Label, smc2Label, smc3Label, smc4Label, hum1Label, hum2Label, hum3Label, hum4Label, glo1Label, glo2Label, glo3Label, glo4Label, 
-	searchErrorsLabel, scheduleDirectoryLabel, idLabel, firstNameLabel, lastNameLabel;
+	searchErrorsLabel, scheduleDirectoryLabel, idLabel, firstNameLabel, lastNameLabel, schoolLabel;
 	@FXML
 	private GridPane studentGrid, rotationGrid;
 	@FXML
@@ -45,6 +50,9 @@ public class ScheduleViewController {
 	private String valid = "-fx-background-color: lightgreen;", invalid = "-fx-background-color: red;";
 	
 	private Student target;
+	
+	@FXML
+	private CheckBox idCheck;
 	
 	private boolean enterKeyPressed = false;
 	
@@ -177,6 +185,7 @@ public class ScheduleViewController {
 		idLabel.setText(target.getId()+"");
 		firstNameLabel.setText(target.getFirstName());
 		lastNameLabel.setText(target.getLastName());
+		schoolLabel.setText(target.getSchoolName());
 		for(int i = 0; i < target.getRots().length; i++) {
 			if(target.getRots()[i].equals("n/a")) {
 				rotButtonsUp[i].setText("n/a");
@@ -352,4 +361,94 @@ public class ScheduleViewController {
 	private void openScheduleDirectoryButtonClick() throws IOException {
 		Desktop.getDesktop().open(new File(IMSLauncher.getDl().getSchedulePath()));
 	}
+	
+	private void openStudentList(List<Student> students, String title) throws IOException {
+		if(idCheck.isSelected()) {
+			Collections.sort(students, new StudentIdComparator());
+		}else {
+			Collections.sort(students);
+		}
+		Stage popUp = new Stage();
+		popUp.setTitle(title);
+		popUp.setResizable(false);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popupViews/StudentListPopUpView.fxml"));
+		Pane popUpRoot = (Pane)loader.load();
+		StudentListPopUpViewController controller = loader.<StudentListPopUpViewController>getController();
+		controller.setStudents(students, title);
+		Scene popUpScene = new Scene(popUpRoot);
+		popUp.setScene(popUpScene);
+		popUp.show();
+	}
+	
+	@FXML
+	private void gen1Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getGenGroups()[0].getStudents(), "General Rotation 1");
+	}
+	@FXML
+	private void gen2Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getGenGroups()[1].getStudents(), "General Rotation 2");
+	}
+	@FXML
+	private void gen3Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getGenGroups()[2].getStudents(), "General Rotation 3");
+	}
+	@FXML
+	private void gen4Click() throws IOException {
+		openStudentList(IMSLauncher.getDl().getGenGroups()[3].getStudents(), "General Rotation 4");
+	}
+	
+	
+	@FXML
+	private void smc1Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getSmcsGroups()[0].getStudents(), "SMCS Rotation 1");
+	}
+	@FXML
+	private void smc2Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getSmcsGroups()[1].getStudents(), "SMCS Rotation 2");
+	}
+	@FXML
+	private void smc3Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getSmcsGroups()[2].getStudents(), "SMCS Rotation 3");
+	}
+	@FXML
+	private void smc4Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getSmcsGroups()[3].getStudents(), "SMCS Rotation 4");
+	}
+	
+	
+	@FXML
+	private void hum1Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getHumGroups()[0].getStudents(),"Humanities Rotation 1");
+	}
+	@FXML
+	private void hum2Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getHumGroups()[1].getStudents(),"Humanities Rotation 2");
+	}
+	@FXML
+	private void hum3Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getHumGroups()[2].getStudents(),"Humanities Rotation 3");
+	}
+	@FXML
+	private void hum4Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getHumGroups()[3].getStudents(),"Humanities Rotation 4");
+	}
+	
+	@FXML
+	private void glo1Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getGloGroups()[0].getStudents(),"Global Rotation 1");
+	}
+	@FXML
+	private void glo2Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getGloGroups()[1].getStudents(),"Global Rotation 2");
+	}
+	@FXML
+	private void glo3Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getGloGroups()[2].getStudents(),"Global Rotation 3");
+	}
+	@FXML
+	private void glo4Click() throws IOException{
+		openStudentList(IMSLauncher.getDl().getGloGroups()[3].getStudents(),"Global Rotation 4");
+	}
+	
+	
 }

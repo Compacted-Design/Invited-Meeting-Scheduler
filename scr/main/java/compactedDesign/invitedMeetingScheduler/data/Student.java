@@ -1,6 +1,6 @@
 package compactedDesign.invitedMeetingScheduler.data;
 
-public class Student {
+public class Student implements Comparable<Student>{
 	private String firstName;
 	private String lastName;
 	private String schoolName; //Change to ID later
@@ -152,6 +152,15 @@ public class Student {
 
 	public boolean isGLOBAL() {
 		return GLOBAL;
+	}
+
+
+	@Override
+	public int compareTo(Student o) {
+		if(this.getLastName().compareToIgnoreCase(o.getLastName()) == 0) {
+			return this.getFirstName().compareToIgnoreCase(o.getFirstName());
+		}
+		return this.getLastName().compareToIgnoreCase(o.getLastName());
 	}
 	
 	
