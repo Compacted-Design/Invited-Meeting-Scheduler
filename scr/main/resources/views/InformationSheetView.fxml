@@ -84,7 +84,10 @@
                   <Label text="Communication" textOverrun="CLIP" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="TOP">
                      <font>
                         <Font size="14.0" />
-                     </font></Label>
+                     </font>
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding></Label>
                   <ImageView fx:id="clubImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <ImageView fx:id="busImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <ImageView fx:id="webImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
