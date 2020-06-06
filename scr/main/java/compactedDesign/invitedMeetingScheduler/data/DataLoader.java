@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -972,10 +973,20 @@ public class DataLoader {
 					}
 				}
 			}
-			doc.write(new FileOutputStream(
-					schedulePath+"/"+s.getRow(i).getCell(3).getStringCellValue() + "_"
-							+ s.getRow(i).getCell(2).getStringCellValue() + "_" + (int)s.getRow(i).getCell(1).getNumericCellValue() + ".docx"));
+			File temp = new File(schedulePath+"/"+s.getRow(i).getCell(3).getStringCellValue() + "_"
+							+ s.getRow(i).getCell(2).getStringCellValue() + "_" + (int)s.getRow(i).getCell(1).getNumericCellValue() + ".docx");
+			if(i == 1) {
+				try {
+					temp.getParentFile().mkdirs();
+				} catch (Exception e) {
+					
+				}
+			}
+			temp.createNewFile();
+			OutputStream fout = new FileOutputStream(temp);
+			doc.write(fout);
 			doc.close();
+			fout.close();
 			schedulesCompleted++;
 		}
 		in.close();
