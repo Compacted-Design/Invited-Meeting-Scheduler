@@ -66,6 +66,7 @@ public class ScheduleViewController {
 		
 		rotButtonsUp[0] = rot1ButtonUp; rotButtonsUp[1] = rot2ButtonUp; rotButtonsUp[2] = rot3ButtonUp; rotButtonsUp[3] = rot4ButtonUp;
 		rotButtonsDown[0] = rot1ButtonDown; rotButtonsDown[1] = rot2ButtonDown; rotButtonsDown[2] = rot3ButtonDown; rotButtonsDown[3] = rot4ButtonDown;
+		setRotationLabels();
 	}
 	
 	@FXML
@@ -271,6 +272,9 @@ public class ScheduleViewController {
 	}
 	
 	private void setRotationLabels() {
+		if(IMSLauncher.getDl().getStudents() == null) {
+			return;
+		}
 		inValidGroups = false;
 		for(int i = 0; i < 4; i++) {
 			genLabels[i].setText(IMSLauncher.getDl().getGenGroups()[i].getStudents().size() + " students");
