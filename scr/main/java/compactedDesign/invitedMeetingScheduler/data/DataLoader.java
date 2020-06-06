@@ -71,6 +71,7 @@ public class DataLoader {
 	
 	private static final int QRCODE_SIDE_LENGTH = 150;
 	private static final int MAP_SIDE_LENGTH = 500;
+	private static final int MAP_SIDE_HEIGHT = 425;
 	
 	private String clubCap, busrCap, phswCap, colgCap, sporCap, comnCap;
 	private String clubLink, busrLink, phswLink, colgLink, sporLink, comnLink;
@@ -856,7 +857,11 @@ public class DataLoader {
 								BufferedImage bimg = ImageIO.read(new File(IMG_PATH+MAP_CODE));
 								int width = bimg.getWidth();
 								int height = bimg.getHeight();
-								p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+MAP_CODE, Units.toEMU(MAP_SIDE_LENGTH), Units.toEMU(MAP_SIDE_LENGTH*(height*1.0/width)));
+								if(width > height) {
+									p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+MAP_CODE, Units.toEMU(MAP_SIDE_LENGTH), Units.toEMU(MAP_SIDE_LENGTH*(height*1.0/width)));
+								}else {
+									p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+MAP_CODE, Units.toEMU(MAP_SIDE_HEIGHT*(width*1.0/height)), Units.toEMU(MAP_SIDE_HEIGHT));
+								}
 							}else {
 								p.createRun().addPicture(image, Document.PICTURE_TYPE_PNG, IMG_PATH+text, Units.toEMU(QRCODE_SIDE_LENGTH), Units.toEMU(QRCODE_SIDE_LENGTH));
 							}

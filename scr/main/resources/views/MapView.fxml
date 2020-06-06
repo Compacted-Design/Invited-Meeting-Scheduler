@@ -47,7 +47,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="mapImageView" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="mapImageView" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Button fx:id="selectFileButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectFileButtonClick" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" prefHeight="100.0" text="Click to Select Map or Drag Map into here" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
