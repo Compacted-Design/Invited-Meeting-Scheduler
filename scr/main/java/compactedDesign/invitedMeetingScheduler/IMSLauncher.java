@@ -55,7 +55,10 @@ public class IMSLauncher extends Application {
 	public static void main(String[] args) throws InvalidFormatException, IOException {
 		launch(args);
 	}
-	
+	/**
+	 * Gets the DataLoader from the Launcher
+	 * @return dataLoader
+	 */
 	public static DataLoader getDl() {
 		return dl;
 	}
