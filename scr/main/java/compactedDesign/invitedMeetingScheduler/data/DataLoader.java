@@ -686,7 +686,71 @@ public class DataLoader {
 				moveStudents(2, 1, studentsSG, gloGroups, smcsGroups, false);
 			}
 		}
-		
+		moveStudents(1, 0, studentsH, humGroups, genGroups, true);
+		moveStudents(1, 0, studentsG, gloGroups, genGroups, true);
+		moveStudents(1, 0, studentsS, smcsGroups, genGroups, true);
+		moveStudents(1, 0, studentsG, gloGroups, genGroups, true);
+		moveStudents(1, 0, studentsH, humGroups, genGroups, true);
+		if(max == global) {
+			if(smcs+studentsSGH.size() < 100) {
+				moveStudents(2, 0, studentsSH, smcsGroups, genGroups, true);
+				moveStudents(2, 1, studentsSH, smcsGroups, genGroups, true);
+				
+				moveStudents(2, 0, studentsSG, smcsGroups, genGroups, true);
+				moveStudents(2, 1, studentsSG, smcsGroups, genGroups, true);
+				
+				moveStudents(2, 1, studentsSG, smcsGroups, gloGroups, false);
+				moveStudents(2, 0, studentsSG, smcsGroups, gloGroups, false);
+			}
+			if(hum+studentsSGH.size() < 100) {
+				moveStudents(2, 0, studentsSH, humGroups, genGroups, true);
+				moveStudents(2, 1, studentsSH, humGroups, genGroups, true);
+				
+				moveStudents(2, 0, studentsGH, humGroups, genGroups, true);
+				moveStudents(2, 1, studentsGH, humGroups, genGroups, true);
+				
+				moveStudents(2, 1, studentsGH, humGroups, gloGroups, false);
+				moveStudents(2, 0, studentsGH, humGroups, gloGroups, false);
+			}
+		}else if(max == hum) {
+			if(smcs+studentsSGH.size() < 100) {
+				moveStudents(2, 0, studentsSH, smcsGroups, genGroups, true);
+				moveStudents(2, 1, studentsSH, smcsGroups, genGroups, true);
+				moveStudents(2, 0, studentsSG, smcsGroups, genGroups, true);
+				moveStudents(2, 1, studentsSG, smcsGroups, genGroups, true);
+				
+				moveStudents(2, 0, studentsSH, smcsGroups, humGroups, false);
+				moveStudents(2, 1, studentsSH, smcsGroups, humGroups, false);
+			}
+			if(global+studentsSGH.size() < 100) {
+				moveStudents(2, 0, studentsGH, gloGroups, genGroups, true);
+				moveStudents(2, 1, studentsGH, gloGroups, genGroups, true);
+				moveStudents(2, 0, studentsSG, gloGroups, genGroups, true);
+				moveStudents(2, 1, studentsSG, gloGroups, genGroups, true);
+				
+				moveStudents(2, 0, studentsGH, gloGroups, humGroups, false);
+				moveStudents(2, 1, studentsGH, gloGroups, humGroups, false);
+			}
+		}else {
+			if(hum+studentsSGH.size() < 100) {
+				moveStudents(2, 0, studentsSH, humGroups, genGroups, true);
+				moveStudents(2, 1, studentsSH, humGroups, genGroups, true);
+				moveStudents(2, 0, studentsGH, humGroups, genGroups, true);
+				moveStudents(2, 1, studentsGH, humGroups, genGroups, true);
+				
+				moveStudents(2, 0, studentsSH, humGroups, smcsGroups, false);
+				moveStudents(2, 1, studentsSH, humGroups, smcsGroups, false);
+			}
+			if(global+studentsSGH.size() < 100) {
+				moveStudents(2, 0, studentsGH, gloGroups, genGroups, true);
+				moveStudents(2, 1, studentsGH, gloGroups, genGroups, true);
+				moveStudents(2, 0, studentsSG, gloGroups, genGroups, true);
+				moveStudents(2, 1, studentsSG, gloGroups, genGroups, true);
+				
+				moveStudents(2, 0, studentsSG, gloGroups, smcsGroups, false);
+				moveStudents(2, 1, studentsSG, gloGroups, smcsGroups, false);
+			}
+		}
 		if(wb.getSheet("ScheduleData") != null) {
 			wb.removeSheetAt(1);
 		}

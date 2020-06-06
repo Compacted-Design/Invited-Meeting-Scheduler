@@ -20,7 +20,7 @@
    <center>
       <ScrollPane BorderPane.alignment="CENTER">
          <content>
-            <GridPane fx:id="informationGrid" alignment="CENTER" vgap="5.0">
+            <GridPane fx:id="informationGrid" alignment="CENTER" gridLinesVisible="true" vgap="5.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -37,9 +37,18 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Clubs" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                  <Label text="Transportation" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-                  <Label text="PHS Website" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+                  <Label text="Clubs" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label text="Transportation" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label text="PHS Website" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
                   <TextField fx:id="clubLinkField" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                   <TextField fx:id="busLinkField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                   <TextField fx:id="webLinkField" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
@@ -52,12 +61,30 @@
                   <TextField fx:id="colLinkField" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                   <TextField fx:id="sportLinkField" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
                   <TextField fx:id="comLinkField" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP" />
-                  <Label text="Caption" GridPane.columnIndex="2" />
-                  <Label text="Links" GridPane.columnIndex="1" />
-                  <Label text="QR Codes" GridPane.columnIndex="3" />
-                  <Label text="Colleges" GridPane.rowIndex="4" GridPane.valignment="TOP" />
-                  <Label text="Sports" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-                  <Label text="Communication" textOverrun="CLIP" wrapText="true" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+                  <Label text="Captions" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label text="Links" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label text="QR Codes" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label text="Colleges" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label text="Sports" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label text="Communication" textOverrun="CLIP" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
                   <ImageView fx:id="clubImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <ImageView fx:id="busImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <ImageView fx:id="webImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
@@ -99,7 +126,10 @@
                   <Font size="25.0" />
                </font>
             </Label>
-            <Label text="Label" GridPane.rowIndex="1" />
+            <Label text="Edit Links, QRcodes, and QRcode Captions" wrapText="true" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font></Label>
          </children>
       </GridPane>
    </top>

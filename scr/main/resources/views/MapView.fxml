@@ -29,7 +29,10 @@
                   <Font size="25.0" />
                </font>
             </Label>
-            <Label text="Label" GridPane.rowIndex="1" />
+            <Label text="Change the Map Here" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
          </children>
       </GridPane>
    </top>
@@ -45,7 +48,10 @@
         </rowConstraints>
          <children>
             <ImageView fx:id="mapImageView" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="selectFileButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectFileButtonClick" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" prefHeight="100.0" text="Click to Select Map or Drag Map into here" GridPane.rowIndex="1" />
+            <Button fx:id="selectFileButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectFileButtonClick" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" prefHeight="100.0" text="Click to Select Map or Drag Map into here" GridPane.rowIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
          </children>
       </GridPane>
    </center>

@@ -1,5 +1,7 @@
 package compactedDesign.invitedMeetingScheduler;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -39,7 +41,6 @@ public class IMSLauncher extends Application {
 		primaryStage.setOnCloseRequest(e -> System.exit(0)); // stops the program upon closing the window
 		primaryStage.setResizable(false); // maybe change later
 		Pane root = new Pane();
-		
 		Scene scene = new Scene(root,1000,800);
 		primaryStage.setScene(scene);
 		primaryStage.show();

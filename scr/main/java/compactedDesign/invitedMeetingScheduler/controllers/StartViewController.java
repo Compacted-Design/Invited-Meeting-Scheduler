@@ -3,6 +3,9 @@ package compactedDesign.invitedMeetingScheduler.controllers;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.commons.io.FileUtils;
 
 import compactedDesign.invitedMeetingScheduler.IMSLauncher;
 import javafx.fxml.FXML;
@@ -23,6 +26,8 @@ public class StartViewController {
 	@FXML
 	private Pane root;
 	
+	private static final String GUIDE_PATH = "Invited Meeting Scheduler User Manual.docx", GUIDE_BACKUP_PATH = "/backups/Invited Meeting Scheduler User Manual Backup.docx";
+	
 	@FXML
 	private void initialize() throws IOException {
 		IMSLauncher.getDl().openMissingFilesPopup();
@@ -37,9 +42,13 @@ public class StartViewController {
 		//TODO: Remove GuideView and GuideControl
 		//root.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/GuideView.fxml")));
 		try {
-			Desktop.getDesktop().open(new File("Guide.docx"));
-		}catch (IOException e) {
-			
+			Desktop.getDesktop().open(new File(GUIDE_PATH));
+		}catch (Exception e) {
+			InputStream backup = getClass().getResourceAsStream(GUIDE_BACKUP_PATH);
+			File source = new File(GUIDE_PATH);
+			FileUtils.copyInputStreamToFile(backup, source);
+			backup.close();
+			Desktop.getDesktop().open(new File(GUIDE_PATH));
 		}
 	}
 	/**

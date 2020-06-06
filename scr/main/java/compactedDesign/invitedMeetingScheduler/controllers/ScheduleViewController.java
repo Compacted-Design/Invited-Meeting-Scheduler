@@ -1,5 +1,6 @@
 package compactedDesign.invitedMeetingScheduler.controllers;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
@@ -26,7 +27,8 @@ public class ScheduleViewController {
 	
 	@FXML
 	private Button backButton, createGroupsButton, createScheduleDocumentsButton, searchButton, scheduleDirectoryButton, confirmButton,
-	rot1ButtonUp, rot2ButtonUp, rot3ButtonUp, rot4ButtonUp, rot1ButtonDown, rot2ButtonDown, rot3ButtonDown, rot4ButtonDown;
+	rot1ButtonUp, rot2ButtonUp, rot3ButtonUp, rot4ButtonUp, rot1ButtonDown, rot2ButtonDown, rot3ButtonDown, rot4ButtonDown,
+	openScheduleDirectoryButton;
 	private Button[] rotButtonsUp = new Button[4], rotButtonsDown = new Button[4];
 	@FXML
 	private Pane root;
@@ -344,5 +346,10 @@ public class ScheduleViewController {
 		rotButtonsDown[indexVisable].setText(rotButtonsUp[indexVisable].getText());
 		
 		switchUpAndDown(indexDisabled, false);
+	}
+	
+	@FXML
+	private void openScheduleDirectoryButtonClick() throws IOException {
+		Desktop.getDesktop().open(new File(IMSLauncher.getDl().getSchedulePath()));
 	}
 }

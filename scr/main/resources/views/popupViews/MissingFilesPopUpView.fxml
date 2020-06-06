@@ -30,11 +30,17 @@
                <padding>
                   <Insets bottom="10.0" />
                </padding>
+               <GridPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </GridPane.margin>
             </Label>
-            <Label text="The Guide file should be in the same directory as the executable, image files should be in the img folder located in the data folder, everything else should just be in the data folder" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Label text="Image files should be in the img folder located in the data folder, everything else should just be in the data folder" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font size="13.0" />
                </font>
+               <GridPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </GridPane.margin>
             </Label>
             <Label fx:id="missingFilesLabel" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
          </children>

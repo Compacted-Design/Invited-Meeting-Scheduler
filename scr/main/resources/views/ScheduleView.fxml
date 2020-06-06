@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1000.0" prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="compactedDesign.invitedMeetingScheduler.controllers.ScheduleViewController">
    <padding>
@@ -24,8 +25,14 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER" text="Schedule Manager" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Label text="Label" GridPane.rowIndex="1" />
+            <Label alignment="CENTER" text="Schedule Manager" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="25.0" />
+               </font></Label>
+            <Label text="Create Student Rotation Groups and Student Schedules here" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
          </children>
       </GridPane>
    </top>
@@ -52,7 +59,7 @@
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -147,48 +154,59 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Rotation 4" GridPane.rowIndex="4" />
-                        <Label text="Rotation 1" GridPane.rowIndex="1" />
-                        <Label text="Rotation 2" GridPane.rowIndex="2" />
-                        <Label text="Rotation 3" GridPane.rowIndex="3" />
-                        <Label text="General Rotation" GridPane.columnIndex="1" />
-                        <Label text="SMCS Rotation" GridPane.columnIndex="2" />
-                        <Label text="Humanitiies Rotation" GridPane.columnIndex="3" />
-                        <Label text="Global Rotation" GridPane.columnIndex="4" />
-                        <Label fx:id="gen1Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="gen2Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="gen3Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label fx:id="gen4Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label fx:id="smc1Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Label fx:id="smc2Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Label fx:id="smc3Label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Label fx:id="smc4Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <Label fx:id="hum1Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <Label fx:id="hum2Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <Label fx:id="hum3Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <Label fx:id="hum4Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <Label fx:id="glo1Label" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                        <Label fx:id="glo2Label" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                        <Label fx:id="glo3Label" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                        <Label fx:id="glo4Label" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                        <Label text="Rotation 4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Label text="Rotation 1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label text="Rotation 2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label text="Rotation 3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label text="General Rotation" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin></Label>
+                        <Label text="SMCS Rotation" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                        <Label text="Humanities Rotation" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                        <Label text="Global Rotation" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+                        <Label fx:id="gen1Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="gen2Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label fx:id="gen3Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label fx:id="gen4Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Label fx:id="smc1Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="smc2Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label fx:id="smc3Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label fx:id="smc4Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Label fx:id="hum1Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="hum2Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label fx:id="hum3Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label fx:id="hum4Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Label fx:id="glo1Label" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="glo2Label" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label fx:id="glo3Label" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label fx:id="glo4Label" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                      </children>
                      <padding>
                         <Insets left="5.0" />
                      </padding>
                   </GridPane>
                   <Label fx:id="searchErrorsLabel" GridPane.rowIndex="10" />
-                  <GridPane GridPane.rowIndex="1">
+                  <GridPane gridLinesVisible="true" GridPane.rowIndex="1">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="scheduleDirectoryLabel" text="Schedule Directory:" />
-                        <Button fx:id="scheduleDirectoryButton" mnemonicParsing="false" onAction="#scheduleDirectoryButtonClick" text="Choose Schedule Directory" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                        <Label fx:id="scheduleDirectoryLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Schedule Directory:" wrapText="true">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding></Label>
+                        <Button fx:id="scheduleDirectoryButton" mnemonicParsing="false" onAction="#scheduleDirectoryButtonClick" text="Choose Schedule Directory" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Button fx:id="openScheduleDirectoryButton" mnemonicParsing="false" onAction="#openScheduleDirectoryButtonClick" text="Open Schedule Directory" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                      </children>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
                   </GridPane>
                   <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonClick" text="Confirm Schedule Changes" GridPane.halignment="RIGHT" GridPane.rowIndex="13" />
                </children>

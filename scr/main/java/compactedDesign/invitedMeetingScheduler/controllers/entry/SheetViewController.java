@@ -33,7 +33,12 @@ public class SheetViewController {
 		}
 		Dragboard db = event.getDragboard();
 		if(db.hasFiles()) {
-			event.acceptTransferModes(TransferMode.COPY);
+			for(File file : db.getFiles()) {
+				if(file.getAbsolutePath().substring(file.getAbsolutePath().length()-5).equals(".xlsx")) {
+					event.acceptTransferModes(TransferMode.COPY);
+					break;
+				}
+			}
 		}
 		event.consume();
 	}
