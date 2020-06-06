@@ -76,6 +76,8 @@ public class DataLoader {
 	private String clubCap, busrCap, phswCap, colgCap, sporCap, comnCap;
 	private String clubLink, busrLink, phswLink, colgLink, sporLink, comnLink;
 	private String missingFiles;
+	
+	private int schedulesCompleted = -1;
 
 	public DataLoader() throws IOException, WriterException {
 		missingFiles = "";
@@ -922,6 +924,7 @@ public class DataLoader {
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("ScheduleData");
 		int i = 1;
+		schedulesCompleted = 0;
 		for (; s.getRow(i) != null; i++) {
 			FileInputStream docIn = new FileInputStream(new File(TEMPLATE_SCHEDULE_PATH));
 			XWPFDocument doc = new XWPFDocument(docIn);
@@ -973,6 +976,7 @@ public class DataLoader {
 					schedulePath+"/"+s.getRow(i).getCell(3).getStringCellValue() + "_"
 							+ s.getRow(i).getCell(2).getStringCellValue() + "_" + (int)s.getRow(i).getCell(1).getNumericCellValue() + ".docx"));
 			doc.close();
+			schedulesCompleted++;
 		}
 		in.close();
 		wb.close();
@@ -1419,5 +1423,13 @@ public class DataLoader {
 
 	public List<Student> getStudentsSGH() {
 		return studentsSGH;
+	}
+
+	public int getSchedulesCompleted() {
+		return schedulesCompleted;
+	}
+
+	public void setSchedulesCompleted(int schedulesCompleted) {
+		this.schedulesCompleted = schedulesCompleted;
 	}
 }

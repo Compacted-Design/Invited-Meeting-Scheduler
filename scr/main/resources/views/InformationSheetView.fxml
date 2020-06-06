@@ -52,12 +52,30 @@
                   <TextField fx:id="clubLinkField" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                   <TextField fx:id="busLinkField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                   <TextField fx:id="webLinkField" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-                  <TextArea fx:id="clubCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextArea fx:id="busCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <TextArea fx:id="webCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <TextArea fx:id="colCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <TextArea fx:id="sportCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <TextArea fx:id="comCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <TextArea fx:id="clubCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextArea>
+                  <TextArea fx:id="busCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextArea>
+                  <TextArea fx:id="webCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextArea>
+                  <TextArea fx:id="colCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextArea>
+                  <TextArea fx:id="sportCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextArea>
+                  <TextArea fx:id="comCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextArea>
                   <TextField fx:id="colLinkField" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                   <TextField fx:id="sportLinkField" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
                   <TextField fx:id="comLinkField" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP" />

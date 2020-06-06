@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="root" prefHeight="100.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="compactedDesign.invitedMeetingScheduler.controllers.popup.CreateSchedulesPopUpViewController">
+   <top>
+      <Label fx:id="informationLabel" text="Please wait as the schedules are being created." wrapText="true" BorderPane.alignment="TOP_CENTER">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </top>
+   <center>
+      <Canvas fx:id="loadingBar" height="20.0" width="300.0" BorderPane.alignment="CENTER" />
+   </center>
+   <padding>
+      <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+   </padding>
+</BorderPane>

@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
-import com.google.zxing.WriterException;
-
 import compactedDesign.invitedMeetingScheduler.IMSLauncher;
 import compactedDesign.invitedMeetingScheduler.controllers.popup.StudentListPopUpViewController;
 import compactedDesign.invitedMeetingScheduler.data.Student;
@@ -55,6 +53,7 @@ public class ScheduleViewController {
 	private CheckBox idCheck;
 	
 	private boolean enterKeyPressed = false;
+	private boolean inValidGroups = false;
 	
 	@FXML
 	private void initialize() {
@@ -81,8 +80,35 @@ public class ScheduleViewController {
 	}
 	
 	@FXML
-	private void createScheduleDocumentsButtonClick() throws InvalidFormatException, IOException, WriterException {
-		IMSLauncher.getDl().createSchedules();
+	private void createScheduleDocumentsButtonClick() throws IOException{
+		if(IMSLauncher.getDl().getStudents() == null) {
+			Stage popUp = new Stage();
+			popUp.setTitle("No Groups Avaliable");
+			popUp.setResizable(false);
+			Pane popUpRoot = FXMLLoader.load(getClass().getResource("/views/popupViews/SchedulePopUpView.fxml"));
+			Scene popUpScene = new Scene(popUpRoot);
+			popUp.setScene(popUpScene);
+			popUp.show();
+			return;
+		}
+		if(inValidGroups) {
+			Stage popUp = new Stage();
+			popUp.setTitle("Unideal Groups Present");
+			popUp.setResizable(false);
+			Pane popUpRoot = FXMLLoader.load(getClass().getResource("/views/popupViews/InvalidGroupsPopUpView.fxml"));
+			Scene popUpScene = new Scene(popUpRoot, 300, 200);
+			popUp.setScene(popUpScene);
+			popUp.show();
+		}else {
+			Stage popUp = new Stage();
+			popUp.setTitle("Creating Schedules");
+			popUp.setResizable(false);
+			Pane popUpRoot = new Pane();
+			Scene popUpScene = new Scene(popUpRoot, 400, 100);
+			popUp.setScene(popUpScene);
+			popUp.show();
+			popUpRoot.getScene().setRoot(FXMLLoader.load(getClass().getResource("/views/popupViews/CreateSchedulesPopUpView.fxml")));
+		}
 	}
 	
 	/*private class ViewThread implements Runnable {
@@ -245,28 +271,33 @@ public class ScheduleViewController {
 	}
 	
 	private void setRotationLabels() {
+		inValidGroups = false;
 		for(int i = 0; i < 4; i++) {
 			genLabels[i].setText(IMSLauncher.getDl().getGenGroups()[i].getStudents().size() + " students");
 			if(IMSLauncher.getDl().getGenGroups()[i].getStudents().size() > 70 || (IMSLauncher.getDl().getGenGroups()[i].getStudents().size() < 10 && IMSLauncher.getDl().getGenGroups()[i].getStudents().size() > 0)) {
 				genLabels[i].setStyle(invalid);
+				inValidGroups = true;
 			}else {
 				genLabels[i].setStyle(valid);
 			}
 			smcLabels[i].setText(IMSLauncher.getDl().getSmcsGroups()[i].getStudents().size() + " students");
 			if(IMSLauncher.getDl().getSmcsGroups()[i].getStudents().size() > 50 || (IMSLauncher.getDl().getSmcsGroups()[i].getStudents().size() < 10 && IMSLauncher.getDl().getSmcsGroups()[i].getStudents().size() > 0)) {
 				smcLabels[i].setStyle(invalid);
+				inValidGroups = true;
 			}else {
 				smcLabels[i].setStyle(valid);
 			}
 			humLabels[i].setText(IMSLauncher.getDl().getHumGroups()[i].getStudents().size() + " students");
 			if(IMSLauncher.getDl().getHumGroups()[i].getStudents().size() > 50 || (IMSLauncher.getDl().getHumGroups()[i].getStudents().size() < 10 && IMSLauncher.getDl().getHumGroups()[i].getStudents().size() > 0)) {
 				humLabels[i].setStyle(invalid);
+				inValidGroups = true;
 			}else {
 				humLabels[i].setStyle(valid);
 			}
 			gloLabels[i].setText(IMSLauncher.getDl().getGloGroups()[i].getStudents().size() + " students");
 			if(IMSLauncher.getDl().getGloGroups()[i].getStudents().size() > 50 || (IMSLauncher.getDl().getGloGroups()[i].getStudents().size() < 10 && IMSLauncher.getDl().getGloGroups()[i].getStudents().size() > 0)) {
 				gloLabels[i].setStyle(invalid);
+				inValidGroups = true;
 			}else {
 				gloLabels[i].setStyle(valid);
 			}

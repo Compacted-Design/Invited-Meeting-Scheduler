@@ -64,10 +64,22 @@
                <font>
                   <Font size="16.0" />
                </font></Label>
-            <TextArea fx:id="genTextBox" wrapText="true" GridPane.columnIndex="1" />
-            <TextArea fx:id="gloTextBox" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextArea fx:id="humTextBox" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextArea fx:id="smcTextBox" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextArea fx:id="genTextBox" wrapText="true" GridPane.columnIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font></TextArea>
+            <TextArea fx:id="gloTextBox" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font></TextArea>
+            <TextArea fx:id="humTextBox" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font></TextArea>
+            <TextArea fx:id="smcTextBox" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font></TextArea>
          </children>
       </GridPane>
    </center>
