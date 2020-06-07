@@ -70,7 +70,7 @@ public class DataLoader {
 	private RotationGroup[] gloGroups = new RotationGroup[4];
 	private List<Student> students, studentsS, studentsG, studentsH, studentsSG, studentsSH, studentsGH, studentsSGH;
 	
-	private static final int QRCODE_SIDE_LENGTH = 150;
+	private static final int QRCODE_SIDE_LENGTH = 125;
 	private static final int MAP_SIDE_LENGTH = 500;
 	private static final int MAP_SIDE_HEIGHT = 425;
 	
@@ -910,7 +910,32 @@ public class DataLoader {
 		footerParagraph.createRun().addBreak();
 		footerParagraph.createRun().setText("	-"+comnCap + " " + comnLink);
 		footerParagraph.createRun().addBreak();*/
-		
+		int fontsize = 10;
+		XWPFParagraph paragraph = doc.createParagraph();
+		XWPFRun run = paragraph.createRun();
+		run.setText("- "+sporCap + ": " + sporLink);
+		run.setFontSize(fontsize);
+		paragraph.createRun().addBreak();
+		run = paragraph.createRun();
+		run.setText("- "+clubCap + ": " + clubLink);
+		run.setFontSize(fontsize);
+		paragraph.createRun().addBreak();
+		run = paragraph.createRun();
+		run.setText("- "+busrCap + ": " + busrLink);
+		run.setFontSize(fontsize);
+		paragraph.createRun().addBreak();
+		run = paragraph.createRun();
+		run.setText("- "+phswCap + ": " + phswLink);
+		run.setFontSize(fontsize);
+		paragraph.createRun().addBreak();
+		run = paragraph.createRun();
+		run.setText("- "+colgCap + ": " + colgLink);
+		run.setFontSize(fontsize);
+		paragraph.createRun().addBreak();
+		run = paragraph.createRun();
+		run.setText("- "+comnCap + ": " + comnLink);
+		run.setFontSize(fontsize);
+		paragraph.createRun().addBreak();
 		doc.write(new FileOutputStream(TEMPLATE_SCHEDULE_PATH));
 		doc.close();
 		docIn.close();
