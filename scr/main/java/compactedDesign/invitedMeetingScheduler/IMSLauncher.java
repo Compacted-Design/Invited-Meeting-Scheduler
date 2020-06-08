@@ -19,8 +19,8 @@ import javafx.stage.Stage;
  * the application.</p>
  * 
  * @author Jeffrey Jiang
- * @version 0.2
- * @since 2020-05-08
+ * @version 0.3
+ * @since 2020-06-07
  */
 public class IMSLauncher extends Application {
 	

@@ -30,12 +30,15 @@
             <Insets bottom="5.0" left="5.0" />
          </opaqueInsets>
          <children>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Back" />
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Back">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
          </children>
       </GridPane>
    </bottom>
    <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="20.0" />
+      <Insets bottom="10.0" left="5.0" right="5.0" top="20.0" />
    </padding>
    <opaqueInsets>
       <Insets bottom="5.0" left="5.0" />
@@ -60,9 +63,18 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button fx:id="manualButton" mnemonicParsing="false" onAction="#manualButtonClick" text="Manual Data Entry" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button fx:id="spreadsheetButton" mnemonicParsing="false" onAction="#spreadsheetButtonClick" text="Spreadsheet Data Entry" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearButtonClick" text="Clear Data" GridPane.columnIndex="2" />
+                  <Button fx:id="manualButton" mnemonicParsing="false" onAction="#manualButtonClick" text="Manual Data Entry" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Button>
+                  <Button fx:id="spreadsheetButton" mnemonicParsing="false" onAction="#spreadsheetButtonClick" text="Spreadsheet Data Entry" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Button>
+                  <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearButtonClick" text="Clear Data" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Button>
                </children>
                <opaqueInsets>
                   <Insets bottom="5.0" />

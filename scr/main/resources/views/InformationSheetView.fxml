@@ -15,7 +15,7 @@
 
 <BorderPane fx:id="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="compactedDesign.invitedMeetingScheduler.controllers.InformationSheetViewController">
    <padding>
-      <Insets bottom="5.0" left="5.0" right="20.0" top="20.0" />
+      <Insets bottom="10.0" left="5.0" right="20.0" top="20.0" />
    </padding>
    <center>
       <ScrollPane BorderPane.alignment="CENTER">
@@ -49,9 +49,18 @@
                      <font>
                         <Font size="14.0" />
                      </font></Label>
-                  <TextField fx:id="clubLinkField" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                  <TextField fx:id="busLinkField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-                  <TextField fx:id="webLinkField" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+                  <TextField fx:id="clubLinkField" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
+                  <TextField fx:id="busLinkField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
+                  <TextField fx:id="webLinkField" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
                   <TextArea fx:id="clubCapArea" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <font>
                         <Font size="14.0" />
@@ -76,9 +85,18 @@
                      <font>
                         <Font size="14.0" />
                      </font></TextArea>
-                  <TextField fx:id="colLinkField" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
-                  <TextField fx:id="sportLinkField" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-                  <TextField fx:id="comLinkField" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+                  <TextField fx:id="colLinkField" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
+                  <TextField fx:id="sportLinkField" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
+                  <TextField fx:id="comLinkField" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
                   <Label text="Captions" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                      <font>
                         <Font size="14.0" />
@@ -127,8 +145,17 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonClick" text="Confirm" GridPane.columnIndex="1" />
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Back" />
+            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonClick" text="Confirm" GridPane.columnIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Back">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></Button>
          </children>
       </GridPane>
    </bottom>

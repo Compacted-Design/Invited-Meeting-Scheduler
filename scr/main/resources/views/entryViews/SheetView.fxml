@@ -15,7 +15,10 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label text="Drag the spreadsheet into the window, or find it in the directory" />
+            <Label text="Drag the spreadsheet into the window, or find it in the directory">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
             <Button fx:id="selectFileButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectFileButtonClick" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" prefHeight="300.0" text="Click to Select a File or Drag and Drop into the Box" textOverrun="CLIP" wrapText="true">
                <font>
                   <Font size="25.0" />

@@ -34,7 +34,7 @@ public class StartViewController {
 	}
 	/**
 	 * Action which occurs upon clicking the guideButton. 
-	 * Changes the root node of the scene to the GuideView.
+	 * Opens the User Manual
 	 * @throws IOException
 	 */
 	@FXML
@@ -53,6 +53,7 @@ public class StartViewController {
 	}
 	/**
 	 * Action which occurs upon clicking the dataEntryButton
+	 * Opens the data entry window
 	 * @throws IOException 
 	 */
 	@FXML

@@ -12,7 +12,10 @@
 
 <BorderPane fx:id="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="compactedDesign.invitedMeetingScheduler.controllers.MapViewController">
    <bottom>
-      <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Back" BorderPane.alignment="BOTTOM_LEFT" />
+      <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Back" BorderPane.alignment="BOTTOM_LEFT">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
    </bottom>
    <top>
       <GridPane BorderPane.alignment="CENTER">

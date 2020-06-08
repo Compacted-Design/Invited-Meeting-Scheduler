@@ -27,15 +27,42 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label text="Student ID" />
-                        <TextField fx:id="idEntry" />
-                        <Label text="First Name" />
-                        <TextField fx:id="firstNameEntry" />
-                        <Label text="Last Name" />
-                        <TextField fx:id="lastNameEntry" />
-                        <Label text="Middle School" />
-                        <TextField fx:id="middleSchoolEntry" />
-                        <Label text="Visiting Programs" />
+                        <Label text="Student ID">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <TextField fx:id="idEntry">
+                           <font>
+                              <Font size="14.0" />
+                           </font></TextField>
+                        <Label text="First Name">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <TextField fx:id="firstNameEntry">
+                           <font>
+                              <Font size="14.0" />
+                           </font></TextField>
+                        <Label text="Last Name">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <TextField fx:id="lastNameEntry">
+                           <font>
+                              <Font size="14.0" />
+                           </font></TextField>
+                        <Label text="Middle School">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <TextField fx:id="middleSchoolEntry">
+                           <font>
+                              <Font size="14.0" />
+                           </font></TextField>
+                        <Label text="Visiting Programs">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
                         <GridPane>
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -46,12 +73,24 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <CheckBox fx:id="smcsCheck" mnemonicParsing="false" text="SMCS" />
-                              <CheckBox fx:id="globalCheck" mnemonicParsing="false" text="Global" GridPane.columnIndex="1" />
-                              <CheckBox fx:id="humanitiesCheck" mnemonicParsing="false" text="Humanities" GridPane.columnIndex="2" />
+                              <CheckBox fx:id="smcsCheck" mnemonicParsing="false" text="SMCS">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></CheckBox>
+                              <CheckBox fx:id="globalCheck" mnemonicParsing="false" text="Global" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></CheckBox>
+                              <CheckBox fx:id="humanitiesCheck" mnemonicParsing="false" text="Humanities" GridPane.columnIndex="2">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></CheckBox>
                            </children>
                         </GridPane>
-                        <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonClick" text="Submit" />
+                        <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonClick" text="Submit">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Button>
                      </children>
                   </VBox>
                   <Label fx:id="noticeLabel" />
