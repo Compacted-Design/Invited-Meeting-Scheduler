@@ -202,7 +202,10 @@ public class DataLoader {
 		schedulePath = scheduleFilePath.getAbsolutePath();
 		br.close();
 	}
-	
+	/**
+	 * Opens a popup with the list of files that were missing from the data folder and needed to be replaced.
+	 * @throws IOException
+	 */
 	public void openMissingFilesPopup() throws IOException {
 		if(missingFiles.equals("")) {
 			return;
@@ -216,7 +219,17 @@ public class DataLoader {
 		popUp.show();
 		missingFiles = "";
 	}
-	
+	/**
+	 * Inputs a students data into the application using given values
+	 * @param id
+	 * @param first
+	 * @param last
+	 * @param school
+	 * @param smcs - whether the student was visiting smcs house
+	 * @param global - whether the student was visiting global house
+	 * @param hum - whether the student was visiting humanitees house
+	 * @throws IOException
+	 */
 	public void loadDataInput(int id, String first, String last, String school, boolean smcs, boolean global, boolean hum) throws IOException {
 		FileInputStream in = null;
 		try {
@@ -281,7 +294,12 @@ public class DataLoader {
 		out.close();
 		wb.close();
 	}
-	
+	/**
+	 * Inputs student information using an excel sheet.
+	 * @param inputSheetFile
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 */
 	public void loadDataInput(File inputSheetFile) throws IOException, InvalidFormatException {
 		FileInputStream in = null;
 		try {
@@ -432,7 +450,17 @@ public class DataLoader {
 		out.close();
 		wb.close();
 	}
-	
+	/**
+	 * Enters student information into the document.
+	 * @param i
+	 * @param s
+	 * @param first
+	 * @param last
+	 * @param school
+	 * @param smcs
+	 * @param global
+	 * @param hum
+	 */
 	private void dataEntry(int i, Sheet s, String first, String last, String school, boolean smcs, boolean global, boolean hum) {
 		s.getRow(i).getCell(1).setCellValue(first);
 		s.getRow(i).getCell(2).setCellValue(last);
@@ -453,7 +481,13 @@ public class DataLoader {
 			s.getRow(i).getCell(6).setCellValue("N");
 		}
 	}
-	
+	/**
+	 * Uses a link to create a QR code
+	 * @param link
+	 * @param fileName
+	 * @throws WriterException
+	 * @throws IOException
+	 */
 	public void makeQRCode(String link, String fileName) throws WriterException, IOException {
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		BitMatrix bitMatrix = qrCodeWriter.encode(link, BarcodeFormat.QR_CODE, QRCODE_SIDE_LENGTH, QRCODE_SIDE_LENGTH);
@@ -463,7 +497,10 @@ public class DataLoader {
         MatrixToImageWriter.writeToStream(bitMatrix, "PNG", new FileOutputStream(new File(IMG_PATH+fileName)));
         
 	}
-	
+	/**
+	 * Clears data in the application by replacing the student document with a blank one stored on the system.
+	 * @throws IOException
+	 */
 	public void clearData() throws IOException {
 		students = null; studentsG = null; studentsGH = null; studentsH = null; studentsS = null; studentsSG = null; studentsSGH = null; studentsSH = null;
 		smcsGroups = new RotationGroup[4]; humGroups = new RotationGroup[4]; genGroups = new RotationGroup[4]; gloGroups = new RotationGroup[4];
@@ -473,7 +510,11 @@ public class DataLoader {
 		FileUtils.copyInputStreamToFile(backup, source);
 		backup.close();
 	}
-	
+	/**
+	 * Groups the students into different schedule groups.
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 */
 	//TODO: Compress redundant series of code
 	public void groupSchedules() throws IOException, InvalidFormatException {
 		FileInputStream in = null;
@@ -813,7 +854,12 @@ public class DataLoader {
 		wb.close();
 		out.close();
 	}
-	
+	/**
+	 * Puts in the Map, links, captions, and qr codes into the schedule
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 * @throws WriterException
+	 */
 	public void createTemplateSchedule() throws IOException, InvalidFormatException, WriterException {
 		FileInputStream docIn = null;
 		try {
@@ -941,7 +987,12 @@ public class DataLoader {
 		docIn.close();
 		openMissingFilesPopup();
 	}
-	
+	/**
+	 * Creates the schedules for each student
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 * @throws WriterException
+	 */
 	public void createSchedules() throws IOException, InvalidFormatException, WriterException {
 		createTemplateSchedule();
 		// There will be issues if the rots leave the tables
@@ -964,7 +1015,7 @@ public class DataLoader {
 							r.setText(text, 0);
 						}
 						if (text != null && text.contains("Last")) {
-							text = text.replace("Last", s.getRow(i).getCell(3).getStringCellValue());
+							text = text.replace("Last", s.getRow(i).getCell(3).getStringCellValue() + " (" + (int)s.getRow(i).getCell(1).getNumericCellValue() + ")");
 							r.setText(text, 0);
 						}
 					}
@@ -1017,7 +1068,12 @@ public class DataLoader {
 		in.close();
 		wb.close();
 	}
-
+	/**
+	 * Adds a student to a rotation group
+	 * @param student
+	 * @param rotationGroup
+	 * @return
+	 */
 	private boolean addStudent(Student student, RotationGroup rotationGroup) {
 		boolean returnValue = student.setRot(rotationGroup.getRotNum(), rotationGroup.getName());
 		if(returnValue) {
@@ -1025,6 +1081,12 @@ public class DataLoader {
 		}
 		return returnValue;
 	}
+	/**
+	 * Removes a student from a rotation group
+	 * @param student
+	 * @param rotationGroup
+	 * @return
+	 */
 	private boolean removeStudent(Student student, RotationGroup rotationGroup) {
 		boolean returnValue = student.removeRot(rotationGroup.getRotNum(), rotationGroup.getName());
 		if(returnValue) {
@@ -1032,7 +1094,14 @@ public class DataLoader {
 		}
 		return returnValue;
 	}
-	
+	/**
+	 * Fills rotation groups based on which group is lacking the most people and which groups have too much.
+	 * @param rot
+	 * @param students
+	 * @param groups1
+	 * @param groups2
+	 * @param genGroups
+	 */
 	private void fillLowest(int rot, List<Student> students, RotationGroup[] groups1, RotationGroup[] groups2, RotationGroup[] genGroups) {
 		for(Student student : students) {
 			if (Math.min(groups1[rot].getStudents().size(), Math.min(groups2[rot].getStudents().size(), genGroups[rot].getStudents().size()-20)) == groups1[rot].getStudents().size() 
@@ -1049,6 +1118,13 @@ public class DataLoader {
 			}
 		}
 	}
+	/**
+	 * Fills rotation groups based on which group is lacking the most people and which groups have too much.
+	 * @param rot
+	 * @param student
+	 * @param groups1
+	 * @param groups2
+	 */
 	private void fillLowest(int rot, Student student, RotationGroup[] groups1, RotationGroup[] groups2) {
 		if(groups1[rot].getName().equals("GE")) {
 			if(groups2[rot].getStudents().size() < groups1[rot].getStudents().size() - 10 && (groups2[rot+1].getStudents().size() > 9 || groups1[rot+1].getStudents().size() < 9)) {
@@ -1142,7 +1218,11 @@ public class DataLoader {
 			}
 		}
 	}
-	
+	/**
+	 * Replaces the place holder rotation text with the actual rotation text
+	 * @param rot
+	 * @return
+	 */
 	private String rotMessage(String rot) {
 		if (rot.equals("H")) {
 			return humString;
@@ -1171,7 +1251,14 @@ public class DataLoader {
 	public String getSmcString() {
 		return smcString;
 	}
-
+	/**
+	 * Stores the changes to rotation text in a text file 
+	 * @param genName
+	 * @param gloName
+	 * @param humName
+	 * @param smcName
+	 * @throws IOException
+	 */
 	public void setRotationNames(String genName, String gloName, String humName, String smcName) throws IOException {
 		genString = genName; gloString = gloName; humString = humName; smcString = smcName;
 		String rotationNames = "gen:" + genName + "\n" + 
@@ -1291,7 +1378,23 @@ public class DataLoader {
 	public static String getBusCode() {
 		return BUS_CODE;
 	}
-	
+	/**
+	 * Applies changes to the information sheet on to the text document.
+	 * @param clubCap
+	 * @param comnCap
+	 * @param phswCap
+	 * @param sporCap
+	 * @param busrCap
+	 * @param colgCap
+	 * @param clubLink
+	 * @param comnLink
+	 * @param phswLink
+	 * @param sporLink
+	 * @param busrLink
+	 * @param colgLink
+	 * @throws WriterException
+	 * @throws IOException
+	 */
 	public void setInformation(String clubCap, String comnCap, String phswCap, String sporCap, String busrCap, String colgCap,
 							   String clubLink, String comnLink, String phswLink, String sporLink, String busrLink, String colgLink) throws WriterException, IOException {
 		this.clubCap = clubCap; this.comnCap = comnCap; this.phswCap = phswCap; this.sporCap = sporCap; this.busrCap = busrCap; this.colgCap = colgCap;
@@ -1327,7 +1430,11 @@ public class DataLoader {
 		fos.close();
 	}
 
-
+	/**
+	 * Applies changes to the map
+	 * @param mapImage
+	 * @throws IOException
+	 */
 	public void setMap(File mapImage) throws IOException {
 		FileInputStream sourceImage = new FileInputStream(mapImage);
 		File fout = new File(IMG_PATH+MAP_CODE);
@@ -1365,7 +1472,11 @@ public class DataLoader {
 		this.schedulePath = schedulePath;
 		String scheduleDirectory = "dir:"+schedulePath;
 		File fout = new File(SCHEDULE_INFO_PATH);
-		fout.getParentFile().mkdirs();
+		try {
+			fout.getParentFile().mkdirs();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		fout.createNewFile();
 		FileOutputStream fos = new FileOutputStream(fout); 	 
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
@@ -1373,7 +1484,12 @@ public class DataLoader {
 		bw.close();
 		fos.close();
 	}
-
+	/**
+	 * Changes student schedules based on user changes
+	 * @param rots
+	 * @param student
+	 * @throws IOException
+	 */
 	public void changeStudentSchedule(String[] rots, Student student) throws IOException {
 		for(int i = 0; i < 4; i++) {
 			if(student.getRots()[i].equals("GE")) {

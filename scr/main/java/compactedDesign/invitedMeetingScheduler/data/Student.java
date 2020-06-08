@@ -4,13 +4,17 @@ public class Student implements Comparable<Student>{
 	private String firstName;
 	private String lastName;
 	private String schoolName; //Change to ID later
+	
+	//temporary values used to make sure a student doesn't have duplicate rotations.
 	private boolean smcs;
 	private boolean hum;
 	private boolean global;
+	private boolean gen = true;
+	
+	//Final values used to check whether a student should or shouldn't have a given magnet rotation.
 	private final boolean SMCS;
 	private final boolean HUM;
 	private final boolean GLOBAL;
-	private boolean gen = true;
 	private int id;
 	//Change to an array?
 	private String[] rots = {"","","n/a","n/a"};
@@ -92,6 +96,12 @@ public class Student implements Comparable<Student>{
 		return rots;
 	}
 	
+	/**
+	 * Program used to set a student's rotation
+	 * @param rotNum specifies which rotation to be set
+	 * @param name specifies the name of the rotation to be set
+	 * @return if the rotation was successfully set.
+	 */
 	public boolean setRot(int rotNum, String name) {
 		if(name.equals("GE") && gen) {
 			gen = false;
@@ -113,6 +123,12 @@ public class Student implements Comparable<Student>{
 		}
 		return false;
 	}
+	/**
+	 * Program used to remove a student's rotation
+	 * @param rotNum specifies the rotation number
+	 * @param name Used to check if said rotation is in a given slot.
+	 * @return if the rotation was successfully removed.
+	 */
 	public boolean removeRot(int rotNum, String name) {
 		if(name.equals("GE") && !gen && rots[rotNum].equals(name)) {
 			gen = true;
