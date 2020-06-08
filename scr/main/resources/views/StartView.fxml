@@ -13,12 +13,6 @@
    <padding>
       <Insets bottom="10.0" top="20.0" />
    </padding>
-   <top>
-      <Label text="Invited Meeting Scheduler" BorderPane.alignment="CENTER">
-         <font>
-            <Font size="25.0" />
-         </font></Label>
-   </top>
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -58,4 +52,33 @@
          </children>
       </GridPane>
    </center>
+   <top>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Invited Meeting Scheduler">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label text="Created by Compacted Design" GridPane.rowIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Members: Leo Bian (Project Manager), Srashta Maharjan (Systems Analyst),  Jeffrey Jiang (Lead Programmer)" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </top>
 </BorderPane>

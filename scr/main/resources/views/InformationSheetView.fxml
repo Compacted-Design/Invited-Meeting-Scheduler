@@ -133,6 +133,9 @@
                </children>
             </GridPane>
          </content>
+         <BorderPane.margin>
+            <Insets bottom="20.0" />
+         </BorderPane.margin>
       </ScrollPane>
    </center>
    <bottom>
