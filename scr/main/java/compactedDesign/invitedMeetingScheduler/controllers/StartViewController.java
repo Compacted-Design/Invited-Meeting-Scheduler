@@ -16,8 +16,8 @@ import javafx.scene.layout.Pane;
  * <h1>StartViewController</h1>
  * <p>The controller of StartView</p>
  * @author Jeffrey Jiang
- * @version 0.1
- * @since 2020-05-08
+ * @version 0.2
+ * @since 2020-06-07
  */
 public class StartViewController {
 	
