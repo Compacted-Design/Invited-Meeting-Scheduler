@@ -72,6 +72,7 @@ public class ManualViewController {
 			if(Character.isDigit(lastNameEntry.getText().trim().charAt(i))) {
 				noticeLabel.setText(noticeLabel.getText() + "\n"+"Please Don't Use Digits in the Last Name");
 				invalidEntry = true;
+				break;
 			}
 		}
 		if(invalidEntry) {
