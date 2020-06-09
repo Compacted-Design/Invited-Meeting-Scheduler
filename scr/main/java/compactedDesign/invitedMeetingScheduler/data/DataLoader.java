@@ -211,6 +211,7 @@ public class DataLoader {
 			return;
 		}
 		Stage popUp = new Stage();
+		popUp.getIcons().add(new Image(getClass().getResourceAsStream("/img/IMSIcon.png")));
 		popUp.setTitle("Missing Files");
 		popUp.setResizable(false);
 		Pane popUpRoot = FXMLLoader.load(getClass().getResource("/views/popupViews/MissingFilesPopUpView.fxml"));

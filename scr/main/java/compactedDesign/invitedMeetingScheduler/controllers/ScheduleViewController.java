@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -85,6 +86,7 @@ public class ScheduleViewController {
 		if(IMSLauncher.getDl().getStudents() == null) {
 			Stage popUp = new Stage();
 			popUp.setTitle("No Groups Avaliable");
+			popUp.getIcons().add(new Image(getClass().getResourceAsStream("/img/IMSIcon.png")));
 			popUp.setResizable(false);
 			Pane popUpRoot = FXMLLoader.load(getClass().getResource("/views/popupViews/SchedulePopUpView.fxml"));
 			Scene popUpScene = new Scene(popUpRoot);
@@ -96,6 +98,7 @@ public class ScheduleViewController {
 			Stage popUp = new Stage();
 			popUp.setTitle("Unideal Groups Present");
 			popUp.setResizable(false);
+			popUp.getIcons().add(new Image(getClass().getResourceAsStream("/img/IMSIcon.png")));
 			Pane popUpRoot = FXMLLoader.load(getClass().getResource("/views/popupViews/InvalidGroupsPopUpView.fxml"));
 			Scene popUpScene = new Scene(popUpRoot, 300, 200);
 			popUp.setScene(popUpScene);
@@ -104,6 +107,7 @@ public class ScheduleViewController {
 			Stage popUp = new Stage();
 			popUp.setTitle("Creating Schedules");
 			popUp.setResizable(false);
+			popUp.getIcons().add(new Image(getClass().getResourceAsStream("/img/IMSIcon.png")));
 			Pane popUpRoot = new Pane();
 			Scene popUpScene = new Scene(popUpRoot, 400, 100);
 			popUp.setScene(popUpScene);
@@ -406,6 +410,7 @@ public class ScheduleViewController {
 		Stage popUp = new Stage();
 		popUp.setTitle(title);
 		popUp.setResizable(false);
+		popUp.getIcons().add(new Image(getClass().getResourceAsStream("/img/IMSIcon.png")));
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popupViews/StudentListPopUpView.fxml"));
 		Pane popUpRoot = (Pane)loader.load();
 		StudentListPopUpViewController controller = loader.<StudentListPopUpViewController>getController();

@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -49,8 +50,9 @@ public class DataEntryViewController {
 	@FXML
 	private void clearButtonClick() throws IOException {
 		Stage popUp = new Stage();
-		popUp.setTitle("No Groups Avaliable");
+		popUp.setTitle("Clear?");
 		popUp.setResizable(false);
+		popUp.getIcons().add(new Image(getClass().getResourceAsStream("/img/IMSIcon.png")));
 		Pane popUpRoot = FXMLLoader.load(getClass().getResource("/views/popupViews/ClearDataPopUpView.fxml"));
 		Scene popUpScene = new Scene(popUpRoot);
 		popUp.setScene(popUpScene);

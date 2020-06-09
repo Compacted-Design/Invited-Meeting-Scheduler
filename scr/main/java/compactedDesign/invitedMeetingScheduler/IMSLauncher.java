@@ -8,6 +8,7 @@ import compactedDesign.invitedMeetingScheduler.data.DataLoader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -36,6 +37,7 @@ public class IMSLauncher extends Application {
 		
 		//Setting up the window
 		primaryStage.setTitle("Invited Meeting Scheduler - by Compacted Design");//sets the title of the window
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/IMSIcon.png")));
 		primaryStage.setOnCloseRequest(e -> System.exit(0)); // stops the program upon closing the window
 		primaryStage.setResizable(false); // maybe change later
 		Pane root = new Pane();
