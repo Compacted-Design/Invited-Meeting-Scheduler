@@ -1,4 +1,4 @@
-club:https://www2.montgomeryschoolsmd.org/schools/poolesvillehs/clubs/
+club:efh
 busr:https://www2.montgomeryschoolsmd.org/schools/poolesvillehs/about/busroutes/
 phsw:https://www2.montgomeryschoolsmd.org/schools/poolesvillehs/
 colg:https://www2.montgomeryschoolsmd.org/siteassets/schools/high-schools/k-q/poolesvillehs/uploadedfiles/magnet/collegeacceptedlistclassof2019.pdf

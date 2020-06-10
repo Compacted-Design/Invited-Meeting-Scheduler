@@ -171,10 +171,10 @@ public class ScheduleViewController {
 				}
 			}
 		} catch (Exception e) {
-			String name1 = searchField.getText().trim(), name2 = null;
+			String name1 = searchField.getText().trim().toLowerCase(), name2 = null;
 			if(searchField.getText().contains(" ") && searchField.getText().split(" ").length >= 2) {
-				name1 = searchField.getText().split(" ")[0];
-				name2 = searchField.getText().split(" ")[1];
+				name1 = searchField.getText().split(" ")[0].trim().toLowerCase();
+				name2 = searchField.getText().split(" ")[1].trim().toLowerCase();
 				int counter = 2;
 				while(name2 != null && name2.equals("")) {
 					if(searchField.getText().split(" ").length > counter) {
@@ -187,17 +187,17 @@ public class ScheduleViewController {
 			}
 			for(Student student: IMSLauncher.getDl().getStudents()) {
 				if(name2 != null) {
-					if((student.getFirstName().equals(name1) && student.getLastName().equals(name2)) || (student.getFirstName().equals(name2) && student.getLastName().equals(name1))) {
+					if((student.getFirstName().trim().toLowerCase().equals(name1) && student.getLastName().trim().toLowerCase().equals(name2)) || (student.getFirstName().trim().toLowerCase().equals(name2) && student.getLastName().trim().toLowerCase().equals(name1))) {
 						target = student;
 						break;
-					}else if(target == null && ((student.getFirstName().contains(name1) && student.getLastName().contains(name2)) || (student.getFirstName().contains(name2) && student.getLastName().contains(name1)))) {
+					}else if(target == null && ((student.getFirstName().trim().toLowerCase().contains(name1) && student.getLastName().trim().toLowerCase().contains(name2)) || (student.getFirstName().trim().toLowerCase().contains(name2) && student.getLastName().trim().toLowerCase().contains(name1)))) {
 						target = student;
 					}
 				}else {
-					if(student.getFirstName().equals(name1) || student.getLastName().equals(name1)) {
+					if(student.getFirstName().trim().toLowerCase().equals(name1) || student.getLastName().trim().toLowerCase().equals(name1)) {
 						target = student;
 						break;
-					}else if(target == null && (student.getFirstName().contains(name1) || student.getLastName().contains(name1))) {
+					}else if(target == null && (student.getFirstName().trim().toLowerCase().contains(name1) || student.getLastName().trim().toLowerCase().contains(name1))) {
 						target = student;
 					}
 				}
@@ -409,7 +409,7 @@ public class ScheduleViewController {
 		}
 		Stage popUp = new Stage();
 		popUp.setTitle(title);
-		popUp.setResizable(false);
+		//popUp.setResizable(false);
 		popUp.getIcons().add(new Image(getClass().getResourceAsStream("/img/IMSIcon.png")));
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popupViews/StudentListPopUpView.fxml"));
 		Pane popUpRoot = (Pane)loader.load();

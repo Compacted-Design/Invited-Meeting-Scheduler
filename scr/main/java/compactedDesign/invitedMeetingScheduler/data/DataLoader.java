@@ -71,8 +71,8 @@ public class DataLoader {
 	private List<Student> students, studentsS, studentsG, studentsH, studentsSG, studentsSH, studentsGH, studentsSGH;
 	
 	private static final int QRCODE_SIDE_LENGTH = 125;
-	private static final int MAP_SIDE_LENGTH = 500;
-	private static final int MAP_SIDE_HEIGHT = 425;
+	private static final int MAP_SIDE_LENGTH = 400;
+	private static final int MAP_SIDE_HEIGHT = 375;
 	
 	private String clubCap, busrCap, phswCap, colgCap, sporCap, comnCap;
 	private String clubLink, busrLink, phswLink, colgLink, sporLink, comnLink;
@@ -244,11 +244,20 @@ public class DataLoader {
 			missingFiles = "StudentData.xlsx";
 			openMissingFilesPopup();
 			in = new FileInputStream(new File(STUDENT_DATA_PATH));
+			System.out.println(e.getStackTrace());
 		}
 		Workbook wb = new XSSFWorkbook(in);
 		Sheet s = wb.getSheet("RawData");
 		int left = 1, right = s.getLastRowNum();
 		int mid = (left+right)/2;
+		if(right == 0) {
+			s.createRow(1);
+			for(int j = 0; j < 7; j++) {
+				s.getRow(1).createCell(j);
+			}
+			s.getRow(1).getCell(0).setCellValue(id);
+			dataEntry(1, s, first, last, school, smcs, global, hum);
+		}else {
 		boolean added = false;
 		while(left <= right && !added) {
 			mid = (left+right)/2;
@@ -289,11 +298,12 @@ public class DataLoader {
 			s.getRow(mid).getCell(0).setCellValue(id);
 			dataEntry(mid, s, first, last, school, smcs, global, hum);
 		}
-		in.close();
+		}
 		FileOutputStream out = new FileOutputStream(new File(STUDENT_DATA_PATH));
 		wb.write(out);
 		out.close();
 		wb.close();
+		in.close();
 	}
 	/**
 	 * Inputs student information using an excel sheet.
@@ -400,6 +410,14 @@ public class DataLoader {
 					}
 					int left = 1, right = s.getLastRowNum();
 					int mid = (left+right)/2;
+					if(right == 0) {
+						s.createRow(1);
+						for(int j = 0; j < 7; j++) {
+							s.getRow(1).createCell(j);
+						}
+						s.getRow(1).getCell(0).setCellValue(id);
+						dataEntry(1, s, first, last, school, smcs, global, hum);
+					}else {
 					boolean added = false;
 					while(left <= right && !added) {
 						mid = (left+right)/2;
@@ -439,6 +457,7 @@ public class DataLoader {
 						}
 						s.getRow(mid).getCell(0).setCellValue(id);
 						dataEntry(mid, s, first, last, school, smcs, global, hum);
+					}
 					}
 				}
 			}
