@@ -39,7 +39,7 @@ public class IMSLauncher extends Application {
 		primaryStage.setTitle("Invited Meeting Scheduler - by Compacted Design");//sets the title of the window
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/IMSIcon.png")));
 		primaryStage.setOnCloseRequest(e -> System.exit(0)); // stops the program upon closing the window
-		primaryStage.setResizable(false); // maybe change later
+		//primaryStage.setResizable(false); // maybe change later
 		Pane root = new Pane();
 		Scene scene = new Scene(root,1000,800);
 		primaryStage.setScene(scene);
